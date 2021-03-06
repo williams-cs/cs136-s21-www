@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+
+    <p class="info">
+      This lab introduces us to some of the tools, techniques, and workflows
+      that we will be using throughout this course; we adapted these workflows
+      from “industry best-practices”. This lab handout walks through all of the
+      steps that we will take in a typical week when acquiring lab starter code,
+      submitting completed lab assignments, and receiving lab feedback.
+
+      <br><br>
+
+      The skills developed in this lab will help us on multiple fronts. The
+      tools that we explore (e.g., the Atom text editor, a command line terminal, etc.)
+      and the workflow we use (checkpointing our progress using the
+      <code>git</code> version control system) will help us to work efficiently,
+      safely, and flexibly throughout the semester.
+
+      <br><br>
+
+      However, before we can begin our workflow, we need to prepare
+      our computers with some important software so we can do things
+      like to create, compile, and run Java programs.
+
+      <br><br>
+
+      <em> Note that we have biased our instructions for Unix-like operating
+      systems. MacOS and Linux are two examples of Unix-like operating systems,
+      and since we normally use MacOS in our CS136 computing lab, the
+      instructions often use MacOS as an example. If you have a different
+      operating system, like Windows, that is OK!  The steps are just slightly
+      different, so read carefully.</em>
+
+    </p>
+
+    <p class="heading" id="editor">
+      Step 1: Install a Text Editor
+    </p>
+
+    <p class="text">
+    During a typical semester, you would have 24-hour in-person
+    access to lab machines with all software pre-installed and configured.
+    However, as computer science students, we should become comfortable with
+    installing software ourselves. Let’s begin making our personal computers our
+    own!
+  </p>
+
+    <p class="text">There are many editors that were designed for writing code.
+    These so-called “<a
+    href="https://en.wikipedia.org/wiki/List_of_text_editors">text editors</a>”
+    are very different than word processing software like Microsoft Office.
+    There are very basic “terminal editors”, like <a
+    href="https://www.gnu.org/software/emacs/">emacs</a> or <a
+    href="https://www.vim.org/">vim</a>, that have the look and feel of the
+    environments that 80’s movie hackers would work in (a small black window with even smaller green text). There are also
+    sophisticated “Integrated Development Environments”, like <a
+    href="https://www.eclipse.org/eclipseide/">Eclipse</a>, that automate some
+    non-obvious programming tasks, but that also require extensive
+    configuration. For this course, you will use <a href="https://atom.io/">Atom</a>,
+    a text editor that falls somewhere in the middle of this taxonomy. Atom provides
+    all of the features of a modern code editor, and some useful integrations
+    with tools that will help us in this course. As instructors, we will be
+    using Atom, and we encourage you to do the same.</p>
+
+    <p class="text">Please download and install <a
+    href="https://atom.io/">Atom</a> on your personal computing device. We
+    highly recommend that you also install the <a
+    href="https://atom.io/packages/teletype">teletype</a> package. Teletype will
+    let us more easily "pair program". We plan to use teletype extensively in later labs;
+    installing it now will help us stay ahead.</p>
+
+	<!--
+    <p class="text"><b>Note to instructors: We should add a description of enabling
+      <code>teletype</code> via creating a <code>GitHub</code> account!</b>
+    </p>
+	-->
+
+    <p class="heading" id="git">
+      Step 2: Install Git
+    </p>
+
+    <p class="text">Developing a piece of software typically requires a number of
+      rounds of entering code, testing, debugging, and rewriting, and the code changes quite
+      a bit over time. Frequently, it is desireable or necessary to go back to an
+      earlier version of your project code. <i>Version control systems</i> are
+      pieces of software that allow programmers to maintain snapshots (copies) of
+      their code at various stages of its development--this can be a life-saver!
+
+    <p class="text">In this course we will be using the
+    <a href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">Git
+    version control system</a>.
+    Git is one of many version control systems; it is important to know <a
+    href="https://www.git-tower.com/learn/git/ebook/en/command-line/basics/what-is-version-control#start">what
+    a version control system is</a> and <a
+    href="https://www.git-tower.com/learn/git/ebook/en/command-line/basics/why-use-version-control">why
+    you might want to use one</a>. We encourage you to explore the links in
+    this paragraph to learn more about version control.<p>
+
+    <p class="text"><a
+    href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Installing
+    Git</a> can be straightforward, but there are a few steps to configure it to
+    work exactly the way you want. Luckily, we can use Atom’s Git integration
+    for most of our Git needs! To install git, follow the directions in the link
+    above for your operating system.</p>
+
+    <p class="subheading">Further Git Installation Notes for Windows Users</p>
+    <p class="text">Among the <em>many</em>
+    dialog boxes you will click through during this installation, you should
+    accept the default suggested for all but two.
+    <ul class="bullet">
+      <li>The <em>git editor</em> suggestion: Do not accept <code>vim</code> (it is likely not
+    installed on your machine and it is a difficult editor to learn); instead
+      choose Atom.</p></li>
+      <li>Open SSL vs Windos Secure Channel: Choose Windows Secure Channel.</li>
+    </ul>
+
+
+    <p class="heading" id="java">
+      Step 3: Install Java
+    </p>
+
+    <p class="text">
+  In this step,
+    <a
+    href="https://www.oracle.com/java/technologies/javase-downloads.html">you
+    will install Java</a> on your own computer, if you haven’t already.
+    <em>(Note: There are many ways to install Java, even within the same
+    operating system (macOS, Microsoft Windows, Linux, etc.), so if you know of
+    another way to install Java you should feel free to try it.)</em>
+    </p>
+
+    <p class="text">
+    We want to install the "Java Development Kit", or JDK. If you click on the <a
+    href="https://docs.oracle.com/en/java/javase/14/install/overview-jdk-installation.html">Installation
+    Instructions link</a>, it will take you to a page that explains how to install
+    Java on three different platforms (Windows, Linux, and macOS). The
+    instructions aren't exactly concise, so you may want to jump to the <a
+    href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html">JDK
+    Downloads page</a> and select the appropriate download for your system: "macOS
+    Installer" if on macOS, or Windows x64 installer if on Windows 10. Then,
+    double click the downloaded file and follow the installation instructions it
+    gives (or go back to the instructions in the previous link as a reference).
+
+    </p>
+
+    <p class="subheading">Further Java Installation Notes for Windows Users</p>
+
+    <p class="text">After you have installed java, you should check that the
+    operating system can find it. To do so, open the <code>Git Bash</code> app
+    that should have been installed as part of your git installation above. You
+    can do this by typing <code>bash</code> into the search text box next to the
+    Windows Start icon. Then type <code>javac --version</code>. This should give
+    you some information about the version of java you have installed. If it
+    does, you’re ready to move on to <a href="#repos">Step 4 below</a>!</p>
+
+    <p class="text">If, instead, typing <code>javac --version</code> gives you
+    an error message, you will need to edit one of what the operating system
+    calls the <em>system environment variables</em>. The one you want to edit is
+    called the <code>Path</code> variable. To do this, type <code>env</code> in
+    the search text box beside the Start icon and select <code>Edit the system
+    environment variables</code>. A dialog box appears. In the
+    <code>Advanced</code> tab, select <code>Environment Variables...</code>.
+    Another dialog box appears. Under <code>System variables</code> select the
+    line that says <code>Path</code> then select <code>Edit...</code>. A dialog
+    box appears. It will contain a text area with a list of directories.
+    Double-click in the text area <em>below</em> the last item in the list. Here
+    you will enter the location in which the java commands have been stored. It
+    will have the form:</p>
+
+    <p class="text">
+      <code>C:\Program Files\Java\jdk-VERSION</code></p>
+
+    <p class="text">where VERSION is the version number of your java installation. For example, it might be
+
+    <p class="text"><code>C:\Program Files\Java\jdk-15.0.2</code></p>
+
+    <p class="text">To find the version number, type <code>javac --version</code> in your terminal window.</p>
+
+
+    <p class="heading" id="repos">Step 4: Get Your Repository</a>
+
+      <p class="text">Each of us has been given our own private repository on
+      the CS department GitLab infrastructure. Your repository for each lab this
+      semester will be named based on a combination of the course
+      (<code>cs136</code>), the semester (<code>s21</code>), your username (on the
+      CS department infrastructure, e.g., <code>22abc1</code>), and the
+      assignment (e.g., <code>environment</code>). For this lab, your repository
+      take the form of:</p>
+
+<p class="text"><code>https://evolene.cs.williams.edu/cs136-s21/lab00-environment/&lt;YOUR_USERNAME&gt;-lab00-environment.git</code></p>
+
+      <p class="text">The part of the path above
+      <code>&lt;YOUR_USERNAME&gt;</code> will be replaced by your username, so
+      if your username was <code>22abc1</code>, your repository would be
+      accessed at:</p>
+
+<p class="text"><code>https://evolene.cs.williams.edu/cs136-s21/lab00-environment/22abc1-lab00-environment.git</code></p>
+
+      <p class="text">We will use the git version control system to retrieve
+      this repository from the CS department servers, and <em>clone</em> it to
+      your local computer. This creates a local copy of your repository that has
+      its own independent timeline.</p>
+
+      <p class="text">To start, open a <i>command-line terminal</i> on your local machine.</p>
+      <ul class="bullet">
+
+        <li>On macOS, whenever we say "terminal", we mean the application
+        <code>Terminal.app</code>. You can find <code>Terminal.app</code> in the
+        <code>Utilities</code> folder inside the <code>Applications</code>
+        directory. (Alternatively, you could use “Spotlight Search” by holding
+        “⌘” and pressing the space bar. If you start typing “Terminal” in the
+        Spotlight Search, you can select <code>Terminal.app</code> from a short
+        list of options.) Once you’ve opened <code>Terminal.app</code>, the
+        app’s icon should appear on the “Dock”; we suggest you right click the
+        icon (ctrl-click if you don’t have a mouse), go to the “Options” menu
+        item, and then select “Keep in Dock”, because we will be using the
+        terminal repeatedly throughout the course.
+
+        <li>On Windows, whenever we say "terminal", we mean the application
+        Git Bash, which you installed in <a href="#git">Step 2</a> above. To
+        open the Git Bash application, you can type "bash" into the search text
+        box next to the Windows Start icon. Then you should see a terminal
+        window not unlike the terminal on macOS (shown below).
+
+        <br>
+        Note: You may be familiar with other command-line terminals for Windows,
+        such as <code>Command Prompt</code> and others, but use Git Bash, as it
+        uses a similar command syntax as Unix-based terminals, and that is the
+        syntax we will use an any descriptions of terminal interactions.
+      </ul>
+
+      <p class="text"> It isn’t a stretch to say that the terminal is among the
+      most important applications for programmers, so any investment you make in
+      order to familiarize your self with the terminal will surely pay off. As
+      far as we are aware, the functionality of Git Bash and
+      <code>Terminal.app</code> are comparable for the things we will be doing in
+      this course, but be aware that there are subtle differences that may come
+      in with more advanced usage.</p>
+
+      <p class="text">At this point, you've successfully opened the terminal on
+      Windows or macOS, and you should see a "prompt" where text will appear
+      when you start typing. The prompt may take different formats depending on
+      your settings. Ours looks like this, but don’t worry if yours looks a
+      little different:</p>
+
+      <p class="text"><img src="images/terminal.png" /></p>
+
+      <p class="text">As a convention, we’ll use the dollar sign
+      (<code>$</code>) to signify the prompt in our examples throughout this
+      course. So when you see instructions like the following,</p>
+
+      <p class="text"><code>$ ls</code></p>
+
+      <p class="text">it means that at the prompt, you should type the command
+      <code>ls</code>. When I type <code>ls</code> and press <code>Enter</code>,
+      I see:</p>
+
+      <p class="text"><code>$ ls<br>
+        Desktop     Documents   Library     Music   notes.txt   Pictures<br>
+      </code></p>
+
+      <p class="text">This output means that there are files called
+      <code>Desktop</code>, <code>Documents</code>, etc. in my current working
+      directory. Terminal commands are often run on files in your file system,
+      so when you open a terminal, by default, it assumes that you want to work
+      with files in your home folder. Therefore, your default <em>current
+      working directory</em> is usually your home folder. The files shown above
+      are the ones in my home folder. <code>ls</code> is short for “list”, so we
+      usually call its output a <em>directory listing</em>.</p> <p
+      class="text">You might recognize that some of the files in the directory
+      listing above are, themselves, directories. How can you tell the
+      difference? Try running <code>ls</code> with some extra
+      <em>arguments</em> (phonetically, you will type "ell ess minus ell"):</p>
+
+      <p class="text"><code>$ ls -l<br>
+      total 8<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Desktop<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Documents<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Library<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Music<br>
+      -rw-r--r--  1 cs136  staff  235 Jan 25 13:19 notes.txt<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Pictures<br>
+</code></p>
+
+      <p class="text">See the cryptic text all the way to the left? It looks
+      like <code>drwxr-xr-x</code>. If that text starts with a <code>d</code>,
+      the entry in the listing is a <code>d</code>irectory. If it starts with a
+      dash, <code>-</code>, like <code>-rw-r--r--</code>, then the entry is an
+      ordinary file. So here, you can see that <code>notes.txt</code> is a
+      regular file.</p>
+
+      <p class="text">Now that we've explored our home directory and a few
+      terminal commands, we would like to <em>clone</em> our repository, which creates a
+	copy of our repository on our local computer. Before we use <tt>git</tt> to
+	get a copy of our lab, we will do a final one-time setup for <tt>git</tt>
+	(replacing the capitals with appropriate values, of course):
+      </p>
+
+  <p class="text"><code>git config --global user.name 'YOUR NAME'<br>
+  git config --global user.email 'YOUR-EMAIL@williams.edu'<br>
+  git config --global push.default simple<br>
+  git config --global core.editor "atom --wait"<br>
+</code><p>
+
+  <p class="text">
+(If you are a Windows user, you will also need to execute one more line, in addition to those above:
+  <code>git config --global http.sslbackend schannel</code>)<br>
+
+  You should only ever need to do this <tt>git</tt> setup once.
+  </p>
+
+  <p class="text">
+      I like to keep all of my
+      files organized by course, so I would like all of my CS136 repositories
+      for my labs this semester to be kept in the same directory. I can create a
+      new directory for this purpose using the <code>mkdir</code> command as
+      follows:</p>
+
+      <p class="text"><code>$ mkdir cs136</code></p>
+
+      <p class="text">This creates a new directory called <code>cs136</code>
+      inside my current working directory. If I type <code>ls -l</code>, I should
+      now see <code>cs136</code> in the directory listing:</p>
+
+      <p class="text"><code>
+      $ ls -l<br>
+      total 9<br>
+      drwxr-xr-x  2 cs136  staff   64 Sep 04 13:11 cs136<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Desktop<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Documents<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Library<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Music<br>
+      -rw-r--r--  1 cs136  staff  235 Jan 25 13:19 notes.txt<br>
+      drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 Pictures<br>
+      </code></p>
+
+      <p class="text">You can now change your working directory to be
+      <code>cs136</code> using the <code>cd</code> command (you guessed it,
+      <code>cd</code> is short for "change directory"):</p>
+
+      <p class="text"><code>$ cd c136</code></p>
+
+      <p class="text">By alternately using the <code>ls</code> and
+      <code>cd</code> commands, you should be able to navigate your files in
+      exactly the same way that you navigate them when you are pointing and
+      clicking with a mouse in your operating system's file explorer (e.g., Finder).</p>
+
+      <p class="text">Verify that you are inside your cs136 directory using the
+      <code>pwd</code> command.</p>
+
+      <p class="text">Now that you are inside the place that you want your
+      repository to live, clone it. The <code>git</code> program that you
+      installed above has many options, and we will use the clone option:</p>
+
+      <p class="text"><code>$ git clone https://evolene.cs.williams.edu/cs136-s21/lab00-environment/&lt;YOUR_USERNAME&gt;-lab00-environment.git</code></p>
+
+      <p class="text">(replacing <code>&lt;YOUR_USERNAME&gt;</code> with your
+      username, of course)</p>
+
+      <p class="text">Now if you type <code>ls</code>, you should see a copy of
+      your newly cloned repository. Change directories into your repository
+      using <code>cd</code>.</p>
+
+    <p class="heading" id="hello">
+      Step 5: Hello world!
+    </p>
+
+    <p class="text">At this point, you have installed Java, a tool for writing Java programs
+    (<code>Atom.app</code>), and a program for managing your coding progress
+    (<code>git</code>), our next order of business is to create, compile, and run a
+    simple Java program.</p>
+
+    <p class="text">You should start by opening Atom.
+    The first time you open Atom, you will see some welcome
+    messages. Click the appropriate boxes to disable the welcome messages and
+    (dis)agree to telemetry. You should have a (mostly) empty window. Go to the
+    <code>File</code> menu and select “Add Project Folder…”. You should select
+    the repository that you just cloned to be your project folder (select the
+    folder itself). When you are done, you should see something like the picture below:</p>
+
+    <p class="text"><img width=800 src="images/atom-project.png" /></p>
+
+    <p class="text">Note the left panel now contains my project folder, and
+    inside that folder is the single file <code>README.md</code>. Inside that
+    file, you will see a version of what appears in your repository when viewed
+    on GitLab. Try clicking it to see its contents. By default, GitLab always
+    displays a repository's <code>README.md</code> file, albeit in a more nicely
+    rendered format; the <code>README.md</code> is where we will often put
+    useful links and descriptions for your upcoming labs. The file extension
+    <code>.md</code> indicates that a file is a markdown file. You may wish to
+    familiarize yourself with markdown in your copious free time, but it is not
+    required.</p>
+
+<br>
+
+    <p class="text">Below, we have included the text for the program that you
+    should create inside your repository. So create a new file (“File”→“New
+    File”) called <code>HelloWorld.java</code>. You are strongly advised to
+    <em>retype</em> this program into your text editor in the newly created
+    file. Retyping instead of copying and pasting will encourage you to notice
+    certain details that you might not ordinarily notice.</p>
+
+
+    <pre><code>
+          public class HelloWorld {
+            public static void main(String[] args) {
+              System.out.println(&quot;Hello world!&quot;);
+            }
+          }
+  </code></pre>
+
+<p class="text">Save this code in the file called <code>HelloWorld.java</code>. You should
+see the “blue dot” on the Atom tab for <code>HelloWorld.java</code> disappear.
+This means that all of your changes are saved.</p>
+
+<p class="text">Now that you’ve created your <code>HelloWorld.java</code> program, we’ve
+arrived at the fun part. We are going to <em>compile</em> our
+<code>HelloWorld.java</code> program into a form that can be run by the computer
+using the <code>javac</code> command. We call this step <em>compilation</em>.
+From the terminal window that is “inside” your repository (i.e., the terminal’s
+current working directory is inside the repository that you’ve cloned) Type:</p>
+
+<pre><code>
+          $ javac HelloWorld.java</code></pre>
+
+<p class="text">If everything goes smoothly–if there are no errors in your program–you will
+see output like this:</p>
+
+<pre><code>
+          $ javac HelloWorld.java
+          $</code></pre>
+
+<p class="text">In other words, you will see no output when things <em>go right</em>. In the
+terminal, it is conventional for programs only to produce output when things
+<em>go wrong</em>. No news is good news! If you get output, that’s <code>javac</code>’s way of telling
+you that there was an error and that you need to fix it. <code>javac</code> goes
+to great lengths to tell you what went wrong. Don’t be afraid of what
+<code>javac</code> prints on your screen. Read it, because it will probably help
+you find your issue!</p>
+
+<p class="text">For example, if I see:</p>
+<pre><code>
+        $ javac HelloWorld.java
+        HelloWorld.java:3: error: &#39;;&#39; expected
+        System.out.println(&quot;Hello world!&quot;)
+                                                    ^
+        1 error
+</code></pre>
+
+
+<p class="text">then <code>javac</code> is telling me that at the location indicated with the
+<code>^</code>, it was expecting a <code>;</code> character, but it did not find
+one. Putting in a <code>;</code> character at that location makes my program
+compile without errors.</p>
+
+<p class="text">Once you have successfully compiled your program, you should see a new file
+in your directory:</p>
+<pre><code>
+        $ ls -l
+        total 8
+        -rw-r--r--  1 cs136  staff  426 Jan 25 13:33 HelloWorld.class
+        -rw-r--r--  1 cs136  staff  235 Jan 25 13:33 HelloWorld.java
+        drwxr-xr-x  2 cs136  staff   64 Jan 25 13:11 README.md
+</code></pre>
+
+<p class="text">Do you see it? It should be called <code>HelloWorld.class</code>. This is a
+<em>compiled</em> Java program, which we can now run. So let’s run it.</p>
+
+<pre><code>
+        $ java HelloWorld
+        Hello world!</code></pre>
+
+<p class="text">We’ve run our first program! Note we did not type <code>java
+HellWorld.class</code>, we just typed the name of the class that we created,
+i.e., <code>HelloWorld</code>.</p>
+
+
+    <p class="heading" id="submitting.">
+      Step 6: Submitting Your First Program.
+    </p>
+
+    <p class="text">In this step, we will walk through the process of submitting your completed
+    program, <code>HelloWorld.java</code>. Note that you <em>will not</em> be graded
+    on the correctness of your program. The purpose of this lab is to walk through
+    the end-to-end process that we will be using for labs throughout the semester.
+    Hopefully, we can identify potential roadblocks now, and by resolving them this
+    week, all of our time during our first "real" lab can be spent making progress on the
+    actual assignment!</p>
+
+    <p class="text">The first thing we will do is open the "Git Tab". Go to
+    "Packages"→"GitHub"→"Toggle Git Tab". After selecting that option, you
+    should see a new column appear at the right-hand side of Atom:</p>
+
+    <p class="text"><img width=800 src="images/atom-gittab.png" /></p>
+
+    <p class="text">Notice that the new files show up, in green, in the area labeled "Unstaged Changes".
+      What this means is that you have made changes to these files that are not yet saved into your repository's timeline.
+      You should press the button labeled "Stage All", which prepares Git to create a new "commit".
+      A "commit" is an entry into your project's timeline, and it encodes the current snapshot of all of your files.
+      After pressing this button, the files should move from the "Unstaged Changes Area" to the "Staged Changes Area".
+    </p>
+
+    <p class="text"> Next, click in the text area that says "Commit message",
+    and type a short descriptive message for your timeline. Something like
+    "completed my version of Hello World!" would accurately describe the
+    contents of this commit. After crafting your message, press the button that
+    says "Commit to master". Note that "master" is the name of the main
+    development branch of your repository. The computer science community is
+    pushing to change the default branch name of Git repositories to "main"
+    instead, but the current version of GitLab has not caught up. As a
+    department, we are planning to make this change in the coming weeks.</p>
+
+    <p class="text"> The last step is to sync up your the local version of your
+    repository with the version of your repository that is on GitLab. As
+    instructors, we cannot see what you have saved on your computer; the only
+    version of your work that we can see is what is stored on GitLab. The final
+    step of "Pushing" your code is how you will submit your labs this semester.
+    However, it is always good to <code>git push</code> <em>even if you are still
+    working!</em> By syncing your local repository with GitLab, you ensure that
+    your progress is saved. </p>
+
+    <p class="text">
+      Press the button that has an upward arrow and the word "Push #"" (where # should be the number 1).
+      Pressing this button will let you push the 1 new commit that you've made to your GitLab repository.
+      (You should be prompted for your GitLab username and password.)
+    </p>
+
+    <p class="text"> When you are done, navigate to your GitLab repository in
+    your web browser. You should see your changes reflected in your repository
+    online. My repository is shown below. Notice that the "commit message"
+    appears next to the files that changed during that commit. I can see
+    "completed my version of Hello World!" next to the two files I've added:
+    <code>HelloWorld.java</code> and <code>HelloWorld.class</code>. Once you
+    confirm that you've successfully submitted, you are done! </p>
+
+    <p class="text"><img width=800 src="images/gitlab-submit.png" /></p>
+
+<p class="heading" id="slack">Step 7: Install/Explore Course Communication Tools</p>
+
+<p class="text">
+  Although these tools are not necessarily part of your "computing environment", we will be relying on several technologies to help us communicate in this course:
+</p>
+<ul class="bullet">
+  <li><a href="https://glow.williams.edu">GLOW</a>: Assignment and lecture announcements</li>
+  <li><a href="https://williams.zoom.us/">Zoom</a>: All remote meetings. (Important: use your <em>Williams</em> zoom account for course-based zooming)</li>
+  <li><a href="https://williams-cs136-s21.slack.com">Slack</a>: Text-based communication forum</li>
+</ul>
+
+<p class="text">
+  You should already be familiar with Zoom and GLOW (since we are meeting on a Zoom call for this lab, and that Zoom call was communicated to you through the course's GLOW webpages), but Slack may be new to us. Slack is a chatting utility that can either be used through its web-based or app-based clients. Slack has many features, but we will primarily use it as a low-latency communication medium. You should all have received an invitation to the <a href="https://williams-cs136-s21.slack.com">CS136 slack "workspace"</a>. Please accept that invitation if you have not already.
+</p>
+
+<p class="text">
+  Each member of the course (student, instructor, TA) has their own "channel" for sending a "direct message". Please find your Lab instructor (Bill or Sam), and send them a direct message. You may say anything you'd like, but if you don't have any pressing questions or announcements, you can simply tell us what you had for breakfast (it's the most important meal of the day after all...).
+</p>
+
+<p class="text">
+  We have also configured the CS136 slack workspace so that it is integrated with Zoom. Go to any channel that you wish, and try typing <code>/zoom help</code>. It should give a nice list of options. We hope that is helpful!
+</p>
+
+    <p class="bottom">&nbsp;</p>
+  </body>
+</html>

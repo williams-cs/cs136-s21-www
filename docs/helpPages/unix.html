@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+      CSCI 136
+    </title>
+  </head>
+
+  <body>
+
+<!-- standard header (found in header.html) -->
+<p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+<p class="title">Data Structures &amp; Advanced Programming</p>
+<p class="box">
+<a href="../index.html">Home</a> |
+<a href="../schedule.html">Schedule</a> |
+<a href="../labs.html">Labs</a> |
+<a href="../handouts.html">Handouts</a> |
+<a href="../links.html">Links</a> |
+<a href="https://csci.williams.edu/">CS@Williams</a>
+</p>
+
+<p class="heading">
+Mac and Unix Hints
+</p>
+
+
+
+<div class="text">
+
+<p>
+This set of notes assumes that you have never used Unix before. It
+does assume, however, that you are comfortable using computers with a
+graphical user interface, such as the Macintosh operating system or
+Microsoft Windows.  You should sit down at a Mac in the lab and go
+through this tutorial trying things out as they are explained. Upon
+completion, you should be able to understand the basics of entering
+commands, move around in the file system
+and view existing files, and know where to find <a href="#Getting help">help</a>.
+
+To gain experience with these topics, try things out as you read.
+
+<h3><a NAME="Logging in"></a>Logging In</h3>
+
+To start, you must log in to one of the Macintosh computers in our
+lab.  Begin by entering the user name and password for your computer
+science account in the login window and click ``Log in''.  Your user
+name for this account may be different than the one used for computer
+accounts provided by the Office of Information Technology (typically
+something like ewr1), and the initial password will also be different.
+You must obtain this password from your instructor.  Once you log in,
+the screen should display a window containing icons for some of the
+files you can access on the machine.
+
+<h3><a NAME="Password"></a>Changing Your Password</h3>
+
+
+Before proceeding, you should change the password we assigned to your
+account to something that only you will know and that will be easier
+for you to remember.  Don't, of course, make your new password too
+easy to guess.  In particular, at least use something that is a mix of
+letters and numbers.  If you forget your password, the system
+administrator can give you a new password.
+
+
+To change your password you should:
+<ul>
+<li> Point the mouse at the black Apple icon in the upper left corner
+of the screen.  Depress and hold down the mouse button to open a menu.
+<li> Select "System Preferences" from this menu.
+
+<li> Click once on the "Accounts" icon in the window that appears.
+
+<li> Change your password in this window.
+
+<li> Close the window by clicking in the red circle in the top left corner.
+
+</ul>
+
+Now, log out and log in again with your new password.  To log out
+select the last item in the menu that appears when you depress the
+mouse on the little apple image that appears in the upper left corner
+of your screen.  Then click the "Log out" button that appears in the
+dialog box.
+
+The files you create for our course laboratory projects will not
+actually be stored in the computer on which you are working.  Instead,
+they will be stored on our department's Macintosh file server,
+cortland.  By entering the account information for your account, you
+have instructed the computer you are using to access your files on
+cortland.  You can access your files on cortland from any computer in
+our lab by simply logging in to that computer.
+
+
+<h3><a NAME="Mac"></a>Using the Mac Interface</h3>
+
+Some of you may be new to Macintoshes, and this section highlights
+the most important elements of the interface.  The files on the hard drive
+can be viewed by clicking on the "Mac HD" icon in the top
+right-hand corner of the screen.  To go to your home directory, click on the
+house icon under "Places" in the Finder window.
+
+<p>All Mac Windows roughly look like the following window:
+<p><img SRC="window.jpg">
+
+<p>Here are some basic window management operations:
+<ul>
+<li>To change the size of the window, click the
+mouse in the lower, right corner and drag the mouse with the button
+held down.
+<li>To close a window, click on the red circle in the title bar.
+<li>To iconify a window (minimize), click on the yellow circle in the title
+bar. The window should appear as an icon at the bottom of the display
+in the tool bar.  Clicking on the icon in the tool bar will restore the window.
+<li>To maximize the size of a window, click on the green circle in the title bar.  Clicking again will restore a window to its previous size.
+</ul>
+
+<p> You can start to get the feel for the environment by clicking on
+the Safari icon to start a web browser.  (You are welcome to use Firefox if you are more comfortable with it.)  The safari icon is in the tool bar and looks like the following:
+<p><img SRC="safari.jpg"> <p>
+
+Go to the class web page at
+<tt>http://www.cs.williams.edu/~cs136</tt> and find the
+electronic version of this page.  Bookmark this page--you will be
+referring to it often during lab.
+
+<h3><a NAME="Mac"></a>Using Unix Commands</h3>
+
+ In order to use the Unix interface on the Macintosh, you must first
+ start the Terminal Program, which you can do by clicking on the
+ following icon in the tool bar:
+<p><img SRC="terminal.jpg"> <p>
+
+The Terminal Program will open a shell window in which will type Unix commands.
+For example, type the command "ls" in the shell window and press return.
+This command will list the files in your directory.  A command consists of
+the name of a program, zero or more options preceded by '-', and zero or more arguments,
+which are themselves words. The command line is terminated with a carriage
+return.
+<p>If you make mistakes in typing on the command line, use the Delete or
+Backspace key to erase the previous character.
+
+<p>Here are other useful commands related to files:<br><br>
+<table BORDER >
+<tr>
+<td WIDTH="110">ls</td>
+
+<td WIDTH="267">List the files in the current directory</td>
+</tr>
+
+<tr>
+<td WIDTH="110">cp file1 file2</td>
+
+<td WIDTH="267">Copy the file named file1 to a new file named file2</td>
+</tr>
+
+<tr>
+<td WIDTH="110">mv file1 file2</td>
+
+<td WIDTH="267">Rename the file named file1 to have the name file2. (mv
+is actually short for move, but it doesn't necessarily move anything!)</td>
+</tr>
+
+<tr>
+<td WIDTH="110">rm file1</td>
+
+<td WIDTH="267">Remove the file named file1</td>
+</tr>
+
+<tr>
+<td WIDTH="110">more file1</td>
+
+<td WIDTH="267">Display the contents of a file</td>
+</tr>
+
+<tr>
+<td WIDTH="110">lpr file1</td>
+
+<td WIDTH="267">Print the file named file1</td>
+</tr>
+</table>
+<br><br>
+One thing you will notice with Unix is that "no news is good news". Often
+if a Unix command is successful, it will produce no output! If it fails,
+you will receive an error message. Of the list of commands above, only
+ls and more produce output when they succeed.
+
+<p>The "more" command deserves some more explanation because it is an interactive
+command. It displays your file one "screenful" at a time.
+You can try out "more" by typing
+
+<small><pre>
+more /opt/mac-cs-local/share/cs136/examples/alice.txt
+</pre></small>
+
+After each screenful,
+it displays a prompt either consisting of the name of the file being displayed
+(for the first screenful), END (for
+the last screenful), or : (for all other screenfuls). The prompt appears
+at the bottom of the terminal screen. At this prompt, you have several options,
+the most useful being:
+<br><br>
+<table BORDER >
+<tr>
+<td WIDTH="103">space</td>
+
+<td>Display the next screenful</td>
+</tr>
+
+<tr>
+<td WIDTH="103">b</td>
+
+<td>Display the previous screenful</td>
+</tr>
+
+<tr>
+<td WIDTH="103">q</td>
+
+<td>Quit more, returning to a shell prompt.</td>
+</tr>
+</table>
+<br><br>
+
+This will show you a file containing the first chapter of Alice in
+Wonderland. (One useful tidbit: hitting the tab key will autocomplete
+directory and file names.  Try typing "/usr/mac" and then hitting
+the tab key.  It should autocomplete /usr/mac-cs-local for you.)
+
+<p>
+When you use
+ls to list your file<font color="#000000">s, a directory will appear with
+/ at the end of its name. </font>At all times you have a current directory.
+Your commands are interpreted with respect to your current directory by
+default. So, for example, ls lists the files in your current directory
+if you give it no arguments. Here are some useful commands to manipulate
+directories:
+<br><br>
+
+<table BORDER >
+<tr>
+<td WIDTH="104">mkdir dir1</td>
+
+<td>Create a new directory named dir1.</td>
+</tr>
+
+<tr>
+<td WIDTH="104">rmdir dir1</td>
+
+<td>Remove the directory named dir1. You can only do this if the directory
+is empty.</td>
+</tr>
+
+<tr>
+<td WIDTH="104">cd dir1</td>
+
+<td>Make dir1 be the current directory</td>
+</tr>
+
+<tr>
+<td WIDTH="104">pwd</td>
+
+<td>Display the name of the current working directory</td>
+</tr>
+</table>
+<br><br>
+
+Filenames should consist only of letters, numbers, and some punctuation marks. A filename is
+typically divided into a descriptive name and an extension, separated by
+a period. Extensions are purely by convention but typically indicate the type
+of file. For example, "myfile.txt" would be a text file, while "myfile.java"
+would contain a Java program. Extensions are generally optional although some
+programs, such as the Java compiler, expect them to be there.
+<p>Filenames can be given as names that are relative to the current working
+directory or as absolute names from the special root directory. Thus far,
+we have assumed relative names that refer simply to files in the current
+directory. We can also use relative names to identify files in subdirectories.
+For example, "mydir/myfile" is the file named "myfile" in the directory
+named "mydir", where "mydir" is located in the current working directory.
+
+<p>Each user also has a home directory. This is the directory that is
+the current directory when you start a new shell window.  (You have
+already found your home directory through the standard Mac interface).
+No matter what the absolute pathname is to your home directory, you
+can always refer to it with the special relative pathname '~'. For
+example, no matter what your current directory is, if you type "ls ~",
+you will see a listing of the files in your home directory.
+<p>An absolute pathname always begins with / while a relative pathname
+never does. To find out the pathname that corresponds to your current
+directory, type <tt>pwd</tt>. Use <tt>pwd</tt> to find the absolute
+path for your home directory.
+
+<p>One last useful feature of the command line: Pressing the up arrow
+will give the last command you executed.  Pressing return will run
+that command again.  Try this.  You can access older commands in your
+history by hitting the up arrow multiple times.
+
+To practice these commands, copy the <tt>alice.txt</tt> file to your
+home directory with the command
+
+<small><pre>
+cp /usr/mac-cs-local/share/cs136/examples/alice.txt ~/alice.txt
+</pre></small>
+
+Rename the file, move it into a newly created
+subdirectory, and practice the other basic Unix commands as well.
+
+<h3>
+<a NAME="More Windows"></a>Additional Shell Windows</h3>
+You can create additional shell windows to work in more than one directory or on different tasks at the same time.
+When any terminal window has the focus (by clicking in it), the menus
+across the top of the screen should be "Terminal", "Shell", and so
+on.  Select "New Window" or "New Tab" from the "Shell" menu.  This will create a
+second terminal window or tab in your current window which you can use just as the one already open.
+
+<p>
+To close a terminal window, click on the red circle in the title bar.  To close only a single tab, click on the gray X in the right corner of the tab's title bar.
+<!--
+<h3>
+<a NAME="Basic Emacs"></a>Basic Emacs</h3>
+
+<p>
+Emacs is a widely used text editor for Unix. To start Emacs, perform the following steps:
+<ul>
+  <li> Open a terminal window.
+<!--  <li> Type the following command:
+<pre>
+   source /usr/mac-cs-local/bin/136
+</pre>
+(This will set up your terminal window for using xemacs and java.)-->
+<!--
+  <li> Type "emacs &amp;" in your shell window.
+</ul>
+A new window similar to that shown below should appear:
+<p><img SRC="emacs.jpg">
+
+<p>Emacs relies heavily upon
+control-characters as a means of entering editing commands. Many
+commands are also available via pulldown menus, but experienced users
+tend to use control commands almost exclusively.
+Over the semester, your repertoire of commands will grow and
+will move away from menus and toward keyboard commands. For now, let's
+create a new file. To do this, type Control-x followed by Control-f.
+(That is, hold down the control key and press x and then f.)  At the
+bottom of the window, you will see "Find file: ~/" with a small black
+box following it. The box indicates where characters will go when you
+type. Type in the name of the file that you want to create and hit
+carriage return.  (Alternatively, you can create a new file by selecting
+"Visit New File" from the "File" menu.
+
+<p>The last line of the Emacs window is where command prompts and
+messages appear. The embossed line immediately preceding it is a
+status line.  It shows you the name of the file you are
+editing. Before that you should see <tt>-u:--</tt>. This means that
+the file is up-to-date. If it says, <tt>-u:**</tt>, it means the
+buffer has been changed since it was last saved. If it
+says <tt>-u:%%</tt>, it means that you cannot modify the file. After
+the filename is the current line number (L1 indicates the first line)
+and an indication of how far the current line is in the file in terms
+of percentage. "All" indicates that the entire file is showing. "Top"
+indicates that you are on the first screenful. "Bot" indicates that
+you are on the last (or bottom) screenful.  The final entry is the "mode" that
+you are editing in. This should say "(Java/l Abbrev)" when
+editing a Java file.
+
+<p>The area between the menu titles and the status line is the buffer
+that displays the contents of the file. Most of your typing goes
+directly into this buffer. Type some text. Notice the status line
+changes. You can move the cursor around using the arrow keys. Use the
+scrollbar to move through the file. Use the "Save" command from
+the File menu to save the buffer to a file. Use "Exit Emacs" from the
+File menu to exit Emacs. Notice the characters that appear in
+parentheses at the ends of command names in the menus. These tell you
+the keyboard characters to type to execute the commands without using
+the commands. For example, saving the buffer can be executed by typing
+Control-x Control-s. In the menu control characters appear as C-. Type
+these by holding the control key down at the same time as typing the
+second character. Another common way to enter commands is using the
+Escape key. This is abbreviated M-. In this case the escape key and
+the following key are typed separately. For example M-x represents
+typing the Escape key followed by the "x" key.  You can also press the
+"Apple" key and "x" at the same time to achieve the same effect.  Here
+are the keyboard sequences for the most common Emacs commands:
+
+<br><br>
+ <table BORDER >
+
+<tr>
+<td WIDTH="86">C-v</td>
+
+<td>Next screenful</td>
+</tr>
+
+<tr>
+<td WIDTH="86">M-v</td>
+
+<td>Previous screenful</td>
+</tr>
+
+<tr>
+<td WIDTH="86">C-d</td>
+
+<td>Delete next character</td>
+</tr>
+
+<tr>
+<td WIDTH="86">Backspace</td>
+
+<td>Delete previous character</td>
+</tr>
+
+<tr>
+<td WIDTH="86">C-x C-s</td>
+
+<td>Save buffer to a file</td>
+</tr>
+
+<tr>
+<td WIDTH="86">C-x C-f</td>
+
+<td>Open a file</td>
+</tr>
+
+<tr>
+<td WIDTH="86">C-x C-c</td>
+
+<td>Exit Emacs</td>
+</tr>
+</table>
+<br><br>
+
+<p>
+You can find more Emacs commands in the <a href= "emacs.html">Emacs Hints Page</a>.
+<p>
+Using keyboard commands is generally faster than moving one's hands back
+and forth between the mouse and keyboard as one must do to use the menus
+and scrollbar. While it takes extra effort to learn, the payoff is worth
+it in the long run in terms of speed of using the editor.
+-->
+<h3>
+<a NAME="Java"></a>Using Java</h3>
+To execute a Java program, you perform two steps.  First, you compile the Java source file.  For example, to compile the file "<tt>Hello.java</tt>", type<p>
+<tt>
+javac Hello.java
+</tt><p>
+Assuming the program is free of compilation errors, a class file "<tt>Hello.class</tt>" will be created.  This files contains the compiled representation of the program.  To execute the program, you run the Java virtual machine with the command<p>
+<tt>java Hello</tt><p>
+The command line argument to <tt>java</tt> is the name of the class whose <tt>main</tt> method you would like to run.
+Copy the file
+
+<pre>
+/usr/mac-cs-local/share/cs136/examples/Hello.java
+</pre>
+
+to your home directory, compile it, and run it.
+
+<h3>
+<a NAME="Getting help"></a>Getting Help</h3> The Unix command
+<tt>man</tt> provides information about all Unix commands and
+programs.  For example, to learn about the <tt>ls</tt> command, type
+<tt>man ls</tt>.  You can then page through the manual information as
+you did with more. To learn more about the manual, you can read the
+manual about the manual by entering <tt>man man</tt> at the command
+prompt.
+
+<h3>
+<a NAME="LoggingOut"></a>Logging Out</h3>
+
+As mentioned earlier, to logout you select "Log Out..." from the Apple
+menu in the top left-hand corner of the screen.  Always close all
+Emacs and shell windows prior to logging out to prevent you from
+losing any work.
+
+</div>
+
+
+<p class="bottom">
+</p>
+
+
+</body>
+</html>

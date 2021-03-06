@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="./index.html">Home</a> |
+      <a href="./schedule.html">Schedule</a> |
+      <a href="./labs.html">Labs</a> |
+      <a href="./handouts.html">Handouts</a> |
+      <a href="./links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Course Schedule</p>
+
+    <p class="text">
+
+      The table below lists the topics we will discuss
+      and supplemental readings associated with each topic.
+      This schedule represents
+      our goals for this semester and is based on our previous experiences
+      exploring this material at Williams&mdash;it is tentative: we may get
+      ahead or behind as the semester progresses.
+      The calendar will be updated
+      to reflect any shift in topics or readings.
+      We will also be making regular GLOW posts associated with new material/updates.
+
+      <br><br>
+
+      Lecture slides and additional digital resources (when used)
+      will be posted along with lecture videos.
+      Click on the topic to access the slides.
+      Some of these resources will only be accessible from within the
+      campus network.
+      If you are off campus, please use the library's
+      <a href="http://library.williams.edu/computing/proxy.php">proxy server</a>.
+      Such slides and course materials are to help you with the course.
+      Please <b>do not</b> post them publicly.
+    </p>
+
+
+    <p class="text"> Book references: </p>
+    <ul style="padding-left: 4em; font-size: 12pt; margin-bottom:12px">
+      <li><i>Bailey</i> refers to
+	<i><a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book.html">Java Structures: Data Structures in Java for the Principled Programmer</a>
+	  by Duane A. Bailey</i>. Since the textbook is available as a PDF,
+	textbook page numbers do not match PDF page numbers.
+	Instead, you may wish to use the hyperlinks in the
+	Table of Contents to jump to textbook (sub)sections
+      </li>
+    </ul>
+    <table border="2" width="99%" cellpadding="5">
+      <tbody>
+	<tr align="center">
+	  <th width="10%">Date</th>
+	  <th width="25%">Topic</th>
+	  <th width="35%">Lecture Materials</th>
+	  <th width="20%"><i>Supplemental</i> Reading(s)</th>
+	</tr>
+
+##FILL
+
+      </tbody>
+</table>
+
+<p class="bottom">&nbsp;</p>
+
+</body></html>

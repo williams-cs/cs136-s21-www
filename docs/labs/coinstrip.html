@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+
+<p class="heading" id="lab-overview-the-silver-dollar-game">Lab Overview: The Silver Dollar Game</p>
+    <p class="info">
+      In this lab, we will write a program to play the Silver Dollar
+      Game described at the end
+      of <a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book_files/JavaStructures.pdf">Bailey
+      Chapter 3 (page 67)</a>. In addition to gaining experience
+      writing, compiling, and running programs from scratch, this lab
+      will help us to think about how we can efficiently represent
+      data and break our logic into reusable methods. Careful planning
+      will help tremendously, so take the time to write a
+      well-thought-out design document <em>before</em> arriving at
+      your scheduled lab session. Your design doc may evolve after lab
+      begins; by having a completed design doc in hand, we will all
+      have a concrete way to discuss design plans with others.</p>
+
+
+<p class="heading" id="pre-lab-tasks">PRE-LAB Tasks</p>
+<p class="text">Before the start of lab, please (1) watch the lab intro video, and (2) read through this lab handout and sketch out a design for your Silver Dollar Game program. You should feel free to use the sample <a href="./Nim-design.html">Nim Design Document</a> as a guide. <!--Each week your design document will account for a small portion of your lab grade, so please bring it to lab, be prepared to discuss it with a partner, and be prepared to submit it.--> For this first lab, it is OK if the design is rough: we are not going to deduct points for correctness. The purpose is to ensure that you think about the lab in advance.</p>
+
+<p class="heading" id="step-1-getting-the-code">Step 1: Getting The Code</p>
+
+<p class="text">By the start of lab, you should have a private lab repository available in your department GitLab account, named <code>USERNAME-lab01-coinstrip</code>, where <code>USERNAME</code> is replaced with your GitLab ID. Clone the repository to your local disk using the following steps:</p>
+<ol type="1">
+<li>(If you are on campus, skip this step.) If you are off campus, please turn on the college’s VPN. The GitLab infrastructure on the CS department web-servers is configured to reject all network requests that do not originate from within the campus network. The VPN creates the illusion that your computer’s Internet traffic originates from the campus. <em>Note: The VPN only needs to be enabled when interacting with the GitLab infrastructure. You can safely disable it afterwards.</em></li>
+<li>After logging into the LDAP textbox using your CS department username/password, you should be greeted with a list of all of your projects. Click on the project <code>USERNAME-lab01-coinstrip</code>.</li>
+<li>You should now see a convenient view of your repository contents. Click the green “clone or download” button on the right side of the repository page, above the list of repository contents. You are given the option to clone via HTTPS or SSH. You’ll probably want to use HTTPS, so first click on the “Clone with HTTPS” link and then click on the little clipboard with an arrow icon to copy the URL to the local clipboard. (If you are curious about the SSH option, you can read a little bit about it <a href="https://docs.gitlab.com/ee/ssh/">here</a>.)</li>
+<li><Open your computers “command line” application (e.g., <code>Terminal.app</code> on MacOS, <code>Git Bash</code> on Windows) and navigate to the directory where you would like to store your work for this class (e.g., the <code>cs136</code> directory we created last week).
+<pre><code>$ cd ~/cs136</code></pre>
+(<em>Note: <code>cd</code> changes your current working directory, and the <code>~</code> is a shortcut for your home directory.</em>)</li>
+<li><em>Verify</em> that you are in the correct directory using:
+<pre><code>$ pwd</code></pre></li>
+<li>Now that you are inside the directory where you will keep all of your CS136 coursework, clone your private repository <code>USERNAME-lab01-coinstrip</code> by typing <code>git clone</code> and then pasting the copied repository URL on the command line. It should look (sort of) like this:
+<pre><code>$ git clone https://evolene.cs.williams.edu/cs136-f20/lab01-coinstrip/USERNAME-lab01-coinstrip.git</code></pre>
+You will be prompted for your username, and then for your password. Enter them when prompted.</li>
+<li>Change your directory into the new repository directory using
+<pre><code>$ cd USERNAME-lab01-coinstrip</code></pre></li>
+<li>Type <code>ls</code>. You should see all of your starter files!</li>
+</ol>
+
+
+    <p class="heading" id="opening">Step 2: Opening Your Lab Code</p>
+
+    <p class="text">As we saw in our <a href="./environment.html">environment</a> lab, there are many text editors to choose from, and this semester, we will be using the <a href="http://atom.io/">Atom</a> text editor. Let’s use Atom to open your lab code:</p>
+<ul class="bullet">
+<li>To open your <code>USERNAME-lab01-coinstrip</code> project folder in Atom:
+<ul class="bullet">
+<li>Launch the Atom application.</li>
+<li>Once you have launched Atom, go to the <code>File</code> menu, click on <code>Add Project Folder</code>, and select the <code>USERNAME-lab01-coinstrip</code> folder that you just cloned.</li>
+<li>Now, in the left pane, you should see a list of all of the files in your project. You can navigate your repository easily using this pane.</li>
+</ul></li>
+</ul>
+<p class="text">(<em>Note: If you would like to simplify this step in the future, you may wish to install Atom’s “shell commands”. After doing so, you can open Atom with a specific project directory from the command line by specifying <code>atom</code> followed by the name of the project folder.</em>)</p>
+
+
+    <p class="heading" id="implementing">Step 3: Implementing CoinStrip</p>
+
+    <p class="text">This week, we will implement the Silver Dollar Game that is found at the end of <a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book_files/JavaStructures.pdf">Bailey Chapter 3</a> (<em>Note: page 67 of the text, 83 in the PDF</em>) or in this <a href="SilverDollar.pdf">PDF exerpt</a>.</p>
+<p class="text">As you think about the design of your game, you should first decide on a representation of the coin strip. Make sure your representation supports all of the operations necessary such as:</p>
+<ul class="bullet">
+<li>Generating different game boards. Your game boards must conform to the following rules:
+<ol type="1">
+<li>Each game board must have at least three coins, but the exact number of coins on a given game board must be chosen with some randomness. (See the <a href="#thoughtQs">first thought question</a> for inspiration.)</li>
+<li>The locations of coins must be randomly selected. In other words, over the course of playing several games, I should expect to encounter different starting configurations.</li>
+<li>No game should be “won” before it starts. In other words, there must be at least one legal move.</li>
+</ol></li>
+<li>Testing whether a move is legal. The rules are fully described in the textbook, but here is a summary:
+<ol type="1">
+<li>No “going right”: Coins can only move to the left.</li>
+<li>No “double occupancy”: At most one coin can occupy a space at a given time.</li>
+<li>No “jumps”: Coins cannot pass another coin.</li>
+<li>“Mandatory progress”: A coin must move one or more spaces.</li>
+</ol></li>
+<li>Printing the board. Somewhere in your code, you will call <code>System.out.println</code>, but we recommend using the following approach:</li>
+<ol type="1">
+<li>Override the <code>Object</code> class’s <code>public String toString()</code> method. Your <code>CoinStrip</code> class’s <code>toString</code> method should yields a “reasonable” <code>String</code> representation of the gameboard. This is where there we intentionally provide the least specification and give you the most flexibility. Your game board’s <code>String</code> representation should make it clear to the players exactly what the state of the game is at any given time. The string should also provide enough information to the player that they can specify the move that they would like to make next. However, you have some flexibility to add your own “style” to how you display the board. Simple is fine. Elaborate is fine. Please just make it clear!</li>
+</ol></li>
+<li>Testing for a win: That is, is the game over?</li>
+<li>Moving pieces. When a legal move is given, you should be able to adjust the state of the game to reflect that move. This includes things like relocating coins, changing the current player, etc.</li>
+</ul>
+
+<p class="text">When we say “representation,” our real focus is: what <em>data structures</em> will you use? For instance, you might use a variable <code>boolean[10] board;</code> to represent the game board, where each index of the array represents a space on the coinstrip, and <code>true</code> indicates that a coin is present in that space while <code>false</code> indicates that the space is empty. This is a sensible approach, but let’s think about the implications of this design:</p>
+<ul class="bullet">
+<li>If I have a game with 3 coins, how large is my <code>board</code> array? What if I instead have 6 coins? In this representation, the size of the array is always larger than the number of coins, and the smallest size the board can be is the position of the rightmost coin.</li>
+<li>Let’s think about enforcing the rules. If I want to make sure a move doesn’t violate the “no jumps” rule, one approach is to check the starting position of the coin, and then examine every array index between that position and the target position of the coin after the move. If there is a <code>true</code> <em>somewhere</em> between those two locations, I know that my coin is “jumping” another. Given this implementation, how many locations do I need to check? The number depends on the “size” of my move.</li>
+</ul>
+<p class="text">There are other interesting design questions that would come up if we were to implement the Silver Dollar game this way. Now, it is certainly possible to use this design to successfully create all the game’s required functionality, but it probably isn’t the <em>best</em> solution we can come up with. Let’s explore an alternative design.</p>
+
+
+<p class="subheading" id="interface">The Two-Player Game Interface</p>
+<p class="text">In your starter code, we provide a Java interface inside the file <code>TwoPlayerGame.java</code>. This interface describes three methods that you <em>must</em> implement in your <code>Coinstrip.java</code> class. We’ve replicated the contents of <code>TwoPlayerGame.java</code> below:</p>
+        <div class="sourceCode" id="cb5">
+        <pre class="sourceCode java">
+        <code class="sourceCode java"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">public</span> <span class="kw">interface</span> TwoPlayerGame {</a>
+        <a class="sourceLine" id="cb5-2" title="2"></a>
+        <a class="sourceLine" id="cb5-3" title="3">    <span class="co">/**</span></a>
+        <a class="sourceLine" id="cb5-4" title="4">    <span class="co">*</span> Returns true if the specification of a move describes a legal move</a>
+        <a class="sourceLine" id="cb5-5" title="5">    <span class="co">*</span> given the rules of the game<span class="co">. </span>Note<span class="co">:</span> this does not check whether the</a>
+        <a class="sourceLine" id="cb5-6" title="6">    <span class="co">*</span> move is a <span class="co">*</span>good<span class="co">*</span> move<span class="co">,</span> only whether the move is legal<span class="co">.</span></a>
+        <a class="sourceLine" id="cb5-7" title="7">    <span class="co">*</span> The move specified is checked against all game rules<span class="co">.</span></a>
+        <a class="sourceLine" id="cb5-8" title="8">    <span class="co">*</span></a>
+        <a class="sourceLine" id="cb5-9" title="9">    <span class="co">*</span> A move is described by<span class="co">:</span></a>
+        <a class="sourceLine" id="cb5-10" title="10">    <span class="co">*</span>   <span class="co">-</span> a resource <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> position<span class="co">,</span> gamepiece<span class="co">,</span> pile of matches<span class="co">,</span> etc<span class="co">.)</span></a>
+        <a class="sourceLine" id="cb5-11" title="11">    <span class="co">*</span>   <span class="co">-</span> a description of the move <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> how many matches to remove<span class="co">,</span> how</a>
+        <a class="sourceLine" id="cb5-12" title="12">    <span class="co">*</span>                                many spaces to move<span class="co">,</span> etc<span class="co">.)</span></a>
+        <a class="sourceLine" id="cb5-13" title="13">    <span class="co">*</span> <span class="an">@param resource </span>describes the game element</a>
+        <a class="sourceLine" id="cb5-14" title="14">    <span class="co">*</span> <span class="an">@param units </span>describes the move</a>
+        <a class="sourceLine" id="cb5-15" title="15">    <span class="co">*</span> <span class="an">@return </span>true if the move is valid</a>
+        <a class="sourceLine" id="cb5-16" title="16">    <span class="co">*/</span></a>
+        <a class="sourceLine" id="cb5-17" title="17">    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isValidMove</span>(<span class="dt">int</span> resource, <span class="dt">int</span> units);</a>
+        <a class="sourceLine" id="cb5-18" title="18"></a>
+        <a class="sourceLine" id="cb5-19" title="19">    <span class="co">/**</span></a>
+        <a class="sourceLine" id="cb5-20" title="20">    <span class="co">*</span> At the conclusion of this method<span class="co">,</span> the game state is changed to represent</a>
+        <a class="sourceLine" id="cb5-21" title="21">    <span class="co">*</span> the completion of the described move<span class="co">. </span>If the described move is not valid<span class="co">,</span></a>
+        <a class="sourceLine" id="cb5-22" title="22">    <span class="co">*</span> the behavior of this method is undefined<span class="co">.</span></a>
+        <a class="sourceLine" id="cb5-23" title="23">    <span class="co">*</span></a>
+        <a class="sourceLine" id="cb5-24" title="24">    <span class="co">*</span></a>
+        <a class="sourceLine" id="cb5-25" title="25">    <span class="co">*</span> A move is described by<span class="co">:</span></a>
+        <a class="sourceLine" id="cb5-26" title="26">    <span class="co">*</span>   <span class="co">-</span> a resource <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> position<span class="co">,</span> gamepiece<span class="co">,</span> pile of matches<span class="co">,</span> etc<span class="co">.)</span></a>
+        <a class="sourceLine" id="cb5-27" title="27">    <span class="co">*</span>   <span class="co">-</span> a description of the move <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> how many matches to remove<span class="co">,</span> how</a>
+        <a class="sourceLine" id="cb5-28" title="28">    <span class="co">*</span>                                many spaces to move<span class="co">,</span> etc<span class="co">.).</span></a>
+        <a class="sourceLine" id="cb5-29" title="29">    <span class="co">*</span></a>
+        <a class="sourceLine" id="cb5-30" title="30">    <span class="co">*</span> <span class="an">@param resource </span>describes the game element</a>
+        <a class="sourceLine" id="cb5-31" title="31">    <span class="co">*</span> <span class="an">@param units </span>describes the move</a>
+        <a class="sourceLine" id="cb5-32" title="32">    <span class="co">*/</span></a>
+        <a class="sourceLine" id="cb5-33" title="33">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">makeMove</span>(<span class="dt">int</span> resource, <span class="dt">int</span> units);</a>
+        <a class="sourceLine" id="cb5-34" title="34"></a>
+        <a class="sourceLine" id="cb5-35" title="35">    <span class="co">/**</span></a>
+        <a class="sourceLine" id="cb5-36" title="36">    <span class="co">*</span> Returns true if the game is over<span class="co">.</span></a>
+        <a class="sourceLine" id="cb5-37" title="37">    <span class="co">*</span> <span class="an">@return </span>True if the game is over<span class="co">,</span> false otherwise<span class="co">.</span></a>
+        <a class="sourceLine" id="cb5-38" title="38">    <span class="co">*/</span></a>
+        <a class="sourceLine" id="cb5-39" title="39">    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isGameOver</span>();</a>
+        <a class="sourceLine" id="cb5-40" title="40">}</a></code></pre></div>
+<p class="text">Since we require that you use this interface, we’ll talk now about a design that we think lends itself to a nice implementation of the Silver Dollar game.</p>
+<p class="text">Instead of representing the <em>spaces on the gameboard</em>, we can create a data structure that represents the <em>locations of the coins</em>. Let’s use an array of integers, <code>int coins[]</code>, where each index corresponds to a single coin, and the value stored at a given index represents the location of that coin on the board.</p>
+<p class="text">Now let’s reexamine the questions we posed for the previous design:</p>
+<ul class="bullet">
+<li>If I have a game with 3 coins, how large is my <code>coins</code> array? What if I instead have 6 coins? In this representation, the size of the array is always the number of coins. It does not change based upon <em>where</em> those coins are located.</li>
+<li>Let’s think about enforcing the rules. If I want to make sure a move doesn’t violate the “no jumps” rule, one approach is to check the starting position of the coin to be moved (examining the coins array at some index <code>i</code>), and then verifying that no coins lie between that location and the target position of the coin after the move. If I’m smart about my representation, I do not need to check every element of the array! Suppose I require that my <code>coins</code> array is in ascending order; how many “coins” do I need to check? Only one!</li>
+</ul>
+<p class="text">This is a very compact representation of the game, and it makes enforcing many rules fairly efficient!</p>
+<p class="text">Once you have worked through the details of your representation, write down the set of operations needed to adjust/check/populate your data structure (including operations you may need that are <em>not</em> in the <code>TwoPlayerGame</code> interface). Since we’re using Java, your representation should be <em>hidden</em> inside a <em>class</em> called <code>CoinStrip</code>. Operations are made possible by providing <em>public methods</em> that implement those operations. Think about what parameters your methods will take, what values they return, and what the methods do. In lab, we will briefly discuss your initial design (so have a copy of your design handy for discussion).</p>
+
+
+    <p class="heading" id="testing">Required Methods</p>
+
+    <p class="text">
+      In addition to the <code>TwoPlayerGame.java</code> interface, we
+      also require two methods to help us test your code. These
+      methods are shown below:
+    </p>
+
+    <pre><code>
+          /**
+           * Returns the number of coins on the CoinStrip gameboard.
+           * @return the number of coints on the CoinStrip gameboard.
+           */
+          public int getNumCoins() {
+          	return 0;
+          }
+
+          /**
+           * Returns the 0-indexed location of a specific coin. Coins are
+           * also zero-indexed. So, if the CoinStrip had 3 coins, the coins
+           * would be indexed 0, 1, or 2.
+           * @param coinNum the 0-indexed coin number
+           * @return the 0-indexed location of the specified coin on the CoinStrip
+           */
+          public int getCoinPosition(int coinNum) {
+          	return 0;
+          }
+</code></pre>
+
+    <p class="text">
+      We rarely impose any particular implementation strategy on you
+      in this course, and we don't think these methods do so;
+      the <code>getNumCoins()</code> and <code>getCoinPosition(int
+      coinNum)</code> methods are quite general. In other words, the
+      methods themselves ask you to provide specific behaviors (which
+      we will rely upon to test your programs), but the methods do not
+      impose any restrictions on the way you implement those
+      behaviors. Further, we think the behaviors these methods provide
+      is critical for any CoinStrip implementation that we can
+      imagine, so we hope that you use these methods to simplify your
+      code.
+    </p>
+
+    <p class="heading" id="instructions">Further Details / Instructions</p>
+
+
+<p class="text">The <code>main</code> method of your <code>CoinStrip</code> class should create a <code>CoinStrip</code> object and then prompt each of two players to make their moves. A move will be of the form:</p>
+<pre>
+          <code>&lt;cn&gt; &lt;ns&gt;</code>
+</pre>
+<p class="text">where <code>&lt;cn&gt;</code> (coin number) specifies the coin to be moved and <code>&lt;ns&gt;</code> (number of spaces) specifies the number of spaces that coin should be moved.</p>
+<p class="text">The program should prompt the user for another input if the move is illegal.</p>
+<p class="text">To read input from a terminal window, you should use the <code>Scanner</code> class, as we have seen in lecture. Consult the <a href="../handouts/scanner.pdf">scanner handout</a>,
+<a href="https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/util/Scanner.html">Oracle Scanner</a> documentation, or sample code from lecture for details.</p>
+
+
+    <p class="heading" id="thoughtQs">Step 4: Thought Questions</p>
+
+<p class="text">Consider the following questions as you complete the lab. Versions of these questions can be found in the textbook, but we have tried to clarify them where ambiguous. Your solutions to these problems should be submitted with your completed lab inside a file called <code>PROBLEMS.md</code>:</p>
+<ol type="1">
+<li>What strategy might you use to pick a random number of coins such that there is a 50 percent chance of a game with three coins, a 25 percent chance of a game with four coins, a 12.5 percent chance of a game with five coins, and so on? (You are not required to implement this strategy in your Coinstrip game, but after you’ve concretely described the strategy in text, writing the code to implement it is often the easy part)</li>
+<li>How might you ensure that the initial games your program generates are not immediate wins? Can you describe a property of the game state that would guarantee that it is possible for players to select a sequence of <em>n</em> moves before the game is won (you would be able to choose the moves)?</li>
+<li>Suppose the computer could occasionally provide good hints. What opportunities appear easy to recognize? (Some strategies may be hard for the computer to determine, but are there “obvious” cases where the computer should always make a particular move?)</li>
+<li>How might you write a method, <code>computerPlay</code>, where the computer plays to win? You <strong>do not</strong> need to write the method, but give a high-level idea of how you might go about implementing it.</li>
+<li>A similar game, called Welter’s Game (after C. P. Welter, who analyzed the game), allows the coins to pass each other. Would this modification of the rules change your implementation significantly?</li>
+</ol>
+<p class="text">Hint: When flipped, the Belgian Euro is heads 149 times out of 250.</p>
+
+
+    <p class="heading" id="style">Step 5: Style</p>
+<p class="text">As relatively new programmers, we are all developing our understanding of what it means to have “good style”. This is made difficult by the fact that the definition of “good style” is both hard to quantify, and hard to agree upon.</p>
+<p class="text">To help us all along our lifelong quests to write better code, we have included a tool inside each of our repositories that checks our code against some industry-standard, agreed-upon best practices. This tool is called <code>checkstyle</code>.</p>
+<p class="text">In this first lab, we have configured <code>checkstyle</code> to give warnings for most classes of stylistic “mistakes” that we might make. We encourage you to review these warnings and follow the suggestions to improve your code.</p>
+<p class="text">However, we have also configured one <code>checkstyle</code> rule to output an error. You <em>must</em> fix all checkstyle <strong>errors</strong>. Your program will be graded on both correctness and style, and we will use <code>checkstyle</code> errors as our measure of your program’s style.</p>
+<p class="text"><code>checkstyle</code> will report an error if your program:</p>
+  <ol type="1">
+    <li>Declares a class variable but does not specify the variable’s visibility.</li>
+  </ol>
+<p class="text">All class variables must be declared as <code>public</code>, <code>private</code>, or <code>protected</code>. If you do not specify a class variable’s visibility, the variable is given “default” visibility, which is very likely <em>not</em> what you want.</p>
+<p class="text">As the semester progresses, we will convert more and more style checks from warnings to errors. It is in your best interest to fix all warnings—both to develop better coding practices, and to prepare yourself for future labs.</p>
+<p class="text">To run <code>checkstyle</code>, you would type the following command at the terminal:</p>
+<pre>
+          <code>   $ ./checkstyle</code>
+</pre>
+<p class="text">The <code>./</code> is a Unix thing: it tells the terminal where to look for the <code>checkstyle</code> program. The <code>.</code> (dot) tells Unix to look in the current directory. This will run <code>checkstyle</code> on every Java program in your directory. To run <code>checkstyle</code> on just one Java file, you would instead specify:</p>
+<pre>
+          <code>   $ ./checkstyle SomeFile.java</code>
+</pre>
+<p class="text"><code>checkstyle</code> is a relatively new addition to the course, and we added it based on student feedback. We hope it helps! If you have any questions about checkstyle output, please ask an instructor or a TA for guidance.</p>
+
+
+    <p class="heading" id="deliverables">Lab Deliverables</p>
+<p class="text">When you are finished with your <code>CoinStrip</code> program, answer the thought questions at the end of the lab, and put your answers in a separate file called <code>PROBLEMS.md</code>. Commit and push <code>PROBLEMS.md</code> along with your other lab files as part of your repository. Your repository should have the files:</p>
+<pre>
+          <code>USERNAME-lab01-coinstrip/
+                 checkstyle
+                 CoinStrip.java
+                 TwoPlayerGame.java
+                 README.md
+                 PROBLEMS.md</code>
+  </pre>
+
+<p class="text">
+(<em>Note: you may notice one or more “hidden” files inside your repository that start with a <code>.</code> (dot). These files should not be modified; they are there to help <code>git</code>. We use them to instruct <code>git</code> not to include files that end in the <code>.class</code> extension, back up files, or other files that are automatically generated by various programs; these types of files clutter our repositories and aren’t useful to include in your final submission.</em>)
+</p>
+
+    <p class="heading" id="submitting">Submitting Your Lab</p>
+<p class="text">As you complete various milestones, you should commit your changes and push them. <strong>Commit early and often.</strong> When the deadline arrives, we will retrieve the latest version of your code. If you are confident that you are done, please include “Lab 1 Submission” as the commit message for your final commit. If you later decide that you have more edits to make, it is OK. We will look at the latest commit before the deadline.</p>
+<ul class="bullet">
+<li><strong>Be sure to push your changes to GitLab</strong></li>
+<li><strong>Verify your changes on GitLab.</strong> Navigate in your web browser to your private repository on GitLab. It should be available in your project listing after logging into <code>https://evolene.cs.williams.edu</code>. You should see all changes reflected in the various files that you submit. If not, go back and make sure you committed and pushed.</li>
+</ul>
+<p class="text">We will know that the files are yours because they are in <em>your</em> <code>git</code> repository. Do not include identifying information in the code that you submit. Our goal is to grade the programs anonymously to avoid any bias. However, in your <code>README.md</code> file, please cite any sources of inspiration or collaboration (e.g., conversations with classmates). We take the honor code very seriously, and so should you. Please include the statement “I am the sole author of the work in this repository.” in the comments at the top of your Java files.</p>
+
+
+    <p class="heading" id="late">Late Days</p>
+<p class="text">At any point up to the lab deadline, and for any reason at all, you may decide to take a late day. In order to let us know, you must fill out <a
+href="https://docs.google.com/forms/d/e/1FAIpQLScFAr2Cu2rzYYoxRiiTZmQrXowHfBPBCUbYQ45aV4WffO-WJA/viewform?usp=sf_link">this form</a>.</p>
+<p class="text">Over the course of the semester, you have a total of 3 free late days at your disposal. You may not take more than two late days on a given lab. When deciding whether or not to take a late day, please remember that we give partial credit for any work that you complete.</p>
+
+
+
+    <p class="bottom">&nbsp;</p>
+  </body>
+</html>

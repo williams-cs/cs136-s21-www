@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+  <p class="heading">Lab 2: Random Writing</p>
+
+
+
+<p class="info">
+  This week We will write a program with several classes.
+  Our lab programs will analyze letter frequencies in text documents
+  and then generate new documents based on those frequencies.
+  Each class will implement unique functionality and together they will
+  solve a larger problem.
+  <br><br>
+  We will explore what is called a <em>has a</em> relationship: where one class
+  <em>has a</em> member variable that stores an instance of another class.
+  Careful planning will help tremendously, so take the time to write a well thought-out
+  design document <em>before</em> arriving for lab.
+  We encourage you to look carefully at the Vector-based Music Catalog sample code
+  for inspiration.
+</p>
+
+
+<p class="heading" id="static">PRE-LAB Step 0: Explore <code>static</code></p>
+
+<p class="text">There is nothing to hand in for this part of the lab, but make sure you understand the following example of the static keyword.  This example was created only to help you think about the effect that the static keyword has--it's not a good example of when or how to use it.</p>
+
+<ol>
+  <li>
+    <p class="text">What is printed by the following program?</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> class Example {
+     public int num;
+
+     public Example(int initial) {
+         num = initial;
+     }
+
+     public int getNum() {
+         num = num + 1;
+         return num;
+     }
+
+     public static void main(String args[]) {
+         Example first = new Example(10);
+         Example second = new Example(20);
+         System.out.println(first.getNum());
+         System.out.println(second.getNum());
+     }
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>What would be printed if the declaration of <code>num</code> were changed as follows?
+    <pre><code>public static int num;</code></pre>
+  </li>
+  <li>What does this tell you about <code>static</code> fields?</li>
+</ol>
+
+<p class="text">Be sure to ask your TAs and instructors if you have any questions. The <code>static</code> keyword can be one of the more confusing features of the Java programming language, but it is an important concept that will show up in all of our labs (and exams!).</p>
+
+
+
+<p class="heading" id="structure">PRE-LAB Step 1: Installing and Exploring the Structure Package</p>
+
+<p class="text">The Java package that contains all of the generic data structures from the <i>Java Structures</i>
+  text is called <code>structure5</code>. You will be using the <code>Vector&lt;E&gt;</code> generic class
+  in this lab so you will need to install the <code>structure5</code> package on your machine and
+  ensure that the <code>javac</code> and <code>java</code> commands can find it.
+  Instructions can be found <a href="../helpPages/classpath.html">here</a>
+  for installing the <code>struture5</code> package.</p>
+
+<p class="text">Browse the <a href="http://www.cs.williams.edu/~bailey/JavaStructures/doc/structure5/index.html">javadoc documentation for the <code>structure5</code> classes</a>. Look up the <code>Vector</code> and <code>Association</code> classes. Become familiar with how to look up information on classes in the <code>structure5</code> package. For this lab, we link to the documentation directly for convenience. Learn how to navigate the documentation yourself, as in future labs we will assume that you know where to find documentation.</p>
+
+
+
+<p class="heading" id="pre-lab-step-2-design-document">PRE-LAB Step 2: Design Document</p>
+
+<p class="text">Please read through the rest of this document before lab. You should prepare a design for your program before lab  (you may find the design of the Music Catolog from Wednesday's conference to be particularly helpful for inspiration). You must think about this lab before writing code! In the past, students have found it very helpful to draw a picture showing the relationships among the classes.</p>
+
+
+<p class="heading" id="pre-lab-step-3-problemsmd">PRE-LAB Step 3: PROBLEMS.md</p>
+
+<p class="text">Before the start of lab, you should see a new private repository called <code>USERNAME-lab02-wordgen</code> in your <a href="https://evolene.cs.williams.edu/">GitLab</a> account (where <code>USERNAME</code> is replaced by your GitLab username). Submit answers to the following book questions inside <code>PROBLEMS.md</code>, a file that was included in the Lab 2 starter code. (<em>Note the difference between <span class="red">Self Check</span> problems and <span class="blue">Regular</span> problems in the book!</em>):</p>
+
+<ol>
+  <li><span class="red">Self Check</span> Problem 3.2</li>
+  <li><span class="red">Self Check</span> Problem 3.3</li>
+  <li><span class="red">Self Check</span> Problem 3.4</li>
+  <li><span class="blue">Regular</span> Problem 3.6.  Don’t write the class—just answer what the advantage would be.</li>
+</ol>
+
+    <p class="text">
+      <em>Note:</em> we will not be grading your answers to these
+      questions before the lab due date.  We included them as
+      "pre-lab" questions because we think that having thought through
+      their answers will be helpful to you when you begin your lab
+      implementation.
+    </p>
+
+<p class="heading" id="lab-program">Lab Program</p>
+
+<p class="text">Consider the following three quotes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+          <code>
+         Call me Ishmael.  Some years ago--never mind how long
+         precisely--having repeatedly smelt the spleen respectfully, not to
+         say reverentially, of a bad cold in his grego pockets, and throwing
+         grim about with his tomahawk from the bowsprit?
+
+         Call me Ishmael.  Some years ago--never mind how long
+         precisely--having little or no money in my purse, and nothing
+         particular to interest me on shore, I thought I would sail about a
+         little and see the watery part of the world.
+
+         Call me Ishmael, said I to myself.  We hast seen that the lesser man is
+         far more prevalent than winds from the fishery.
+</code>
+</pre></div></div>
+
+<p class="text">The second quote is the first sentence of Herman Melville’s 1851 novel, <em>Moby Dick</em>. The other two quotes were generated “in Melville’s style” using a simple algorithm developed by Claude Shannon in 1948 [<a href="#footnote1">footnote: 1</a>].  You will implement Shannon’s algorithm in this week’s lab.</p>
+
+<p class="text">In addition to producing mildly entertaining output, this lab introduces you to:</p>
+
+<ul class="bullet">
+  <li>the generic <code>Vector</code> and <code>Association</code> classes,</li>
+  <li>building complex structures out of these basic building blocks, and</li>
+  <li>the design and implementation of a multi-class program.</li>
+</ul>
+
+
+
+<p class="subheading" id="level-0-analysis">Level 0 analysis</p>
+
+<p class="text">The following algorithm is based on letter probability distributions. Imagine taking the novel <em>Tom Sawyer</em> and counting the frequency with which each character occurs. You’d probably find that spaces are the most common, that the character <code>'e'</code> is fairly common, and that the character <code>'q'</code> is rather uncommon. After completing this <em>level 0</em> analysis, you’d be able to produce <em>Tom Sawyer</em>-esque text based on character frequencies. The idea is to randomly select each character based on the probability of it’s occurrence in the text.  This random text wouldn’t have much in common with the real novel, but characters would tend to appear with the same proportions. In fact, here’s an example of what a <em>level 0</em> analysis might produce:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+          rla bsht eS ststofo hhfosdsdewno oe wee h .mr ae irii ela
+          iad o r te u t mnyto onmalysnce, ifu en c fDwn oee iteo
+  </code>
+</pre></div></div>
+
+
+
+<p class="subheading" id="level-1-analysis">Level 1 analysis</p>
+
+<p class="text">Now imagine doing a slightly more sophisticated <em>level 1</em> analysis by determining <em>the frequency with which each character follows every other character</em>. You would probably discover that <code>'h'</code> is more likely to follow <code>'t'</code> than <code>'x'</code>, and you would probably discover that a space follows <code>'.'</code> more frequently than <code>','</code> does.</p>
+
+<p class="text">More concretely, if you are analyzing the text <code>"the theater is their thing"</code>, <code>'e'</code> appears after ‘<code>h'</code> three times, and <code>'i'</code> appears after <code>'h'</code> one time; no other letters appear after <code>'h'</code>. So, given this example,</p>
+
+<ul class="bullet">
+  <li>the <em>probability</em> that <code>'e'</code> follows <code>'h'</code> is <code>0.75</code>,</li>
+  <li>the <em>probability</em> that <code>'i'</code> follows <code>'h'</code> is <code>0.25</code>,</li>
+  <li>the <em>probability</em> that any other letter follows <code>'h'</code> is <code>0</code>.</li>
+</ul>
+
+<p class="text">Using a <em>level 1</em> analysis, you could produce randomly generated <em>Tom Sawyer</em>-esque text by 1) picking a character, and then 2) always choosing the next character based on the probability of the next character given the chosen character.  Here’s an example of <em>level 1</em> random text:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+          "Shand tucthiney m?" le ollds mind Theybooure
+          He, he s whit Pereg lenigabo Jodind alllld ashanthe ainofevids tre
+          lin--p asto oun theanthadomoere
+  </code>
+</pre></div></div>
+
+
+
+<p class="subheading" id="level-k-analysis">Level <em>k</em> analysis</p>
+
+<p class="text">Now imagine doing a <em>level k</em> analysis by determining the probability with which each character <em>follows every possible sequence of characters of length k</em>. For example, a <em>level 5</em> analysis of <em>Tom Sawyer</em> would reveal that <code>'r'</code> follows <code>"Sawye"</code> more frequently than any other character. After a <em>level k</em> analysis, you would be able to generate <em>Tom Sawyer</em>-esque text by always choosing the next character based on the previous <em>k</em> characters and the probabilities revealed by the analysis.</p>
+
+<p class="text">At only a moderate level of analysis (levels 5—7), randomly-generated text begins to take on many of the characteristics of the source text. It probably won’t make complete sense, but you’ll be able to tell that it was derived from Tom Sawyer as opposed to, say, Moby Dick. Here are some more examples:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+         (Level 2:) "Yess been." for gothin, Tome oso; ing, in to
+             weliss of an'te cle - armit. Papper a comeasione, and smomenty,
+             fropeck hinticer, sid, a was Tom, be suck tied. He sis tred a
+             youck to themen
+
+         (Level 4) en themself, Mr. Welshman, but him awoke, the
+             balmy shore. I'll give him that he couple overy because in the
+             slated snufflindeed structure's kind was rath. She said that the
+             wound the door a fever eyes that WITH him.
+
+         (Level 6:) people had eaten, leaving. Come - didn't stand it
+             better judgment; His hands and bury it again, tramped herself!
+             She'd never would be. He found her spite of anything the one was a
+             prime feature sunset, and hit upon that of the forever.
+
+         (Level 8:) look-a-here - I told you before, Joe. I've heard
+             a pin drop. The stillness was complete, however, this is awful
+             crime, beyond the village was sufficient. He would be a good
+             enough to get that night, Tom and Becky.
+
+         (Level 10:) you understanding that they don't come around in
+             the cave should get the word "beauteous" was over-fondled, and
+             that together" and decided that he might as we used to do - it's
+             nobby fun. I'll learn you."
+    </code>
+</pre></div></div>
+
+<p class="text">Once we have processed input text and stored it in a table structure that allows us to check probabilities, we pick <em>k</em> letters (for example, the first <em>k</em> in the input text) to use as a “seed” for our new text. Then we choose subsequent characters based on the preceding <em>k</em> characters and their probability information.</p>
+
+<p class="text">For now, we will focus on implementing a <em>level 2</em> analysis. That is, we will compute the next character to print based on the previous two characters only.</p>
+
+
+
+<p class="subheading" id="program-design">Program Design</p>
+
+<p class="text">Think about the design and prepare a written design description of this program. Just like last week, you should have your design prepared when you come to lab on Thursday. We will briefly discuss the general structure of the classes together at the beginning of lab. We have provided implementation strategies below to help you decide which classes to include and what functionality each class should implement.</p>
+
+<p class="text">When thinking about the design, focus on what would constitute a good data structure for this problem. Your data structure needs to keep a table of info and be able to support two key operations:</p>
+
+<ul class="bullet">
+  <li>update the probabilities in the table, given a string of 2 characters and the succeeding character.</li>
+  <li>select a next character, given a string 2 characters and the probabilities stored in your table.</li>
+</ul>
+
+<p class="text">You might try to save the frequency information in a big array, but the size will quickly become too large. For <em>k</em> = 2, you would need a three-dimensional array whose size is about 27,000 entries if you include blanks and punctuation. For larger <em>k</em>, the number of entries grows rapidly.</p>
+
+<p class="text">Instead, you will develop a <code>Table</code> class which is implemented as a <code>Vector</code> of <code>Association</code>s. Each <code>Association</code> should have a character sequence (stored as a <code>String</code>) as its <em>key</em>, along with a <em>value</em> which is a <code>FrequencyList</code>. <code>FrequencyList</code> is a class that keeps track of which characters appear after the given sequence, along with a frequency.</p>
+
+<p class="text">There are many ways to implement a frequency list. A good start is… another <code>Vector</code> of <code>Association</code>s. Thus the frequency list’s <code>Vector</code> consists of <code>Association</code>s in which the <em>key</em> is a single character (which can be stored simply as a <code>String</code>) and the <em>value</em> is a count of the number of times that the given letter occurs after the <em>k</em>-character sequence with which the list is associated (stored as an <em>Integer</em>). Think carefully about what methods the frequency list needs and any instance variables that might be useful.</p>
+
+<p class="text">The data structure design built from these two classes has the benefit of requiring only as many entries as necessary for the given input text. You may find it helpful to look carefully at the word frequency program in Section 3.3 of <em>Bailey</em>.</p>
+
+<p class="text">Your <code>main</code> method for the program should be written in a third class, <code>WordGen</code>, which reads the input text, builds the table, and prints out a randomly-generated string based on the character sequence probabilities from the input text.</p>
+
+<p class="text">To summarize, you will write three classes for this lab: <code>Table</code>, <code>FrequencyList</code>, and <code>WordGen</code>. <u>The design doc you prepare should include a description of each of them. (In addition to text, you may also find it helpful to illustrate how the three classes interact with each other by creating a drawing or diagram.)</u></p>
+
+
+
+<p class="heading" id="importing-class-definitions">Importing Class Definitions</p>
+
+<p class="text">To ensure that your program can find the implementations of <code>Vector</code> and <code>Association</code>, you will need to add the following <code>import</code> statement to the top of your Java files:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+          import structure5.*;
+  </code>
+</pre></div></div>
+
+<p class="text">The <code>*</code> tells Java to import <em>all</em> classes inside the structure package. <u>Note:</u> To import the <code>Random</code> and <code>Scanner</code> classes use the following imports:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+          import java.util.Random;
+          import java.util.Scanner;
+  </code>
+</pre></div></div>
+
+<p class="text">In these latter imports, observe that there is no <code>*</code>, so only the specific class <code>Random</code> and the specific class <code>Scanner</code> will be imported from the <code>java.util</code> package. If you mistakenly write <code>import java.util.*;</code>, the Java compiler will produce an error message, since another <code>Vector</code> class is already defined in <code>java.util</code>.  You must use the <code>structure5</code> version of <code>Vector</code> for this assignment.</p>
+
+
+
+<p class="heading" id="implementation-strategy">Implementation Strategy</p>
+
+<p class="text">You should build your program in stages that you have planned out <em>ahead of time</em>. While writing and debugging your code, try using a fixed <code>String</code> constant as the input (e.g., <code>"the theater is their thing"</code>) and use a fixed <em>k</em> = 2.  Using these fixed parameters will help you ensure the correctness of your code since you can verify the correct answers by hand on paper.</p>
+
+<p class="text">After the input is processed you should generate and print out new text using the frequencies in the table. You may start with a fixed sequence of letters that appears in the table or choose starting characters randomly. Generate and print about 500 letters of randomly-generated text so that we can see how your program works. Be sure to handle the special case where you encounter a sequence that has no known successor character in a reasonable way (i.e., your program should not throw an exception).</p>
+
+<p class="text">Once the basic program is working, change it to accept input from the keyboard using the <code>Scanner</code> class. When using the <code>Scanner</code>, build up a string of the entire input line by line before performing any frequency analysis. You can use the <code>hasNextLine()</code> method to find out if there is another line of input ready and the <code>nextLine()</code> to read the next line if it exists, as in the following code snippet. (This code uses a <code>StringBuffer</code> to create large strings efficiently.)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight">
+  <code>
+          Scanner in = new Scanner(System.in);
+          StringBuffer textBuffer = new StringBuffer();
+          while (in.hasNextLine()) {
+              String line = in.nextLine();
+              textBuffer.append(line);
+              textBuffer.append("\n");
+          }
+          String text = textBuffer.toString();
+          // 'text' now contains the full contents of the input.
+  </code>
+</pre></div></div>
+
+<p class="text">You can signal the end of the input for Java on the Mac or on any Unix system by typing <code>Ctrl-D</code> on a new line.</p>
+
+<p class="text">You may also read your input from any text file, e.g. <code>whosonfirst.txt</code>, with this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight">
+<pre class="highlight">
+  <code>
+          $ java WordGen &lt; whosonfirst.txt
+  </code>
+</pre></div></div>
+
+<p class="text">This way of reading files is not specific to Java. “Input redirection” can be used with any program running on any Unix system.  (This works on the Git Bash terminal on Windows, though it may not on some other Windows terminals.)</p>
+
+<p class="text">Finally, change <code>WordGen</code> to support any arbitrary level of analysis <em>k</em> other than 2. If you have designed the structure well, simply passing longer strings to <code>Table</code>’s methods should be sufficient, and you should not need to change any code except in the <code>WordGen</code> class.</p>
+
+<p class="text">You should also change your <code>main</code> method to use a command line parameter to specify the level of analysis. For example, it would be convenient to be able to run the program like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight">
+<pre class="highlight">
+  <code>
+          $ java WordGen 5 &lt; whosonfirst.txt
+  </code>
+</pre></div></div>
+
+<p class="text">to specify a <em>level 5</em> analysis. Command line options are passed to your main method as an array of strings. You can use the following skeleton code to ensure that there is at least one argument and to convert the first argument to an <code>int</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight">
+<pre class="highlight">
+  <code>
+          public static void main(String args[]) {
+            if (args.length == 0) {
+                // no args, so print usage line and do nothing else
+                System.out.println("Usage: java WordGen k");
+            } else {
+                // convert first argument to k
+                int k = Integer.parseInt(args[0]);
+
+                // ... the rest of your code here ...
+            }
+          }
+  </code>
+</pre></div></div>
+
+
+
+<p class="heading" id="style">Style</p>
+
+<p class="text">As we continue to develop our sense of programming style,
+we will continue to add and refine the rules in our <code>checkstyle</code> tool.
+<!--
+This week, we fixed some of the issues with the first week’s <code>checkstyle</code>
+rules. To do so, we <em>refined</em> our “[ERROR]” rule from Lab 1, as explained below.
+-->
+
+We are also adding one style requirement this week
+<em>that does not involve checkstyle</em>; it involves the standard Java compiler,
+<code>javac</code>.</p>
+
+<p class="text">To earn full style points this week, your code must do two things:</p>
+<ul class="bullet">
+  <li>Pass all of the <code>checkstyle</code> “[ERROR]” checks</li>
+  <li>Compile using <code>javac</code> without any messages about “unchecked or unsafe operations”.</li>
+</ul>
+
+<p class="subheading" id="style-details">Style Details</p>
+
+<p class="text"><strong><code>checkstyle</code> requirements</strong>:</p>
+
+<p class="text">This week, <code>checkstyle</code> will report an “[ERROR]” if your program
+declares a class variable and does not specify an <strong>appropriate</strong> visibility.
+(All class variables must be declared as <code>public</code>, <code>private</code>, or <code>protected</code>.
+If you do not specify a class variable’s visibility, the variable is given
+“default” visibility, which is very likely <em>not</em> what you want.)
+We are defining <strong>appropriate</strong> as follows:</p>
+<ul class="bullet">
+  <li>all class variables that are not <code>final</code> must be declared <code>private</code> or <code>protected</code> (i.e., no <code>public</code> member variables unless they are constants)</li>
+</ul>
+
+<p class="text">To run <code>checkstyle</code>, you would type the following command at the terminal:</p>
+<pre>
+  <code>
+          $ ./checkstyle
+  </code>
+</pre>
+
+<p class="text">The <code>./</code> is a Unix thing: it tells the terminal where to look for the
+<code>checkstyle</code> program. The <code>.</code> (dot) tells Unix to look in the current directory.
+This will run <code>checkstyle</code> on every Java program in your directory.
+To run <code>checkstyle</code> on just one Java file, you would instead specify:</p>
+<pre>
+  <code>
+          $ ./checkstyle SomeFile.java
+  </code></pre>
+
+<p class="text"><strong><code>javac</code> requirements</strong>:</p>
+
+<p class="text">At least two of the classes that you will use to implement your program
+use Java generics (<code>Vector</code> and <code>Association</code>).
+Proper use of Java generics will be enforced as follows.</p>
+<ul class="bullet">
+  <li>Compiling your code with <code>javac</code> must not produce the following message:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight">
+<pre class="highlight">
+  <code>
+  Note: YourProgram.java uses unchecked or unsafe operations.
+  Note: Recompile with -Xlint:unchecked for details.
+  </code>
+</pre></div>    </div>
+  </li>
+</ul>
+
+<p class="text">To fix this problem, make sure to specify the appropriate types for all of your
+generic classes when you <em>declare</em> the variable’s type and when you <em>instantiate</em>
+an object. For example, to create a <code>Vector</code> that stores <code>Integer</code> objects, I would type:</p>
+<pre>
+  <code>
+          Vector&lt;Integer&gt; intVec = new Vector&lt;Integer&gt;();
+  </code>
+</pre>
+
+<p class="text">That message also tells you how to get more information. Recompile your program as follows (replace with the appropriate file name):</p>
+<pre>
+  <code>
+          $ javac YourProgram.java -Xlint:unchecked
+  </code></pre>
+<p class="text">The output will give you details about the issue.</p>
+
+
+
+<p class="heading" id="lab-deliverables">Lab Deliverables</p>
+
+<p class="text">When you are finished with your program, answer the questions from Step 0, and put your answers in a separate file called <code>PROBLEMS.md</code>. Commit and push PROBLEMS.md along with your other lab files as part of your repository. Your repository should have the files:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight">
+<pre class="highlight">
+  <code>
+          USERNAME-lab02-wordgen/
+            checkstyle
+            FrequencyList.java
+            PROBLEMS.md
+            README.md
+            Table.java
+            Wordgen.java
+            texts/mobydick.txt
+            texts/Seuss.txt
+            texts/whosonfirst.txt
+  </code>
+</pre></div></div>
+
+
+
+<p class="heading" id="submitting-your-lab">Submitting Your Lab</p>
+
+<p class="text">As you complete portions of this lab, you should <code>commit</code> your changes and <code>push</code> them. <u>Commit early and often.</u> When the deadline arrives, we will retrieve the latest version of your code. If you are confident that you are done, please use the phrase <code>"Lab Submission"</code> as the commit message for your final commit. If you later decide that you have more edits to make, it is OK. We will look at the latest commit before the deadline.</p>
+
+<ul class="bullet">
+  <li><u>Be sure to push your changes to GitLab.</u></li>
+  <li><u><a href="https://evolene.cs.williams.edu/">Verify your changes on GitLab</a>.</u> Navigate in your web browser to your private repository on GitLab. It should be available at <code>https://evolene.cs.williams.edu/cs136-s21/lab02-wordgen/USERNAME-lab02-wordgen</code>. You should see all changes reflected in the files that you <code>push</code>. If not, go back and make sure you have both committed and pushed.</li>
+</ul>
+
+<p class="text">We will know that the files are yours because they are in <em>your</em> <code>git</code> repository. <u>Do not include identifying information in the code that you submit.</u> We grade your lab programs anonymously to avoid bias. In your <code>README.md</code> file, please cite any sources of inspiration or collaboration (e.g., conversations with classmates). We take the honor code very seriously, and so should you. Please include the statement <code>"I am the sole author of the work in this repository."</code> in the comments at the top your Java files.</p>
+
+
+
+    <p class="heading" id="late">Late Days</p>
+<p class="text">Remember that if&dash;for any reason&dash;you will be submitting your lab beyond <thead>
+  submission deadline, you'll need to</thead> fill out <a
+href="https://docs.google.com/forms/d/e/1FAIpQLScFAr2Cu2rzYYoxRiiTZmQrXowHfBPBCUbYQ45aV4WffO-WJA/viewform">the <i>Late Lab Form</i></a>.
+ That form contains a description of the late lab submission policy for the course</p>
+
+<p class="heading" id="bonus-word-level-analysis"><b>Optional</b> A Deeper Dive: Word-level Analysis.</p>
+
+    <p class="text">
+      This section is completely optional; attempting it will neither
+      improve nor harm your grade on this lab. However, we feel it is
+      an interesting extension and we encourage you to explore
+      it <em>after all other required lab steps are completed</em>. If
+      you do attempt this extension, pleae commit and push your
+      finished lab first, then implement this extension inside a
+      separate Java class.
+    </p>
+
+    <p class="text">
+      Instead of working at the character level, you could work at the
+      word level. How would this affect your program design? If you
+      designed your classes appropriately,
+      your <code>FrequencyList.java</code> and <code>Table.java</code>
+      classes need not change! Does word-level analysis make the
+      results better or worse in any way? Is your word-level analysis
+      more or less sensitive to your choice of <code>k</code>? Why?
+    </p>
+
+    <p class="bottom">
+      <a id="footnote1">[1] Claude Shannon, “A mathematical theory of communication”, <em>Bell System Technical Journal</em>, 1948. Shannon’s technique was popularized by A.K. Dewdney’s <a href="https://www.clear.rice.edu/comp200/09fall/textriff/sci_am_paper.htm">A potpourri of programmed prose and prosody</a> that appeared in <em>Scientific American</em>, 122-TK, 1989.</a>
+    </p>
+
+</body>
+
+</html>

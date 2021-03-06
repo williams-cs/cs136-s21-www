@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="./index.html">Home</a> |
+      <a href="./schedule.html">Schedule</a> |
+      <a href="./labs.html">Labs</a> |
+      <a href="./handouts.html">Handouts</a> |
+      <a href="./links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Course Schedule</p>
+
+    <p class="text">
+
+      The table below lists the topics we will discuss
+      and supplemental readings associated with each topic.
+      This schedule represents
+      our goals for this semester and is based on our previous experiences
+      exploring this material at Williams&mdash;it is tentative: we may get
+      ahead or behind as the semester progresses.
+      The calendar will be updated
+      to reflect any shift in topics or readings.
+      We will also be making regular GLOW posts associated with new material/updates.
+
+      <br><br>
+
+      Lecture slides and additional digital resources (when used)
+      will be posted along with lecture videos.
+      Click on the topic to access the slides.
+      Some of these resources will only be accessible from within the
+      campus network.
+      If you are off campus, please use the library's
+      <a href="http://library.williams.edu/computing/proxy.php">proxy server</a>.
+      Such slides and course materials are to help you with the course.
+      Please <b>do not</b> post them publicly.
+    </p>
+
+
+    <p class="text"> Book references: </p>
+    <ul style="padding-left: 4em; font-size: 12pt; margin-bottom:12px">
+      <li><i>Bailey</i> refers to
+	<i><a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book.html">Java Structures: Data Structures in Java for the Principled Programmer</a>
+	  by Duane A. Bailey</i>. Since the textbook is available as a PDF,
+	textbook page numbers do not match PDF page numbers.
+	Instead, you may wish to use the hyperlinks in the
+	Table of Contents to jump to textbook (sub)sections
+      </li>
+    </ul>
+    <table border="2" width="99%" cellpadding="5">
+      <tbody>
+	<tr align="center">
+	  <th width="10%">Date</th>
+	  <th width="25%">Topic</th>
+	  <th width="35%">Lecture Materials</th>
+	  <th width="20%"><i>Supplemental</i> Reading(s)</th>
+	</tr>
+
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 02/19
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Course Overview/Administration
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Form : <a href='https://docs.google.com/forms/d/e/1FAIpQLSe3Z759t9uHdGlw_1sfyGnveZlL45_9ZZkvPbO0i5CRfsPK6A/viewform?usp=sf_link'>Getting to Know You</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/rw6_N6VBpgg'>Welcome to CS 136</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/WaTG5KmnkCQ'>HelloJava</a>]
+<br/>
+	
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Handout : <a href='./handouts/syllabus.pdf'>Syllabus</a>]
+<br/>
+	<font color='#ff8000'>(post)</font> [Handout : <a href='./handouts/honor-code.pdf'>Honor Code for CS136</a>]
+<br/>
+	<font color='#ff8000'>(post)</font> [Slides : <a href='./handouts/Welcome+WhyCS136+CourseInfo.pdf'>Welcome to CS 136</a>]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> Ch. 0 (book overview)
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 02/22
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Java Basics
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/-LZE1Q0u5pA'>Java Basics</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='./handouts/Java1-Basics.pdf'>Java Basics</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Handout : <a href='./handouts/JavaEssentials.pdf'>Java Essentials</a>]
+<br/>
+	
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Code : <a href='./handouts/Nim.java'>Nim</a> (a 1st attempt)]
+<br/>
+	<font color='#ff8000'>(post)</font> [Video : <a href='https://youtu.be/LFmyBKWbRnA'>String & Scanner Classes</a>]
+<br/>
+	<font color='#ff8000'>(post)</font> [Slides : <a href='./handouts/Java3-Strings.pdf'>Java String and Scanner Classes</a>]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> Appendix B (Java Reference)`
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 02/24
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	OOP, Designing and Organizing Code
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/u1XhyxN3rkU'>OOP</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='./handouts/OOPandInterfaces.pdf'>OOP-slides</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/HuHYKUFCclI'>Interfaces</a>]
+<br/>
+	
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Code : <a href='./handouts/OOPNim.java'>OOPNim</a>]
+<br/>
+	<font color='#ff8000'>(post)</font> [Code : <a href='./handouts/TwoPlayerGame.java'>TwoPlayerGame.java interface</a>]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 1-1.10 (focus on 1.6, particularly '5 informal steps')
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 02/26
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Associations, Composition ('Has A' relationship)
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/Qj0-N8X35XM'>Associations and Dictionaries</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/Associations+Dictionaries.pdf'>Associations+Dictionaries.pdf</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/1KBqIgNVGyg'>static</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/static.pdf'>static.pdf</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/SLft6WmdIjg'>Generic Types</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/GenericTypes.pdf'>GenericTypes.pdf</a>]
+<br/>
+	
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Code :
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/RockPaperScissors.java'>RockPaperScissors.java</a> (new)
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/TwoPlayerGame.java'>TwoPlayerGame.java</a> (old)
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/InterfaceNim.java'>InterfaceNim.java</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/InterfacePlay.java'>InterfacePlay.java</a> (new)
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/StaticInterfacePlay.java'>StaticInterfacePlay.java</a> (new)
+<br/>
+	<font color='#ff8000'>(post)</font> ]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 1.4<br>	<i>Bailey</i> 4.2.1
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 03/01
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Vectors (extensible arrays)
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/is1pVEfLoQc'>Vectors</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/vectors-split.pdf'>Vectors.pdf</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/NGtxzkOVuGU'>structure5 and Vector src</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/fOprU629Z8k'>Bag Of Holding</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/revisitingBags.pdf'>BagOfHolding.pdf</a>]
+<br/>
+	[Code : <a href='handouts/BagOfHolding.java'>BagOfHolding.java</a>/<a href='handouts/Bag.java'>Bag.java</a>]
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Code : <a href='handouts/GenWordFreq.java'>GenWordFreq.java</a>]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 3<br>	<i>Bailey</i> 4-4.2.2
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 03/03
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Conditions and Assertions; Time and Space Complexity
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/sV6eS0v9fKs'>Conditions and Assertions</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/Conditions+Assertions.pdf'>Conditions+Assertions.pdf</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video : <a href='https://youtu.be/JmbkwH2DB0E'>Measuring Complexity</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides : <a href='handouts/MeasuringComplexity.pdf'>Measuring Complexity.pdf</a>]
+<br/>
+	
+
+<br/>
+	<font color='#ff8000'>(post)</font> [Code :
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/GenWordFreq.java'>GWF2.java</a> (a variant on GenWordFreq.java)
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/MusicCatalog.pdf'>Music Catalog slides</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/VMusicCatalog/TrackParser.java'>TrackParser.java</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/VMusicCatalog/Track.java'>Track.java</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/VMusicCatalog/TrackList.java'>TrackList.java</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/VMusicCatalog/Catalog.java'>Catalog.java</a>
+<br/>
+	<font color='#ff8000'>(post)</font> - <a href='handouts/VMusicCatalog/TrackTitles.java'>TrackTitles.java</a> (old)]
+
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 5.1
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 03/05
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Interfaces and Abstraction: What is a List?
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video: <a href='https://youtu.be/_VGQazY35sI'>Singly-Linked Lists</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides: <a href='handouts/SinglyLinkedLists.pdf'>Singly-Linked Lists</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video: <a href='https://youtu.be/TqWsavNu5jA'>Variations on Singly-Linked Lists</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides: <a href='handouts/SinglyLinkedVariants.pdf'>Variations on Singly-Linked Lists</a>]
+<br/>
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 7-7.1<br>	<i>Bailey</i> 9-9.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 03/08
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Lists II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video: <a href='https://youtu.be/5HlkFIKqH10'>Memory, Types, and Scope</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides: <a href='handouts/objectsAndPrimitiveTypes.pdf'>Memory, Types, and Scope</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video: <a href='https://youtu.be/XjAJ4LJz7OE'>Doubly Linked Lists</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides: <a href='handouts/doubly-linked-lists.pdf'>Doubly Linked Lists</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Video: <a href='https://youtu.be/szQjYm9PpOg'>Abstract Classes</a>]
+<br/>
+	<font color='#009933'>&thinsp;(pre)&thinsp;</font> [Slides: <a href='handouts/abstraction.pdf'>Abstract Classes</a>]
+<br/>
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 9.5-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 03/10
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Recursion and Induction I
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 5.2-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 03/12
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Recursion and Induction II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 5.2-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 03/15
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Sorting I
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 6.1 (Bubble Sort)<br>	<i>Bailey</i> 6.2 (Selection Sort)<br>	<i>Bailey</i> 6.3 (Insertion Sort)<br>	<i>Bailey</i> 6.7-6.8 (Comparing Objects)
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 03/17
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Sorting II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 6.4 (Merge Sort)<br>	<i>Bailey</i> 6.5 (Quicksort)<br>	<i>Bailey</i> 6.6 (Radix Sort)<br>	<i>Bailey</i> 6.9 (Sorting Vectors)
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 03/19
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Linear Structures
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 10-10.1 (Stacks)
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 03/22
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Reading Period</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>No Class</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 03/24
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Exam Review in conferences</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>Exam Review</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Th: 03/25
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Midterm Exam</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>Midterm Exam</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 03/26
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Linear Structures II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 10.2 (Queues)<br>	<i>Bailey</i> 10.3-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 03/29
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Iterators
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 8
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 03/31
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Ordered Structures
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 11
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 04/02
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Trees I
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 12-12.3
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 04/05
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Trees II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 12.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 04/07
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Trees III
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 12.6
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 04/09
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Binary Search Trees I
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 14-14.2
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 04/12
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Binary Search Trees II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 14.3-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 04/14
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Maps and Dictionaries
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 15-15.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 04/16
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Hashtables
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 15.5-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 04/19
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Hashtables
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 15.5-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 04/21
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Health Day</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='red'>Breathe</font>
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>Relax</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 04/23
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Trees IV
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 12.7-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 04/26
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Priority Queues and Heaps
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 13-13.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 04/28
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Heaps and Heapsort
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 13.5-end
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 04/30
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs I
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16-16.1
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 05/03
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs II
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.2 (Interface)<br>	<i>Bailey</i> 16.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 05/05
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs III
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.3
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 05/07
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Health Day</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	<font color='red'>Breathe</font>
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>Relax</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 05/10
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs IV
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.3
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 05/12
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs V
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.4
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 05/14
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs VI
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.5
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Mo: 05/17
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	Graphs VII
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<i>Bailey</i> 16.5
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	We: 05/19
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	Fr: 05/21
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Reading Period</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>No Class</font>
+</td>
+</tr>
+<tr>
+<!--Date-->
+<td width="8%" align="left" valign="middle">
+	??: ??
+</td>
+<!--Topic-->
+<td width="16%" align="center">
+	<font color='red'>Final Exam</font>
+</td>
+<!--Materials-->
+<td wdith="18%">
+	
+</td>
+
+<!--Readings-->
+<td wdith="18%">
+	<font color='red'>Final Exam</font>
+</td>
+</tr>
+
+
+      </tbody>
+</table>
+
+<p class="bottom">&nbsp;</p>
+
+</body></html>

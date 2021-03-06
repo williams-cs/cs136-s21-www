@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+
+    <p class="heading">Lab Overview: The Genius of Dummies</p>
+
+    <p class="info">
+      The central purpose of this week's lab is to give you some
+      hands-on experience writing code that manipulates a linked
+      structure.
+      Your task is to complete the Laboratory Assignment
+      from <b>Section 9.10</b> of your text, entitled <em>Lists with Dummy
+      Nodes</em> (pages 215-217).
+      You will start with already working code
+      (a class called <tt>LinkedList</tt> that extends the <tt>structure5</tt>
+      class <tt>DoublyLinkedList</tt>).  The goal is to simplify the code by
+      adding two "dummy" nodes to your <tt>LinkedList</tt> in order to
+      simplify the implementations of several of the class methods.
+      The Laboratory Assignment in <b>Section 9.10</b> walks you through this
+      process&mdash;you will have the best experience if you follow the
+      instructions in that description carefully!
+    </p>
+
+    <p class="heading">Pre-lab: Step 0</p>
+    <p class="text">
+      Before lab, please do the following:
+      </p>
+      <ul class="bullet">
+	<li>
+	  Watch the lab video and read through the assignment
+	</li>
+	<li>
+	  Review any course materials on linked lists (particularly doubly linked lists) that were unclear, and bring your questions.
+	</li>
+      </ul>
+      <p class="text">
+	That's it for this week!
+      </p>
+    <p class="heading">Lab Assignment</p>
+    <p class="text">
+      <b>Complete Laboratory Assignment 9.10</b>, which begins on page
+      215 of
+      the <a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book_files/JavaStructures.pdf">
+      course textbook</a>.  A starter file <tt>LinkedList.java</tt>
+      will be included in your GitLab repository in addition to a
+      starter file with some sample tests. The tests are not
+      exhaustive, so please add additional tests as you consider the
+      various edge cases.
+    </p>
+    <p class="text">
+      In addition, <b>answer the five Thought Questions on page
+      217</b> of your text. We have included (clarified versions of
+      them) in the file called <tt>PROBLEMS.md</tt>. Please submit
+      those answers with the rest of your code this week.
+    </p>
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+      <ul class="bullet">
+	<li>
+	  Your well-documented source code in <tt>LinkedList.java</tt>
+	</li>
+	<li>
+	  The sample testing file, <tt>TestLinkedList.java</tt> supplemented with additional
+	  tests as you feel appropriate. The sample file has some tests to get you started,
+	  but it does not test all edge cases.
+	</li>
+	<li>
+	  A <tt>PROBLEMS.md</tt> file that contains answers to the five warm-up/thought questions.
+	</li>
+      </ul>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.  Be sure to document your program appropriately:
+      include pre/post conditions and assertions where appropriate.
+      We will also be looking at how well you organize your code.
+      Whenever you see yourself duplicating functionality, consider moving that
+      code to a helper method. There are several opportunities in this lab to simplify
+      your code by using helper methods. Think carefully!
+    </p>
+
+<p class="heading" id="checkstyle-requirements"><strong><code>checkstyle</code> requirements</strong>:</p>
+
+<p class="text">This week, we are expanding <code>checkstyle</code> to encourage you to write modular
+and reusable code. Let’s first motivate that decision, and then describe
+the new <code>checkstyle</code> rule.</p>
+
+<p class="text">As a programmer, you should never type the same code over and over again.
+That would be a waste of your time.
+The ability to copy/paste useful code makes this tempting,
+but it is <em>still very bad practice</em>!
+When you copy code, you copy errors. If you ever fix those errors, you have
+to remember to fix them in every location.
+This “fixing” rarely happens. Trust us. We’ve been there.</p>
+
+<p class="text">So what should you do instead? You should write a helper method!
+Whenever you find yourself writing the same code more than once
+(it could be a common loop, searching a data structure, computing an equation)
+you should refactor that code into a method.
+Then you can call that method many times, but only ever have to fix bugs
+in one place.</p>
+
+<p class="text">Similarly, if you find yourselves writing a function that is very long,
+that is problematic.
+The long function can probably be broken into smaller parts that
+can then be composed to solve a larger problem.
+Bonus: you can now reuse those parts to solve other problems!</p>
+
+<p class="text">Breaking long functions into byte-size chunks
+also has the benefit of making your code easier to read and debug:
+by isolating functionality inside independent units, you can convince yourself
+that each of those units is correct in isolation,
+and then you can more easily convince yourself that the larger problem
+is correct.</p>
+
+<p class="text">Since we cannot easily check for copy/pasted code,
+we will use checkstyle to encourage concise methods.</p>
+
+<p class="text">The <code>checkstyle</code> tool will report an <code>[ERROR]</code> if your program has a
+method that is longer than 30 lines
+(excluding whitespace and single-line comments).
+This new rule is in addition to previous style requirements.</p>
+
+<p class="text"><b>In total, checkstyle will enforce the following guidelines:</b></p>
+<ul class="bullet">
+  <li>All class variables that are not <code>final</code> must be declared <code>private</code> or <code>protected</code> (i.e., no <code>public</code> member variables unless they are constants).</li>
+  <li>All <code>public</code> methods must include a “Javadoc” comment (starts with <code>/**</code> and ends with <code>*/</code>; it should include descriptions of the function, the arguments, and any pre/post conditions).</li>
+  <li>No methods should be longer than 30˘ lines (exluding whitespace and single-line comments).</li>
+</ul>
+<br><br>
+<p class="text"><b>To run <code>checkstyle</code>, you would type the following command at the terminal:</b></p>
+<pre><code>
+          $ ./checkstyle
+</code></pre>
+
+<p class="text">The <code>./</code> is peculiar to Unix: it tells the terminal to look for the
+<code>checkstyle</code> program in the current directory.
+This command will run <code>checkstyle</code> on every Java program in your directory.
+To run <code>checkstyle</code> on a specific Java file, type:</p>
+<pre><code>
+          $ ./checkstyle SomeFile.java
+</code></pre>
+
+<hr class="style12" />
+
+<p class="heading" id="javac-requirements"><strong><code>javac</code> requirements</strong>:</p>
+
+<p class="text">In addition to <code>checkstyle</code>, we will continue to enforce
+proper use of Java generics.</p>
+<ul class="bullet">
+  <li>Compiling your code with <code>javac</code> must not produce the following message:
+    <pre><code>Note: YourProgram.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+</code></pre>
+  </li>
+</ul>
+
+<p class="text">This message tells you how to get more information. Recompile your program as follows (replace with the appropriate file name):</p>
+<pre><code>
+          $ javac -Xlint:unchecked YourProgram.java
+</code></pre>
+<p class="text">The output will give you details about the issue.</p>
+
+<p class="text">To fix this problem, make sure that you specify type parameters for every generic class, both when <em>declaring</em> the variable’s type and when <em>instantiating</em> an object.
+For example, to create a <code>Vector</code> that stores <code>Integer</code> objects, one would type:</p>
+
+<pre><code>
+          Vector&lt;Integer&gt; intVec = new Vector&lt;Integer&gt;();
+</code></pre>
+
+
+    <p class="heading">Submitting Your Lab</p>
+
+      <p class="text">As you complete portions of this lab, you
+      should <code>commit</code> your changes and <code>push</code>
+      them. <u>Commit early and often.</u> When the deadline arrives,
+      we will retrieve the latest version of your code. If you are
+      confident that you are done, please use the phrase <code>"Lab
+      Submission"</code> as the commit message for your final
+      commit. If you later decide that you have more edits to make, it
+      is OK. We will look at the latest commit before the
+      deadline.</p>
+      <ul class="bullet">
+	<li>
+	  <u>Be sure to push your changes to GitLab.</u>
+	</li>
+	<li>
+	  <u>Verify your changes on GitLab.</u>
+	  Navigate in your web browser to your repository on
+	  GitLab. It should be available
+	  at <code>https://evolene.cs.williams.edu/cs136-f20/lab03-lists/USERNAME-lab03-lists</code>. You
+	  should see all changes reflected in the files that
+	  you <code>push</code>. If not, go back and make sure you
+	  have both committed and pushed.
+	</li>
+      </ul>
+
+      <p class="text">We will know that the files are yours because
+      they are in <em>your</em> <code>git</code> repository. <u>Do not
+      include identifying information in the code that you submit.</u>
+      We grade your lab programs anonymously to avoid bias. In
+      your <code>README.md</code> file, please cite any sources of
+      inspiration or collaboration (e.g., conversations with
+      classmates). We take the honor code very seriously, and so
+      should you. Please include the statement <code>"I am the sole
+      author of the work in this repository."</code> in the comments
+      at the top your Java files.</p>
+
+      <p class="heading" id="late">Late Days</p>
+    <p class="text">Remember that if&dash;for any reason&dash;you will be submitting your lab beyond <thead>
+    submission deadline, you'll need to</thead> fill out the <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLScFAr2Cu2rzYYoxRiiTZmQrXowHfBPBCUbYQ45aV4WffO-WJA/viewform"><i>Late Lab Form</i></a>.
+    That form contains a description of the late lab submission policy for the course</p>
+
+  <p class="bottom">&nbsp;</p>
+
+
+</body>
+</html>

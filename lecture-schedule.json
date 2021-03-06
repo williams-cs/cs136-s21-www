@@ -1,0 +1,759 @@
+{
+	"dates" : [
+		[ "Fr: 02/19" , "#" ],
+		[ "Mo: 02/22" , "#" ],
+		[ "We: 02/24" , "#" ],
+		[ "Fr: 02/26" , "#" ],
+		[ "Mo: 03/01" , "#" ],
+		[ "We: 03/03" , "#" ],
+		[ "Fr: 03/05" , "#" ],
+		[ "Mo: 03/08" , "#" ],
+		[ "We: 03/10" , "#" ],
+		[ "Fr: 03/12" , "#" ],
+		[ "Mo: 03/15" , "#" ],
+		[ "We: 03/17" , "#" ],
+		[ "Fr: 03/19" , "#" ],
+		[ "Mo: 03/22" , "reading" ],
+		[ "We: 03/24" , "exam-review" ],
+		[ "Th: 03/25" , "midterm" ],
+		[ "Fr: 03/26" , "#" ],
+		[ "Mo: 03/29" , "#" ],
+		[ "We: 03/31" , "#" ],
+		[ "Fr: 04/02" , "#" ],
+		[ "Mo: 04/05",  "#" ],
+		[ "We: 04/07" , "#" ],
+		[ "Fr: 04/09" , "#" ],
+		[ "Mo: 04/12",  "#" ],
+		[ "We: 04/14" , "#" ],
+		[ "Fr: 04/16" , "#" ],
+		[ "Mo: 04/19",  "#" ],
+		[ "We: 04/21" , "health" ],
+		[ "Fr: 04/23" , "#" ],
+		[ "Mo: 04/26",  "#" ],
+		[ "We: 04/28" , "#" ],
+		[ "Fr: 04/30" , "#" ],
+		[ "Mo: 05/03" , "#" ],
+		[ "We: 05/05" , "#" ],
+		[ "Fr: 05/07" , "health" ],
+		[ "Mo: 05/10" , "#" ],
+		[ "We: 05/12" , "#" ],
+		[ "Fr: 05/14" , "#" ],
+		[ "Mo: 05/17" , "#" ],
+		[ "We: 05/19" , "#" ],
+		[ "Fr: 05/21" , "reading" ],
+		[ "??: ??" , "final" ]
+	],
+    "health" : { "topic" : ["<font color='red'>Health Day</font>"],
+		      "readings" : ["<font color='red'>Relax</font>"],
+		      "materials" : ["<font color='red'>Breathe</font>"]
+		    },
+	"meetings" :[
+		{
+			"topic" : [
+				"Course Overview/Administration"
+			],
+			"readings" : [
+				"<i>Bailey</i> Ch. 0 (book overview)"
+			],
+			"pre" : [
+				"[Form : <a href='https://docs.google.com/forms/d/e/1FAIpQLSe3Z759t9uHdGlw_1sfyGnveZlL45_9ZZkvPbO0i5CRfsPK6A/viewform?usp=sf_link'>Getting to Know You</a>]",
+				"[Video : <a href='https://youtu.be/rw6_N6VBpgg'>Welcome to CS 136</a>]",
+				"[Video : <a href='https://youtu.be/WaTG5KmnkCQ'>HelloJava</a>]"
+			],
+			"materials" : [],
+			"post" : [
+				"[Handout : <a href='./handouts/syllabus.pdf'>Syllabus</a>]",
+				"[Handout : <a href='./handouts/honor-code.pdf'>Honor Code for CS136</a>]",
+				"[Slides : <a href='./handouts/Welcome+WhyCS136+CourseInfo.pdf'>Welcome to CS 136</a>]"
+			]
+		},
+		{
+			"topic" : [
+				"Java Basics"
+			],
+			"readings" :[
+				"<i>Bailey</i> Appendix B (Java Reference)`"
+			],
+			"pre" : [
+        "[Video : <a href='https://youtu.be/-LZE1Q0u5pA'>Java Basics</a>]",
+				"[Slides : <a href='./handouts/Java1-Basics.pdf'>Java Basics</a>]",
+        "[Handout : <a href='./handouts/JavaEssentials.pdf'>Java Essentials</a>]"
+      ],
+			"materials" : [],
+			"post" : [
+        "[Code : <a href='./handouts/Nim.java'>Nim</a> (a 1st attempt)]",
+        "[Video : <a href='https://youtu.be/LFmyBKWbRnA'>String & Scanner Classes</a>]",
+				"[Slides : <a href='./handouts/Java3-Strings.pdf'>Java String and Scanner Classes</a>]"
+      ]
+		},
+		{
+			"topic" : [
+				"OOP, Designing and Organizing Code"
+			],
+			"readings" :[
+				"<i>Bailey</i> 1-1.10 (focus on 1.6, particularly '5 informal steps')"
+			],
+			"pre" : [
+				"[Video : <a href='https://youtu.be/u1XhyxN3rkU'>OOP</a>]",
+				"[Slides : <a href='./handouts/OOPandInterfaces.pdf'>OOP-slides</a>]",
+				"[Video : <a href='https://youtu.be/HuHYKUFCclI'>Interfaces</a>]"
+			],
+			"materials" : [
+			],
+			"post" : [
+        "[Code : <a href='./handouts/OOPNim.java'>OOPNim</a>]",
+				"[Code : <a href='./handouts/TwoPlayerGame.java'>TwoPlayerGame.java interface</a>]"
+			]
+		},
+		{
+			"topic" : [
+				"Associations, Composition ('Has A' relationship)"
+			],
+			"readings" :[
+				"<i>Bailey</i> 1.4",
+				"<i>Bailey</i> 4.2.1"
+			],
+			"pre" : [
+				"[Video : <a href='https://youtu.be/Qj0-N8X35XM'>Associations and Dictionaries</a>]",
+				"[Slides : <a href='handouts/Associations+Dictionaries.pdf'>Associations+Dictionaries.pdf</a>]",
+				"[Video : <a href='https://youtu.be/1KBqIgNVGyg'>static</a>]",
+				"[Slides : <a href='handouts/static.pdf'>static.pdf</a>]",
+				"[Video : <a href='https://youtu.be/SLft6WmdIjg'>Generic Types</a>]",
+				"[Slides : <a href='handouts/GenericTypes.pdf'>GenericTypes.pdf</a>]"
+			],
+			"materials" : [
+			],
+			"post" : [
+				"[Code :",
+				"- <a href='handouts/RockPaperScissors.java'>RockPaperScissors.java</a> (new)",
+				"- <a href='handouts/TwoPlayerGame.java'>TwoPlayerGame.java</a> (old)",
+				"- <a href='handouts/InterfaceNim.java'>InterfaceNim.java</a>",
+				"- <a href='handouts/InterfacePlay.java'>InterfacePlay.java</a> (new)",
+				"- <a href='handouts/StaticInterfacePlay.java'>StaticInterfacePlay.java</a> (new)",
+				"]"
+
+			]
+		},
+		{
+			"topic" : [
+				"Vectors (extensible arrays)"
+			],
+			"readings" :[
+				"<i>Bailey</i> 3",
+				"<i>Bailey</i> 4-4.2.2"
+			],
+			"pre" : [
+				"[Video : <a href='https://youtu.be/is1pVEfLoQc'>Vectors</a>]",
+				"[Slides : <a href='handouts/vectors-split.pdf'>Vectors.pdf</a>]",
+				"[Video : <a href='https://youtu.be/NGtxzkOVuGU'>structure5 and Vector src</a>]",
+				"[Video : <a href='https://youtu.be/fOprU629Z8k'>Bag Of Holding</a>]",
+				"[Slides : <a href='handouts/revisitingBags.pdf'>BagOfHolding.pdf</a>]"
+			],
+			"materials" : [
+				"[Code : <a href='handouts/BagOfHolding.java'>BagOfHolding.java</a>/<a href='handouts/Bag.java'>Bag.java</a>]"
+			],
+			"post" : [
+				"[Code : <a href='handouts/GenWordFreq.java'>GenWordFreq.java</a>]"
+
+			]
+		},
+		{
+			"topic" : [
+				"Conditions and Assertions; Time and Space Complexity"
+			],
+			"readings" :[
+				"<i>Bailey</i> 5.1"
+			],
+			"pre" : [
+				"[Video : <a href='https://youtu.be/sV6eS0v9fKs'>Conditions and Assertions</a>]",
+				"[Slides : <a href='handouts/Conditions+Assertions.pdf'>Conditions+Assertions.pdf</a>]",
+				"[Video : <a href='https://youtu.be/JmbkwH2DB0E'>Measuring Complexity</a>]",
+				"[Slides : <a href='handouts/MeasuringComplexity.pdf'>Measuring Complexity.pdf</a>]"
+			],
+			"materials" : [
+			],
+			"post" : [
+				"[Code :",
+				"- <a href='handouts/GenWordFreq.java'>GWF2.java</a> (a variant on GenWordFreq.java)",
+				"- <a href='handouts/MusicCatalog.pdf'>Music Catalog slides</a>",
+				"- <a href='handouts/VMusicCatalog/TrackParser.java'>TrackParser.java</a>",
+		    "- <a href='handouts/VMusicCatalog/Track.java'>Track.java</a>",
+		    "- <a href='handouts/VMusicCatalog/TrackList.java'>TrackList.java</a>",
+		    "- <a href='handouts/VMusicCatalog/Catalog.java'>Catalog.java</a>",
+		    "- <a href='handouts/VMusicCatalog/TrackTitles.java'>TrackTitles.java</a> (old)]"
+			]
+		},
+		{
+			"topic" : [
+				"Interfaces and Abstraction: What is a List?"
+			],
+			"readings" :[
+				"<i>Bailey</i> 7-7.1",
+				"<i>Bailey</i> 9-9.4"
+			],
+			"pre" : [
+        "[Video: <a href='https://youtu.be/_VGQazY35sI'>Singly-Linked Lists</a>]",
+        "[Slides: <a href='handouts/SinglyLinkedLists.pdf'>Singly-Linked Lists</a>]",
+        "[Video: <a href='https://youtu.be/TqWsavNu5jA'>Variations on Singly-Linked Lists</a>]",
+				"[Slides: <a href='handouts/SinglyLinkedVariants.pdf'>Variations on Singly-Linked Lists</a>]"
+      ],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Lists II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 9.5-end"
+			],
+			"pre" : [
+				"[Video: <a href='https://youtu.be/5HlkFIKqH10'>Memory, Types, and Scope</a>]",
+				"[Slides: <a href='handouts/objectsAndPrimitiveTypes.pdf'>Memory, Types, and Scope</a>]",
+				"[Video: <a href='https://youtu.be/XjAJ4LJz7OE'>Doubly Linked Lists</a>]",
+				"[Slides: <a href='handouts/doubly-linked-lists.pdf'>Doubly Linked Lists</a>]",
+				"[Video: <a href='https://youtu.be/szQjYm9PpOg'>Abstract Classes</a>]",
+				"[Slides: <a href='handouts/abstraction.pdf'>Abstract Classes</a>]"
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Recursion and Induction I"
+			],
+			"readings" :[
+				"<i>Bailey</i> 5.2-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Recursion and Induction II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 5.2-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Sorting I"
+			],
+			"readings" :[
+				"<i>Bailey</i> 6.1 (Bubble Sort)",
+				"<i>Bailey</i> 6.2 (Selection Sort)",
+				"<i>Bailey</i> 6.3 (Insertion Sort)",
+				"<i>Bailey</i> 6.7-6.8 (Comparing Objects)"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Sorting II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 6.4 (Merge Sort)",
+				"<i>Bailey</i> 6.5 (Quicksort)",
+				"<i>Bailey</i> 6.6 (Radix Sort)",
+				"<i>Bailey</i> 6.9 (Sorting Vectors)"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Linear Structures"
+			],
+			"readings" :[
+				"<i>Bailey</i> 10-10.1 (Stacks)"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Linear Structures II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 10.2 (Queues)",
+				"<i>Bailey</i> 10.3-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Iterators"
+			],
+			"readings" :[
+				"<i>Bailey</i> 8"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Ordered Structures"
+			],
+			"readings" :[
+				"<i>Bailey</i> 11"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+
+		{
+			"topic" : [
+				"Trees I"
+			],
+			"readings" :[
+				"<i>Bailey</i> 12-12.3"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Trees II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 12.4"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Trees III"
+			],
+			"readings" :[
+				"<i>Bailey</i> 12.6"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Binary Search Trees I"
+			],
+			"readings" :[
+				"<i>Bailey</i> 14-14.2"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Binary Search Trees II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 14.3-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Maps and Dictionaries"
+			],
+			"readings" :[
+				"<i>Bailey</i> 15-15.4"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Hashtables"
+			],
+			"readings" :[
+				"<i>Bailey</i> 15.5-end"
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Hashtables"
+			],
+			"readings" :[
+				"<i>Bailey</i> 15.5-end"
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Trees IV"
+			],
+			"readings" :[
+				"<i>Bailey</i> 12.7-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+
+		{
+			"topic" : [
+				"Priority Queues and Heaps"
+			],
+			"readings" :[
+				"<i>Bailey</i> 13-13.4"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Heaps and Heapsort"
+			],
+			"readings" :[
+				"<i>Bailey</i> 13.5-end"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Graphs I"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16-16.1"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Graphs II"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.2 (Interface)",
+				"<i>Bailey</i> 16.4"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Graphs III"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.3"
+			],
+			"pre" : [
+			],
+			"materials" : [],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Graphs IV"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.3"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Graphs V"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.4"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : [
+			]
+		},
+		{
+			"topic" : [
+				"Graphs VI"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.5"
+			],
+			"pre" : [
+			],
+			"materials" : [
+
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				"Graphs VII"
+			],
+			"readings" :[
+				"<i>Bailey</i> 16.5"
+			],
+			"pre" : [
+			],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			],
+			"post" : []
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		},
+		{
+			"topic" : [
+				""
+			],
+			"readings" :[
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		},
+		{
+			"topic" : [
+				"course wrapup"
+			],
+			"readings" : [
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		},
+		{
+			"topic" : [
+				"extra!!!!"
+			],
+			"readings" : [
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		},
+		{
+			"topic" : [
+				"extra!!!!"
+			],
+			"readings" : [
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		},
+		{
+			"topic" : [
+				"extra!!!!"
+			],
+			"readings" : [
+				""
+			],
+			"pre" : [],
+			"materials" : [
+			]
+		}
+	],
+	"carnival" : {
+		"topic" : ["<font color='red'>Winter Carnival</font>"],
+		"readings" : ["<font color='red'>No Class</font>"],
+		"materials" : []
+	},
+	"mountain" : {
+		"topic" : ["<font color='red'>Mountain Day</font>"],
+		"readings" : ["<font color='red'>No Class</font>"],
+		"materials" : []
+	},
+	"reading" : {
+		"topic" : ["<font color='red'>Reading Period</font>"],
+		"readings" : ["<font color='red'>No Class</font>"],
+		"materials" : []
+	},
+	"thanks" : {
+		"topic" : ["<font color='red'>ThanksGiving Break</font>"],
+		"readings" : ["<font color='red'>No Class</font>"],
+		"materials" : []
+	},
+	"springbreak" : {
+		"topic" : ["<font color='red'>Spring Break</font>"],
+		"readings" : ["<font color='red'>Spring Break</font>"],
+		"materials" : []
+	},
+	"midterm" : { "topic" : ["<font color='red'>Midterm Exam</font>"],
+		"readings" : ["<font color='red'>Midterm Exam</font>"],
+		"materials" : [
+		]
+	},
+	"final" : { "topic" : ["<font color='red'>Final Exam</font>"],
+		"readings" : ["<font color='red'>Final Exam</font>"],
+		"materials" : []
+	},
+	"final-materials" : {
+		"topic" : [],
+		"readings" : [],
+		"materials" : [
+		]
+	},
+	"exam-review" : { "topic" : ["<font color='red'>Exam Review in conferences</font>"],
+		"readings" : ["<font color='red'>Exam Review</font>"],
+		"pre": [],
+		"materials" : []
+	}
+}

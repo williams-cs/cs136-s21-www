@@ -1,0 +1,263 @@
+body {
+  position: relative;
+  margin-top: 10px;
+  background: #ffffff;
+  width: 950px;
+  color: #000000;
+}
+
+.title {
+  font-size: 32pt;
+  text-align: left;
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 960px;
+  height: 60px;
+  color: #ffffff;
+  background: #330066;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #330066;
+}
+
+.title2 {
+  font-size: 32pt;
+  text-align: left;
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 960px;
+  height: 40px;
+  color: #ffffff;
+  background: #330066;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #330066;
+}
+
+.bottom {
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 960px;
+  background: #ffffff;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-top: 6px solid #666699;
+}
+
+
+  /*  the menubar at the top */
+.box {
+  font-size: 13.5pt;
+  font-style: normal;
+  font-family: sans-serif;
+  text-align: center;
+  position: relative;
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-bottom: 2px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  width: 960px;
+  height: auto;
+  background: #666699;
+  color: #ffffff;
+  border: 2px solid #666699;
+}
+
+  /*  hyperlink in menubar */
+.box a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+  /*  hyperlink with mouse over it in menubar */
+.box a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+
+
+
+.heading {
+  font-size: 18pt;
+  text-align: left;
+  position: relative;
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  width: 910px;
+  height: 30px;
+  color: #000000;
+  background: #ffffff;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 3px solid #330066;
+}
+
+.subheading {
+  font-size: 16pt;
+  text-align: left;
+  position: relative;
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  width: 910px;
+  height: 30px;
+  color: #000000;
+  background: #ffffff;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 3px solid #330066;
+}
+
+
+.bordered {
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 910px;
+  background: #e8e8e8;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #444444;
+  border-collapse:collapse;
+}
+.bordered td{
+    padding:10px 5px;
+    border-style:solid;
+    border-width:1px;
+    overflow:hidden;
+    word-break:normal;
+    border-color:black;
+}
+
+.bordered th{
+    padding:10px 5px;
+    border-style:solid;
+    border-width:1px;
+    overflow:hidden;
+    word-break:normal;
+    border-color:black;
+}
+
+
+
+.info {
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 910px;
+  background: #e8e8e8;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #444444;
+}
+
+.info ul {
+font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  background: #e8e8e8;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.info h3 {
+  font-size: 16pt;
+  text-align: left;
+}
+
+.info h4 {
+  font-size: 12pt;
+  font-style: bold;
+  text-align: left;
+}
+
+
+.text {
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 8px;
+  width: 910px;
+  background: #ffffff;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #ffffff;
+}
+
+.text2 {
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 8px;
+  width: 860px;
+  background: #ffffff;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #ffffff;
+}
+
+table {
+  empty-cells:show;
+  font-size: 12pt;
+  width: 910px;
+  margin-left: 50px;
+}
+
+ul {
+  margin-bottom: 2px;
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 15px;
+  margin-top: 5px;
+  background: #ffffff;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  /*border: 2px solid #ffffff;*/
+}
+
+ol {
+  font-size: 12pt;
+  text-align: left;
+  position: relative;
+  margin-left: 70px;
+  margin-top: 0px;
+  margin-bottom: 2px;
+  width: 710px;
+  background: #ffffff;
+  color: #000000;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid #ffffff;
+}
+
+.bullet {
+    padding-left: 6em;
+    font-size: 12pt;
+    background: none;
+}

@@ -1,0 +1,52 @@
+<h1 id="class-nim">class Nim</h1>
+<ul>
+<li>This class is designed to represent the "board" and "game state for a game of <a href="https://www.archimedes-lab.org/game_nim/play_nim_game.html">Nim</a>. The game board will be represented as an array of <code>int</code>, where each array index represents a pile of matches and the number stored at each index represents the number of matchsticks in that pile.</li>
+</ul>
+<h2 id="instance-variables">Instance variables</h2>
+<ul>
+<li><code>int piles[]</code>: an array that represent the piles of matchsticks</li>
+<li><code>int player</code>: represents the current player (the player about to make a move). Valid values for <code>player</code> can be either <code>0</code> or <code>1</code>.</li>
+</ul>
+<h2 id="constructors">Constructors</h2>
+<ul>
+<li><code>public Nim(int numPiles, int minMatches, int maxMatches)</code>:
+<ul>
+<li>The <code>numPiles</code> parameter represents the number of piles of matches in the game. A valid game must have at least one pile of matches.</li>
+<li>The <code>minMatches</code> parameter represents the minimum number of matches that can be in a pile at the start of a new Nim game (inclusive)</li>
+<li>The <code>maxMatches</code> parameter represents the maximum number of matches that can be in a pile at the start of a new Nim game (inclusive)</li>
+</ul></li>
+<li><code>public Nim(int numPiles)</code>: constructs a Nim game with <code>numPiles</code> piles of matches, and between 1 and five matches in each pile.
+<ul>
+<li>The <code>numPiles</code> parameter represents the number of piles of matches in the game. A valid game must have at least one pile of matches.</li>
+</ul></li>
+<li><code>public Nim()</code>: constructs a Nim game with 3 piles of matches, and between 1 and 5 matches in each pile.</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<ul>
+<li><code>protected void populateEmptyBoard(int minMatches, int maxMatches)</code>
+<ul>
+<li>Randomly generates a board</li>
+<li>The <code>minMatches</code> parameter represents the minimum number of matches that can populate any given pile</li>
+<li>The <code>maxMatches</code> parameter represents the maximum number of matches that can populate any given pile</li>
+</ul></li>
+<li><code>public boolean isValidMove(int whichPile, int numMatches)</code>:
+<ul>
+<li>Returns true if the move is valid (a correctly specified pile has at least as many matches as requested), and false otherwise.</li>
+<li><code>whichPile</code> specifies which pile to remove matches from (0-indexed)</li>
+<li><code>numMatches</code> specifies how many matches to move</li>
+</ul></li>
+<li><code>public void makeMove(int whichPile, int numMatches)</code>:
+<ul>
+<li>Removes the specified number of matches from the specified pile (without checking the legality)</li>
+<li><code>whichPile</code> The pile to remove matches from</li>
+<li><code>numMatches</code> How many matches to remove</li>
+</ul></li>
+<li><code>public boolean isGameOver()</code>:
+<ul>
+<li>Returns true if the game is over (i.e., no more matches in any piles).</li>
+</ul></li>
+<li><code>public String toString()</code>:
+<ul>
+<li>A string representation of the current game. The String contains the current player, as well as a row for each pile of matches. A pile is represented by a numeric index and a series of vertical bars, one per match.</li>
+</ul></li>
+</ul>

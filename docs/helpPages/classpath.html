@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+<p class="heading">Document Overview</p>
+
+<p class="info">
+  "Structure5" is the name of the software library that includes the
+  code associated with the course textbook. Since we will be using
+  data structures from the textbook throughout the semester, it is
+  important that we are all able to compile programs that rely on
+  structure5 code. This document includes backround on the various
+  structure5 resources, as well as instructions that let you compile
+  structure5-based programs on your personal computing environment.
+</p>
+
+<p class="heading">
+  Structure 5 Background
+</p>
+
+    <p class="text">
+      There are several download links that refer to various parts of the structure5 software.
+      You should be familiar with them all; they are all useful resources. Here we describe
+      the ways that we hope you will use them.
+    </p>
+    <ul class="bullet">
+            <li>
+	The <a href="http://dept.cs.williams.edu/~bailey/JavaStructures/Book_files/JavaStructures.pdf">textbook</a>
+	describes the data structures and their implementations in the
+	structure5 software package. The textbook is an incredibly
+	useful resource for understanding designs and tradeoffs, but
+	the textbook is not necessary for running programs.
+      </li>
+
+      <li>
+	The <a href="http://www.cs.williams.edu/~bailey/JavaStructures/doc/structure5/index.html">structure5
+	class documentation</a> is presented in the standard "Javadoc
+	web" format; it consists of a series of <code>.html</code>
+	pages hosted on a webserver. This documentation is useful when
+	figuring out how to <em>write</em> code that uses the
+	structure5 software, but it is not necessary
+	when <em>running</em> your code.
+      </li>
+
+      <li>
+	The <a href="http://www.cs.williams.edu/~bailey/JavaStructures/Software_files/structure-source.tgz">structure5
+	source code</a> is downloadable as a "gzipped tar archive" (a
+	file with the <code>.tgz</code> extension can be expanded by
+	first "unzipping it" to decompress it and then "untarring it"
+	to reconstruct the constituent files from the TAR archive
+	format). The source code is useful when we want to dive into
+	specific details about the class implementations. Having
+	access to the source code is also useful if we want to
+	experiment by making changes/additions to the default
+	structure5 class implementations. In theory, we can compile
+	our lab programs against any source code, including
+	structure5's source code, but that is not the easiest way to
+	set up our programming environments for this course.
+      </li>
+      <li>
+	Finally, <a href="http://www.cs.williams.edu/~bailey/JavaStructures/Software_files/bailey.jar"><code>bailey.jar</code></a>
+	is a single file that contains all of the structure5 classes
+	in a format that the Java compiler can use to build our lab
+	programs when we import structure5 classes into our Java
+	files.  (Duane Bailey is the author of the textbook and the
+	structure5 source code, hence the "bailey" part of the
+	name. The .jar extension is commonly used
+	for <b>J</b>ava <b>AR</b>chives.)  The rest of the
+	instructions in this document will explain how to
+	download <code>bailey.jar</code> and set up our computing
+	environments so that the Java compiler
+	(i.e., <code>javac</code>) knows where to find it.
+      </li>
+    </ul>
+
+    <p class="heading">Setup Instructions</p>
+    <p class="text">
+      The first step is to
+      download <a href="http://www.cs.williams.edu/~bailey/JavaStructures/Software_files/bailey.jar"><code>bailey.jar</code></a>
+      and move that file to a location on your computer that you would
+      like it to "live" for the duration of the
+      semester. (<em>Note</em>: For these instructions, I will
+      use <em>my</em> setup as an example, so whenever you see a path
+      to <code>bailey.jar</code>, you should replace that path with
+      the location of <code>bailey.jar</code> on <em>your</em>
+      machine.) I have a directory called <code>cs136/</code> inside
+      my home directory where I placed the file. From the terminal, I
+      can navigate to that directory using <code>cd</code> and then
+      type <code>pwd</code>; after doing so, I am told that the
+      location of this directory is <code>/Users/bill/cs136/</code>.
+      Do this yourself and take note of your directory's path; we will
+      use it later.
+    </p>
+    <p class="text">
+      The rest of the steps are logically similar for macOS, Linux,
+      and Windows, but the particulars of the "preferred approach"
+      vary slightly. Therefore we have created two sets of instructions below,
+      one for <a href="#unix">macOS/Linux users</a> and one for
+      <a href="#windows">Windows</a> users. Follow the instructions
+      that apply to your operating system.
+    </p>
+    <p class="text">
+      At a high level, the steps below will guide you through the
+      process of setting up the <em>environment variable</em> that
+      Java uses to determine the location of imported libraries.
+      Since the structure5 libraries are not part of the default Java
+      installation, we need to add the location of the structure5
+      libraries to this environment variable so that
+      <code>javac</code> knows where to find it.
+      </p>
+    <p class="text">
+      <em>Note:</em> All instructions assume you have completed your environment setup
+      according to the instructions in <a href="./labs/environment.html">Lab 0</a>.
+    </p>
+
+    <p class="heading"><a name="unix">MacOS and Linux users</a></p>
+    <p class="text">
+      When we lauch a new "shell" (aka terminal) in a Unix-like
+      operating system, a lot of things happen in the background.
+      Many of those are explored in detail in the course <em>CSCI 432:
+      Operating Systems</em>, but the "initialization" steps are
+      important to us now. A particular instance of the terminal has a
+      its own "environment" that includes a set of so-called
+      "environment variables". The <code>CLASSPATH</code> environment
+      variable is where <code>javac</code> looks to find imported
+      classes. These instructions explain how to set
+      the <code>CLASSPATH</code> environment variable so that it
+      includes a reference to structure5.
+    </p>
+    <ul class="bullet">
+      <li>
+	First, we will determine which "shell" we are using. The Unix
+	command <code>echo</code> can be used to display a value to
+	the terminal. The dollar sign <code>$</code> is used to tell
+	the shell that you don't want it to interpret a string as
+	literal text, but instead to interpret that string as a
+	variable and to <em>evaluate</em> that variable. Type the
+	command <code>echo "$SHELL"</code> in your terminal to print
+	the value of the "SHELL" variable to your terminal. When I do
+	so on macOS, I see:
+      <pre><code style="font-size:75%">% echo "$SHELL"
+      /bin/zsh
+      </code></pre>
+If you are on Linux (or a slightly older version of macOS), you will likely see:
+<pre><code style="font-size:75%">% echo "$SHELL"
+/bin/bash
+</code></pre>
+Take note of which shell you are using: "zsh" or "bash".
+      <li>
+	When a new shell starts, it reads from a set of pre-determined <em>configuration</em> files
+	as part of its initialization process. Depending on your shell, the names of those configuration
+	files differ. What we want to do in this step is add the line:
+	<pre><code style="font-size:75%">export CLASSPATH=".:/Users/bill/cs136/bailey.jar:$CLASSPATH"</code></pre>
+	to your shell's default cofiguration file (except you will replace <code>/Users/bill/cs136/bailey.jar</code> with the path to <code>bailey.jar</code> that you noted when you downloaded the file).
+	<br><br>
+	If your terminal uses "zsh", you can update your initialization files by typing the following command:
+
+	<pre><code style="font-size:75%">echo "export CLASSPATH=\".:/Users/bill/cs136/bailey.jar:\$CLASSPATH\"" >> ~/.zshrc</code></pre>
+
+	If your terminal uses "bash", you can update your initialization files by typing the following command:
+
+	<pre><code style="font-size:75%">echo "export CLASSPATH=\".:/Users/bill/cs136/bailey.jar:\$CLASSPATH\"" >> ~/.bash_profile</code></pre>
+
+
+	The "<code>echo "..."</code>" portion of the command will
+	print everything in the "<code>"..."</code>" part to the
+	terminal. The "<code>&gt;&gt; ~/some/file</code>" part of the
+	command tells the shell to take what was printed by echo
+	and <em>append it</em> to the file specified after
+	the <code>&gt;&gt;</code>. This command will preserve the old
+	contents of the configuration file, but add your classpath
+	definition to the end.
+
+      </li>
+
+      <li>
+	Now that you've updated your shell's initialization scripts,
+	we want to check that we did so correctly.  First, we can use
+	the <code>cat</code> utility to inspect the contents of our
+	configuration files.  Execute either:
+
+	<pre><code style="font-size:75%">% cat ~/.zshrc</code></pre>
+
+	or
+
+	<pre><code style="font-size:75%">% cat ~/.bash_profile</code></pre>
+
+	Do the contents match what you'd expect? If not, you can open
+	the file in a text editor and edit the file by hand.
+
+	<br><br>
+
+	If the output finally looks OK, we will next check whether the
+	shell initialization process correctly interprets our command.
+	Open a new terminal window and type:
+
+	<pre><code style="font-size:75%">% echo "$CLASSPATH"</code></pre>
+
+	Does the output match what you'd expect? If not, send us or
+	the TAs an email or Slack message, and we can debug.
+      </li>
+
+      <li>
+	Now we can try compiling a simple program that uses a
+	structure5 class. We have included the contents a sample
+	program below that you can save into a file
+	called <code>Sample.java</code> and compile with <code>% javac
+	Sample.java</code>. If it successfully compiles, you are done!
+      </li>
+    </ul>
+
+    <p class="heading"><a name="windows">Windows Users</a></p>
+    <p class="text">
+      When we open a new Git-Bash window (aka terminal) in Windows,
+      the operating system initializes a set of variables, called
+      <i>environment variables</i> that hold information that
+      various commands need to function properly. Some of these,
+      like the $Path variable that you might have modified when
+      you installed Java, are system-wide, while others are
+      user-specific. To allow your program to access the compiled
+      Java classes contained in bailey.jar, you will need to
+      create (or modify) one such user-specific environment variable,
+      the CLASSPATH variable.
+    </p>
+
+    <p class="text">
+      To begin, let's assume that you have created a cs136 directory
+      somewhere in your file system. First be sure to move the
+      bailey.jar file to that directory. For example, if your bailey.jar
+      file is in your Downloads folder and your cs136 directory is in
+      your Documents folder, you can open a Git-Bash window and type
+    </p>
+
+      <pre><code style="font-size:75%">
+          >mv Downloads/bailey.jar Documents/cs136
+      </code></pre>
+
+      <p class="text">
+      To get the full name of that directory, in the same Git-Bash
+      window, move to the directory containing bailey.jar then type
+      the pwd command. For example
+
+      <pre><code style="font-size:75%">
+          >cd Documents/cs136
+          >pwd
+          /c/Users/Bill/Documents/cs136
+      </code></pre>
+
+      <p class="text">
+      Now, following the approach taken to install Java,
+      type <code style="font-size:75%">env</code>
+      into the Windows 10 search box and select
+      <code style="font-size:75%">Set the system environment variables</code>.
+      Select the <code style="font-size:75%">Advanced</code>
+      tab and press the <code style="font-size:75%">Environment
+      Variables...</code> button.
+    </p>
+
+    <p class="text">
+    In the dialog box that appears, there should be two lists of variables:
+    user variables and system variables. You will need to add a new user
+    variable (the upper list) called CLASSPATH. Press the
+    <code style="font-size:75%">New</code> button below the user variables list
+    and a dialog box appears. Enter <code style="font-size:75%">CLASSPATH</code>
+    for the variable name and enter
+    <code style="font-size:75%">%CD%;C:\Users\Bill\Documents\cs136\bailey.jar</code>
+    for the variable value. Then select <code style="font-size:75%">ok</code> in
+    each dialog box to close them all.
+  </p>
+
+  <p class="text">
+    Changes to environment variables only take effect in Git-Bash windows that
+    are opened <i>after</i> the variable is created/edited. So, close any open
+    Git-Bash windows and open a new one. Then type
+    <code style="font-size:75%">echo $CLASSPATH</code>. The result should be
+
+    <pre><code style="font-size:75%">
+          >echo $CLASSPATH
+          %CD%;C:\Users\Bill\Documents\cs136\bailey.jar
+    </code></pre>
+
+    <p class="text">
+    If this is the case, you should now be able to test whether Java can
+    successfully access the structure5 classes by following the instructions
+    below.
+
+
+    <p class="heading"><a name="sample">Sample Testing Program</a></p>
+    <p class="text">
+      You can copy and paste this program into a file called <code>Sample.java</code>.
+      If you can successfully compile that program, then you are done!
+    </p>
+
+<pre><code>
+        import structure5.Vector;
+
+        public class Sample {
+    	     public static void main(String[] args) {
+    		       Vector&lt;String&gt; v = new Vector&lt;String&gt;();
+    		       System.out.println("Success!");
+    	     }
+       }
+</code></pre>
+
+<p class="bottom">
+</p>
+
+
+</body>
+
+</html>

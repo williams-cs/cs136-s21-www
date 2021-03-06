@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">
+    Computer Setup
+    </p>
+
+    <p class="info">
+      This document will walk through all of the steps needed to
+      install the Atom editor, Java Development Kit, and Git
+      version control system.
+
+      <br><br>
+
+      <em>
+	Note that we have biased our instructions for Unix-like
+	operating systems. Linux and MacOS are two examples of
+	Unix-like operating systems, the type we use in our courses.
+  These instructions often use MacOS
+	as an example. If you have a different operating system, like
+	Windows, that is OK!  The steps are just slightly different,
+	so read carefully.
+      </em>
+
+    </p>
+
+    <p class="heading" id="editor">
+      Step 1: Install a Text Editor
+    </p>
+
+    <p class="text">This is very straightforward. Just download and install
+      Atom on your personal computing device.
+      Also install the <a href="https://atom.io/packages/teletype">teletype</a> package. Teletype will let us “pair program”.
+</p>
+
+    <p class="heading" id="git">
+      Step 2: Install Git
+    </p>
+
+    <p class="text"><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Installing Git</a> can be straightforward, but there are a few steps to configure it to work exactly the way you want. To install git, follow the directions in the link above for your operating system.</p>
+
+    <p class="text"><em>Note for Windows users</em>: Among the <em>many</em> dialog boxes you will click through during this installation, you should accept the default suggested for all but one. That one is the <em>git editor</em> suggestion. Do not accept <code>vim</code> (it is likely not installed on your machine and it is a rather painful editor to use); instead choose Atom.</p>
+
+    <p class="heading" id="java">
+      Step 3: Install Java
+    </p>
+
+    <p class="text">There are many ways to install Java, even within the same operating system (Apple’s OSX, Microsoft Windows, Linux, etc.).
+      We reccommend <a href="https://docs.oracle.com/en/java/javase/14/install/overview-jdk-installation.html">this one</a>.
+    </p>
+
+    <p class="text"><em>Note for Windows users</em>: After you have installed java, you should check that the operating system can find it. To do so, open the <code>Git Bash</code> app that should have been installed as part of your git installation above. You can do this by typing <code>bash</code> into the search text box next to the Windows Start icon. Then type <code>javac --version</code>. This should give you some information about the version of java you have installed.
+    </p>
+
+    <p class="text">If typing <code>javac --version</code> gives you an error message, you will need to edit one of what the operating system calls the <em>system environment variables</em>. The one you want to edit is called the <code>Path</code> variable. To do this, type <code>env</code> in the search text box beside the Start icon and select <code>Edit the system environment variables</code>. A dialog box appears. In the <code>Advanced</code> tab, select <code>Environment Variables...</code>. Another dialog box appears. Under <code>System variables</code> select the line that says <code>Path</code> then select <code>Edit...</code>. A dialog box appears. It will contain a text area with a list of directories. Double-click in the text area <em>below</em> the last item in the list. Here you will enter the location in which the java commands have been stored. It will have the form:</p>
+
+    <pre><code>
+        C:\Program Files\Java\jdk-VERSION
+    </code></pre>
+
+    <p class="text">where VERSION is the version number of your java installation. For example, it might be</p>
+
+    <pre><code>
+        C:\Program Files\Java\jdk-15.0.2
+    </code></pre>
+
+    <p class="text">To find the version number, type <code>javac --version</code> in your terminal window.</p>
+
+    <p> That's it!</p>
+
+    <p class="bottom">&nbsp;</p>
+  </body>
+</html>
