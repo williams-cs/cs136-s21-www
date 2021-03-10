@@ -40,8 +40,8 @@
 		[ "Fr: 05/14" , "#" ],
 		[ "Mo: 05/17" , "#" ],
 		[ "We: 05/19" , "#" ],
-		[ "Fr: 05/21" , "reading" ],
-		[ "??: ??" , "final" ]
+		[ "Thurs: 05/20" , "final-materials" ],
+		[ "Tues: 05/25" , "final" ]
 	],
     "health" : { "topic" : ["<font color='red'>Health Day</font>"],
 		      "readings" : ["<font color='red'>Relax</font>"],
@@ -743,7 +743,7 @@
 		"materials" : [
 		]
 	},
-	"final" : { "topic" : ["<font color='red'>Final Exam</font>"],
+	"final" : { "topic" : ["<font color='red'>Final Exam : 9:30-noon (E.T.)</font>"],
 		"readings" : ["<font color='red'>Final Exam</font>"],
 		"materials" : []
 	},
