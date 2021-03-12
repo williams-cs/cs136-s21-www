@@ -254,7 +254,10 @@
 			],
 			"materials" : [
 			],
-			"post" : []
+			"post" : [
+				"[Code :",
+				"- <a href='handouts/Induction.java'>Induction.java</a>]"
+			]
 		},
 		{
 			"topic" : [
@@ -267,7 +270,11 @@
 				"<i>Bailey</i> 6.7-6.8 (Comparing Objects)"
 			],
 			"pre" : [
-			],
+        "Video: <a href='https://youtu.be/g6ODFnxmUQQ'>Simple Sorting Methods</a>",
+        "Video: <a href='https://youtu.be/uE8DyrTTbLk'>Making Sorting Generic</a>",
+				"[Slides: <a href='handouts/BasicSorting.pdf'>Simple Sorting Methods</a>]",
+        "[Slides: <a href='handouts/MakingSortingGeneric.pdf'>Making Sorting Generic<a>]"
+       ],
 			"materials" : [
 			],
 			"post" : [
