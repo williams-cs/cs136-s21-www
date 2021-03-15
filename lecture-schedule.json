@@ -292,6 +292,9 @@
 				"<i>Bailey</i> 6.9 (Sorting Vectors)"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/QgeRdOmIwj8'>MergeSort and QuickSort</a>",
+				"[Slides: <a href='handouts/BetterSorting.pdf'>MergeSort and QuickSort</a>]",
+				"[Code : <a href='handouts/MergeSort.java'>MergeSort.java</a>]"
 			],
 			"materials" : [
 			],
