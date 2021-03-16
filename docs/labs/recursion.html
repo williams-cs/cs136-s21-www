@@ -60,6 +60,9 @@
     <p class="text">
       In particular, we prohibit partners from taking the approach of "dividing
       up the work" and then working separately on their individual "subprojects".
+	  Instead, we would like you to do pair programming: one student is assigned to be the typer, while the other looks on.  The students work together to decide how to move forward at a given moment&mdash;the onlooker gives ideas and proofreads the code, while the typer discusses their thinking and writes the code.  The two students switch roles every 5-10 minutes.
+	</p>
+	<p class = "text">
       If you have questions about this requirement, please ask us!
     </p>
 
@@ -703,6 +706,16 @@ interface:
 	each method&mdash;with a brief justiﬁcation.</b>  These
 	runtimes replace the typical thought questions for this week.
     </p>
+	<p class="text"><b>A note on <code>String</code> methods:</b>  Some of your methods will call <code>String</code> methods; therefore, you'll need to know the running time of the <code>String</code> methods in order to determine how long your method takes.  Here are some tips:
+	</p>
+	<ul class="bullet">
+		<li><code>indexOf</code> on a <code>String</code> takes O(n) time.</li>
+		<li><code>substring(a,b)</code> on a <code>String</code> takes O(b-a+1) time&mdash;that is to say, it takes time proportional to the size of the returned substring.</li>
+		<li><code>charAt</code> on a <code>String</code> takes O(1) time.</li>
+	</ul>
+	<p class="text">
+	Let us know if you encounter any <code>String</code> methods whose running time you're unsure of.
+	</p>
 
     <p class="heading">Submitting Your Lab</p>
     <p class="text">
