@@ -765,7 +765,8 @@
 			"[<a href='exams/midterm-study.html'>Study Guide</a>]",
 			"[<a href='exams/midterm-format.html'>Midterm Format</a>]",
 			"[<a href='exams/samplemidterm.pdf'>Sample Midterm</a>]",
-			"[<a href='exams/samplemidterm-answers.pdf'>Sample Solutions</a>]"
+			"[<a href='exams/samplemidterm-answers.pdf'>Sample Solutions</a>]",
+			"[<a href='https://youtu.be/hiMj1GdnVHY'>Solutions Video</a>]"
 		]
 	},
 	"final" : { "topic" : ["<font color='red'>Final Exam : 9:30-noon (E.T.)</font>"],
