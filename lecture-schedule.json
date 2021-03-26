@@ -335,7 +335,10 @@
 			"materials" : [
 			],
 			"post" : [
-			]
+        "[Code :",
+        "- <a href='handouts/MazeRunner.java'>MazeRunner.java</a>",
+        "]"
+      ]
 		},
 		{
 			"topic" : [
@@ -345,7 +348,9 @@
 				"<i>Bailey</i> 8"
 			],
 			"pre" : [
-			],
+        "Video: <a href='https://youtu.be/x_tav-fuwY0'>Iterators</a>",
+				"[Slides: <a href='handouts/Iterators.pdf'>Iterators</a>]"
+      ],
 			"materials" : [
 			],
 			"post" : [
