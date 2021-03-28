@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../../index.html">Home</a> |
+      <a href="../../schedule.html">Schedule</a> |
+      <a href="../../labs.html">Labs</a> |
+      <a href="../../handouts.html">Handouts</a> |
+      <a href="../../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Lab 5: P.S. It's Just a Stack!</p>
+
+    <p class="info">
+      In this week's lab (described in <a href="./JavaStructures-PostScriptLab.pdf"><b>Section 10.5</b> of <em>Bailey</em></a>)
+      we will implement a small portion of the stack-based language Postscript,
+      a language designed to describe graphical images.
+      When you create a Postscript file or print to a PostScript printer,
+      you actually create a file that contains a program written in this
+      language.
+      A printer or viewer interprets that program to render the image
+      described by the file.
+    </p>
+
+    <p class="heading">Pre-lab Task: Explore the Starter Code</p>
+    <p class="text">
+      For this lab, we provide you with several useful classes to serve as building blocks for your implementation.
+      These starter files are well documented, but sometimes reading source code can be daunting.
+      To help out, we will use the <code>javadoc</code> program to generate Javdoc-formatted webpages that we can use to
+      get a handle on the ways these classes can fit into our lab program design.
+    </p>
+    <p class="text">
+      To create Javadoc documentation from the files in your repository,
+      we can use the <code>javadoc</code> program that is included with our Java installation.
+      By default, <code>javadoc</code> will process the
+      Javadoc-formatted comments in a source file and generate a series
+      of webpages and resources in the current directory. We don't
+      want to clutter our repositories, so we will tell Javadoc to place
+      its output inside the <tt>javadoc/</tt> folder that we have created.
+      The command we suggest that you use is:
+    </p>
+    <pre>
+              <code>$ javadoc -d javadoc/ *.java</code>
+    </pre>
+    <p class="text">
+    Some notes on this command:
+    </p>
+    <ul class="bullet">
+      <li>The <code>-d</code> javadoc option tells the <code>javadoc</code> program to place its output in the <tt>javadoc/</tt> directory.
+      <li>The <code>*.java</code> argument tells Javadoc to create documentation for every single file in your current directory that ends with the extension <code>.java</code>. The <code>*</code> is what is called a "wildcard character" (in <code>*.java</code>, the <code>*</code> will expand to match anything that it can, given the constraint that the string ends in <code>.java</code>).
+    </ul>
+
+    <p class="text">
+      After you are done, you should see many new files in your javadoc/ directory:
+    </p>
+<pre>
+          <code>$ ls javadoc
+
+            Interpreter.html         help-doc.html            package-tree.html
+            Reader.html              index-all.html           resources
+            SymbolTable.html         index.html               script-dir
+            Token.html               member-search-index.js   script.js
+            allclasses-index.html    member-search-index.zip  search.js
+            allpackages-index.html   overview-tree.html       stylesheet.css
+            constant-values.html     package-search-index.js  system-properties.html
+            deprecated-list.html     package-search-index.zip type-search-index.js
+            element-list             package-summary.html     type-search-index.zip
+        </code>
+</pre>
+<p class="text">
+  If I want to view my newly created documentation, I would open the file <tt>index.html</tt>. This is the webpage that forms the "root" of my Javadoc websites.
+  In macOS, I could use the open command:
+</p>
+<pre>
+          <code>$ open javadoc/index.html</code>
+</pre>
+<p class="text">
+I can also use my browser of choice (e.g., Firefox, Chrome, Safari, Edge, etc.)
+to open that local file.
+</p>
+
+<br />
+
+    <p class="text">
+      <b>Before lab, please do the following:</b>
+      <ul class="bullet">
+	<li>
+	  <em>Generate Javadoc</em> for the starter files in your
+	  repository. You should not commit these files to your
+	  repository, but you should have them as a "local resource".
+	</li>
+	<li>
+	  Read through the javadoc that you generated for
+	  the <code>Token</code>, <code>Reader</code>,
+	  and <code>SymbolTable</code> classes.
+	  These classes will be helpful in your implementation.
+	</li>
+  <ul class="bullet">
+    <li> Really! Read through them carefully. Understanding the
+      methods (including constructors) that these classes provide
+      can save you <b><i>a lot of time</i></b> on this lab!
+    </li>
+  </ul>
+	<li>
+	  For more implementation details, skim the
+	  <a href="./Token.java">Token.java</a>,
+	  <a href="./Reader.java">Reader.java</a>, and
+	  <a href="./SymbolTable.java">SymbolTable.java</a>
+	  source files (also in your private repository)
+	  before coming to lab.
+	</li>
+	<li>
+	  Read this handout and think about your lab design.
+	  If generating a formal design document is helpful,
+	  we strongly encourage you to do so.
+	  If you are working with a partner, we suggest that
+	  you discuss the lab tasks and starter files together,
+	  then independently think about designs.
+	  Discussing your independently-generated designs will
+	  help you to compare approaches without being influenced
+	  early on in the design process, hopefully leading to a
+	  richer joint discussion--and better final product!
+	</li>
+      </ul>
+    </p>
+    <p class="heading">Lab Assignment</p>
+    <p class="text">
+      <b>Complete Laboratory Assignment 10.5</b>, which begins on page
+      247 of Bailey (<a href="./JavaStructures-PostScriptLab.pdf">PDF
+      excerpt here</a>).  We have provided additional notes below.
+    </p>
+    <p class="text">
+      In addition, <b>answer the following Questions from page 246</b>
+      of your text in <tt>PROBLEMS.md</tt>,
+      and submit it with the rest of your code this week.
+      Note that we have added additional text in italics below to help
+      clarify the questions.
+      <ul class="bullet">
+	<li><b>Problem 10.3</b>: Suppose you wish to fill a stack with
+	  a copy of another, maintaining the order of elements. Using
+	  only Stack operations, describe how this would be done. How
+	  many stacks are necessary (including the source stack and
+	  any additional stacks that you use)? <em>Note: the original
+	  stack and its contents should be preserved. After completing
+	  the steps that you describe, there should be two identical
+	  stacks.</em>
+	</li>
+
+	<li><b>Problem 10.4</b>: Suppose you wish to reverse the order
+	  of elements of a stack (when you are done, the "reversed
+	  elements" should be located in the original stack). Using
+	  only Stacks and Stack operations, describe how this could be
+	  done. How many stacks are necessary (including the source
+	  stack and any additional stacks that you use)?
+	</li>
+
+	<li><b>Problem 10.5</b>: Suppose you wish to move the contents
+	  of one queue into another, preserving the order of the
+	  elements. Using only Queue operations, describe how this
+	  would be done. <em>Also indicate the number of queues
+	  needed, including the source queue, the destination queue,
+	  and any additional queues that you use.</em>
+	</li>
+      </ul>
+    </p>
+
+
+    <p class="heading">Helpful Notes</p>
+    <p class="text">
+      <ul class="bullet">
+	<li> The starter files can be found online and in your private
+	  repository.
+	  In addition to starter Java files,
+	  we have included several sample postscript programs that
+	  will be useful for testing your code.
+	  Postscript files end with the <code>.ps</code> file extension.
+	</li>
+
+	<li>
+	  Make use of the functionality of the classes you are given.  Be
+	  careful not to spend time developing code that is already there!
+	  Pay careful attention to the different class constructors, and
+	  ask questions if you have any.
+	</li>
+
+	<li>
+	  Name your interpreter class <code>Interpreter</code>.
+	  You should only need to modify the <code>Interpreter</code> class
+	  and nothing else.
+	</li>
+
+	<li>
+	  Your program should read commands from standard input.
+	  You can also redirect input from a file named <code>sample.ps</code>
+	  to your Interpreter program by using a command like:
+	  <pre><code>$ java Interpreter < sample.ps</code></pre>
+	</li>
+
+	<li>
+	  Make your <code>main</code> method very short.
+	  All it should do is create an <code>Interpreter</code>
+	  object and tell it to start parsing the postscript program
+	  provided as standard input.
+	  Create a method <code>interpret</code> that takes a single parameter
+	  of type <code>Reader</code>
+	  and processes the PostScript tokens returned by that <code>Reader</code>.
+	</li>
+
+	<li>
+	  Develop your <code>interpret(Reader reader)</code> method
+	  incrementally.  Get your
+	  simple <code>push</code>, <code>pop</code>,
+	  and <code>pstack</code> operations working, then move on to
+	  the arithmetic operators, and finally the definition and
+	  usage of symbols.
+	  <b>Decompose the program into small, manageable
+	    helper methods as you go!</b>
+	  You may wish to use a large <code>switch</code> statement,
+	  but each "case" should call an appropriate helper.
+	</li>
+
+	<li>
+	  Your program should report errors when it encounters invalid input,
+	  and these should contain meaningful error messages.
+	  Printing appropriate messages is perfectly fine, but
+
+	  you can also use <code>Assert.condition()</code>
+	  and <code>Assert.fail()</code> for this (or use the
+	  Java <code>assert</code> statement).  Think about the
+	  different operations that may share preconditions.  Can you
+	  create helper methods that meaningfully handle multiple
+	  operations?
+	</li>
+
+	<li>
+	  Implementing the basic operations
+	  (<tt>pstack</tt>, <tt>add</tt>, <tt>sub</tt>, <tt>mul</tt>,
+	  <tt>div</tt>, <tt>dup</tt>, <tt>exch</tt>, <tt>eq</tt>, <tt>ne</tt>,
+	  <tt>def</tt>, <tt>pop</tt>, <tt>quit</tt>, and <tt>ptable</tt>)
+	  will allow you to earn <b>4.5 out of 5 functionality points</b>.
+	  You can earn the last functionality points by <b>implementing the
+	  extensions outlined in thought questions 3, 4, and 5</b> from the book.
+	  In particular, you should implement <em>procedure</em> definitions
+	  and calls, and the <tt>if</tt> instruction.
+	  These extensions may require a little thought,
+	  but ought to be straight-forward to implement if you have designed
+	  your interpreter engine well.
+	</li>
+
+	<li>
+	  You can use the <tt>gs</tt> interpreter if you want try out
+	  the commands yourself (you may need to install the program
+	  "Ghostscript", which is the name of the <tt>gs</tt>
+	  PostScript interpreter).  Type the command:
+	  <pre><code>$  gs -dNODISPLAY</code></pre>
+	  This will give you a text-only postscript interpreter.
+	  You can type commands at the prompt as they appear in the lab
+	  assignment.  Type <tt>quit</tt> to exit the interpreter.
+	  </li>
+      </ul>
+    </p>
+
+
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in previous weeks. Last week we requested that you
+      include
+<a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">Javadoc</a>-style
+      comments for each <b><code>public</code></b> method, and this
+      week we are asking you to use the <tt>javadoc</tt> program to
+      produce real Javadoc webpages. We hope that you generate these
+      webpages using your comments in <tt>Interpreter.java</tt>, and
+      use the generated files to help you improve your documentation.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants). (We don't expect this to be an issue this week.)
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc” comment
+	(starts with <code>/**</code> and ends with <code>*/</code>;
+	it should include descriptions of the function at the top,
+	descriptions of return values after a <code>@return</code> tag,
+	descriptions of each argument after a <code>@param</code> tag,
+	and pre/post conditions after the <code>@pre</code>
+	or <code>@post</code> tags).
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+	<font color="#F00">
+	However, in this lab, it
+	is relatively natural to process the "built-in" symbols (i.e.,
+	<tt>pstack</tt>, <tt>add</tt>, <tt>sub</tt>, <tt>mul</tt>,
+	<tt>div</tt>, <tt>dup</tt>, <tt>exch</tt>, <tt>eq</tt>, <tt>ne</tt>,
+	<tt>def</tt>, <tt>pop</tt>, <tt>quit</tt>, and <tt>ptable</tt>)
+	using a switch statement. Even a crisply formatted switch statement
+	may exceed the 30-line limit. So it is OK if the method with your symbol-processing
+	logic triggers this particular makestyle error.
+	</font>
+	That being said, we <em>would</em> consider it a style violation if you
+	embed the logic for handling each operation directly inside your
+	switch statement code. Instead, you should create helper methods,
+	and call them from within your switch statement. For example:
+<pre><code>    .
+    .
+    .
+    switch (symbolToken.getSymbol()) {
+    case "add":
+        doAdd();
+        break;
+    .
+    .
+    .</code></pre>
+and
+<pre><code>    .
+    .
+    .
+    switch (symbolToken.getSymbol()) {
+    case "add":
+    case "sub":
+    case "mul":
+    case "div":
+        doMathOp(symbolToken);
+        break;
+    .
+    .
+    .</code></pre>
+    are two examples where the Java code that implements the logic for
+    performing a PostScript operation are handled inside a helper method
+    instead of directly inside the switch statement.
+
+      </li>
+    </ul>
+
+
+    <br><br>
+
+    <p class="text">
+      <b>To run <code>checkstyle</code>, you would type the following
+      command at the terminal:</b>
+    </p>
+
+<pre>
+          <code>$ ./checkstyle</code>
+</pre>
+
+    <p class="text">
+      The <code>./</code> is peculiar to Unix: it tells the terminal
+      to look for the <code>checkstyle</code> program in the current
+      directory.  This command will run <code>checkstyle</code> on
+      every Java program in your directory.  To
+      run <code>checkstyle</code> on a specific Java file, type:
+    </p>
+
+<pre>
+          <code>$ ./checkstyle SomeFile.java</code>
+</pre>
+
+
+
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+      <ul class="bullet">
+	<li>
+	  Your well-documented source code in <tt>Interpreter.java</tt>
+	</li>
+	<li>
+	  A <tt>PROBLEMS.md</tt> file that contains answers to the three
+	  questions described above.
+	</li>
+	<li>(the other starter files in your repository should not need to change)</li>
+      </ul>
+    <p class="text">
+      If you worked with a partner, submit your collaborative solution in your shared repository.
+    </p>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.
+      Be sure to document your program with appropriate comments,
+      including class-level and method-level comments (with pre- and post-conditions where
+      appropriate).
+      Also use comments and descriptive variable names to clarify sections
+      of the code which may not be clear to someone trying to understand it.
+      The <a href="../../style.html">CS136 Style Guide</a> may be helpful.
+    </p>
+    <p class="text">
+      Whenever you see yourself duplicating functionality, consider moving that
+      code to a helper method.
+      There are several opportunities in this lab to simplify your code by
+      using helper methods. Think carefully!
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">
+      As you complete various milestones,
+      you should <tt>commit</tt> your changes and <tt>push</tt> them.
+      <b>Commit early and often</b>.
+      When the deadline arrives,
+      we will retrieve the latest version of your code.
+      If you are confident that you are done,
+      please include "Lab Submission" as the commit message for your final commit.
+      If you later decide that you have more edits to make, it is OK.
+      We will look at the latest commit before the deadline.
+    </p>
+    <ul class="bullet">
+      <li><b>Be sure to push your changes to GitLab</b>
+      </li>
+
+      <li><b>Verify your changes appear on GitLab</b>.  You should see
+	all changes reflected in the various files that you submit.
+	If not, go back and make sure you committed <em>and</em>
+	pushed.
+      </li>
+    </ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em>
+      git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration
+      (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository."
+      In the comments at the top your <tt>Interpreter.java</tt> file.
+    </p>
+
+
+    <p class="heading" id="late">Late Days</p>
+
+    <p class="text">
+      At any point up to the lab deadline, and for any reason at all,
+      you may decide to take a late day. In order to let us know, you
+      must fill
+      out <a href="https://docs.google.com/forms/d/e/1FAIpQLSfmHWOxn_aJJOLhPYsuRpHI8l4cEA_FSe8maPkBhho9bPF3Kg/viewform?usp=sf_link">this
+      form</a>.
+    </p>
+
+    <p class="text">
+      Over the course of the semester, you have a total of 3 free late
+      days at your disposal. You may not take more than two late days
+      on a given lab. When deciding whether or not to take a late day,
+      please remember that we give partial credit for any work that
+      you complete.
+    </p>
+
+
+  <p class="bottom">&nbsp;</p>
+</body>
+</html>

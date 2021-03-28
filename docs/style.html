@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="./resources/cs136.css" type="text/css">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+      CSCI 136
+    </title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="./index.html">Home</a> |
+      <a href="./schedule.html">Schedule</a> |
+      <a href="./labs.html">Labs</a> |
+      <a href="./handouts.html">Handouts</a> |
+      <a href="./links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+<p class="heading">
+Style Guide
+</p>
+<div class="text">
+
+The way you present your program is just as important as having a
+correct program.  While having good comments or good variable names
+will not affect the correctness of your program, it will make it
+easier to read your program.  It is important that others be able to
+understand your code so that they can modify your code if they have
+to.  A large fraction of your lab grade will be determined by your
+programming style.
+<p>
+This is a guide to help you better understand what we are looking for
+when we look at your programs.  As the semester progresses there will
+be steeper penalties for stylistic mistakes.  So, get into the habit
+of writing good labs from the beginning.  Our class examples the
+textbook should serve as additional examples of well-formatted and
+documented code.  <b>Always look over your code and your style before
+handing in your labs.</b>
+
+<h3>Commenting</h3>
+<p>Always write accurate yet concise comments:
+<ul>
+
+<li>Be specific with your comments.  What happens when the mouse
+    is pressed?  What is the <tt>Vector</tt> used for?  Your
+    comments should describe the intent of the code.  What are you
+    trying to accomplish with this piece of code?
+
+    <li>Do not make your comments too long.  Any line of comment or
+    code that is over 80 characters will not print nicely.  If it does
+    not print, the TA will not be able to read it.  Consider revising
+    or writing it on multiple lines.
+
+    <li>Do not overcomment!  Overcommenting can make the program hard
+    to read just as much as under-commenting.  Do not comment every
+    line.  If they are simple instructions, most people will
+    understand them without comments.  If you think you need
+    commenting, try commenting chunks of code under the same comment.
+
+    <li>Delete any extraneous code that is not used.  You would not
+    hand in an English paper with crossed out lines.  Similarly, you
+    should not hand in a lab with commented out code.  Remove all code
+    that you comment out.
+
+</ul>
+<p>You should write comments for:
+<ol>
+
+    <li><b>Class (Program)</b>: At the top of each class, you should
+    write your name, date of creation, and a brief description of what
+    the class is for.  If you decide to do more than the assignment
+    requested, you should describe these "extra" features in the
+    program under the class description.  Sometimes it's hard to tell
+    a bug from a feature.
+
+    <li><b>Methods:</b> Above each method heading there should be a
+    brief description of what the method does.  You should also
+    describe what each parameter means and what the return result
+    means.  If the method code is simple you do not need to comment in
+    the method body.  If the method body is complicated, you might
+    want to add some comments to certain areas that you deem to be
+    complicated.
+
+    <li><b>Variables and constants</b>: In general, variables and
+    constants should all have comments as to what they are used for.
+    For example a good comment for your variable <tt>int player </tt>
+    in our Nim game examples would be: <br>
+    <tt>// the player whose turn it currently is</tt>.  <br>
+    Occasionally several closely related variables
+    or constants can be grouped together under the same comment.
+
+</ol>
+
+<h3>Blank Lines</h3>
+Blank lines are used to delineate different areas of the code.  The
+instance variable declarations at the top of your program should be
+separated from the header of the class and the header of the first
+method.  There should always be space between methods.  It is
+advisable to break up long method bodies and long declarations into
+logical pieces.  Always start a new line after the semicolon.
+Always leave a blank line before a comment line.
+
+<h3>Names</h3>
+
+You should always choose names that suggest the meanings of the things
+being named.  If the purpose of a method is to draw a rectangle, then
+a good name for that method is <tt>drawRect</tt>.  If there is a
+variable used to store the cards held by a player, suitable names may
+be <tt>playerHand</tt> or <tt>hand</tt>.
+
+<ul>
+
+    <li>Names that have nothing to do with the program are bad.
+    Example: <tt>FramedRect frodo</tt>.
+
+    <li>Names that are not specific or descriptive enough are
+    generally bad names.  Ex.  <tt>Card card</tt> or <tt>Card c</tt>
+    are not as good as <tt>Card ace</tt> if the card represents an
+    ace.
+
+    <li>Try not to name objects sequentially.  You should only do this
+    when the objects are related in some way that is not otherwise
+    expressible.  Ex., <tt>card1</tt>, <tt>card2</tt>, <tt>card3</tt>
+    are not as good as <tt>ace</tt>, <tt>king</tt>, and <tt>queen</tt>
+    if that is what the cards are.
+
+</ul>
+<p>
+Also, follow the Java capitalization convention:
+<ul>
+<li> constants are all capital letters,
+<li> classes begin with uppercase,
+<li> variable and method names begin with lowercase, while uppercase is used to start
+new words in multi-word names.
+</ul>
+
+<p>
+Instance variables should almost <em>never</em> be declared to be <tt>public</tt>.  Instance
+variables should only be used when a value is part of the objects persistent state (e.g., it must be saved for use after
+a constructor or method has been completed).  Otherwise local variables
+should be used.
+</p>
+
+<h3>Format</h3>
+
+<p>
+Your program should be organized as neatly as possible.  All method
+headers should be aligned with each other.  Variables should also be
+aligned.  You should indent consistently.  A good heuristic is that
+whenever you see an open curly brace you should indent your code 2 or
+3 spaces until the ending curly brace.  See the example below.
+</p>
+
+<p>
+The following is a guide to what your code should look like.  There
+are variations that are acceptable, but this is a good format to
+follow.
+</p>
+
+<pre><code>
+/**
+ * Lab:
+ * Description of Class and Extras...
+ */
+public class ClassName {
+
+  // comment for firstVariable
+  type1 firstVariable;
+
+  // comment for secondVariable
+  type2 secondVariable;
+        .
+        .
+        .
+  /*
+   * This variable needs a really long comment that doesn't fit on
+   * the end of the line with the declaration
+   */
+  typeN nthVariable;
+
+  /**
+   * comments for method should follow "javadoc" formatting
+   * when possible
+   * @param  param1 is the first parameter
+   */
+  public void methodName1(type1 param1) {
+    code line 1;
+    if (condition) {
+      code line 3;
+      code line 4;
+    }
+    code line 5;
+  }
+
+  /**
+   * comments for method
+   *
+   * @param  param1 is the first parameter
+   * @param  param2 is the first parameter
+   * @return a value that indicates ...
+   * @pre precondition (if one exists)
+   * @pre a second precondition (if one exists)
+   * @post a postcondition
+   */
+  public int methodName2(type1 param1, type2 param2) {
+    .
+    .
+    .
+  }
+}
+</code></pre>
+
+<p class="bottom">
+</p>
+
+</div>
+</body>
+</html>
