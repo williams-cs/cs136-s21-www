@@ -1,0 +1,100 @@
+<h1 id="jdb-the-java-debugger"><code>jdb</code>: The Java Debugger</h1>
+<p>The Java Debugger (<code>jdb</code>) is not something that we’ve typically needed in CS136, but its “cousin”, the GNU Project debugger (<code>gdb</code>), is something that many systems programmers heavily lean on to help write, debug, and explore code. We’ll explore <code>jdb</code> here, and then use it to examine some sample programs.</p>
+<h2 id="debugger-what-is-it-good-for">Debugger, what is it good for?</h2>
+<p>One of the main reasons to use a debugger is to, well, debug. Here is one example of a simple program with an “obvious” bug: we try to access the array <code>strings</code> at an index that is beyond its length.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">// AIOOB = Array Index Out Of Bounds</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co">// This class has an &quot;obvious&quot; error: we overflow the length of our array!</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">public</span> <span class="kw">class</span> AIOOB {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span> (<span class="bu">String</span>[] args) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>        <span class="bu">String</span>[] strings = {<span class="st">&quot;array&quot;</span>, <span class="st">&quot;index&quot;</span>, <span class="st">&quot;out&quot;</span>, <span class="st">&quot;of&quot;</span>, <span class="st">&quot;bounds&quot;</span>, <span class="st">&quot;exception&quot;</span>};</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= strings.<span class="fu">length</span>; i++) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>            <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(strings[i]);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>        }</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    }</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>}</span></code></pre></div>
+<p>To debug a small program like this, I may choose to insert print statements. I could also run my program, encounter a crash, and then look at my run-time error message (<code>Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 6 at AIOOB.main(AIOOB.java:7)</code>). With enough experience, we may be able to use that error message and the code near the line number where the crash occurs to reason about the cause.</p>
+<p>However, as our programs become more complex, we will often find that the location where an error manifests itself may be very far from the location of the actual error. Worse, that distance may be far away in time, location, or both. NOT FUN!</p>
+<p><code>jdb</code> is another tool at our disposal in our quest to connect our programs’ symptoms to their causes. <code>jdb</code> lets us <em>single-step</em> through the execution of our program, one line at a time. At any point in our debugging process, we can pause our program’s execution to examine the state of our program’s memory, which lets us validate our assumptions and reason about the correctness of pieces of our code. Let’s use <code>jdb</code> on this simple program to demonstrate some of these features.</p>
+<h2 id="using-jdb">Using <code>jdb</code></h2>
+<p>We must first compile our program (<code>jdb</code> helps us correct errors in logic, not in syntax; we must have a syntactically correct program to start). In addition to our normal <code>javac</code> command, we must pass information to our compiler so that it <em>includes debugging symbols</em> in our compiled code. <code>jdb</code> needs this extra information to maximize its usefulness. To do this, we use the <code>-g</code> flag when we compile.</p>
+<pre><code>$ javac -g AIOOB.java
+$ ls
+AIOOB.class AIOOB.java</code></pre>
+<p>Once we have our compiled program, we can run <code>jdb</code> on a java class. Here, we want to run <code>jdb</code> to step through the execution of the <code>main</code> method in <code>AIOOB.java</code>, which has the <code>AIOOB</code> class. We first start <code>jdb</code>:</p>
+<pre><code>$ jdb AIOOB
+Initializing jdb ...
+&gt;</code></pre>
+<p>At this point we’re given a prompt (our prompt is <code>&gt;</code> at first; later we will see our prompt changes). Our program hasn’t yet begun executing—we will use <code>jdb</code> to control what happens next.</p>
+<h3 id="setting-breakpoints">Setting Breakpoints</h3>
+<p>We will first create what is called a <strong>breakpoint</strong> in our program. A breakpoint is a location in our code (e.g., line number, method) where execution will stop, and where <code>jdb</code> will give us control. To create a breakpoint, we use the <code>stop</code> command. There are several ways to invoke <code>stop</code>, including: * <code>stop in &lt;ClassName&gt;:&lt;line_num&gt;</code>. This version tells <code>jdb</code> to stop execution once our program hits the specified line of the program. * <code>stop at &lt;ClassName&gt;.&lt;methodName&gt;</code>. This version tells <code>jdb</code> to stop at the start of the method <code>&lt;methodName&gt;</code> inside the class <code>&lt;ClassName&gt;</code>. (If we overload out methods, we also need to specify the argument types so that <code>jdb</code> knows which version of the method we mean.)</p>
+<p>Since we want to stop at the start of our main method, which begins at line <code>5</code> in <code>AIOOB</code>, we could say either: * <code>stop at AIOOB:5</code>, or * <code>stop in AIOOB.main</code></p>
+<pre><code>$ jdb AIOOB
+Initializing jdb ...
+&gt; stop in AIOOB.main
+Deferring breakpoint AIOOB.main.
+It will be set after the class is loaded.
+&gt; _</code></pre>
+<h2 id="running-our-program">Running Our Program</h2>
+<p>Now we’ve set a breakpoint (and it is the only breakpoint we want to set), so we’re ready to run our program. We can use the <code>run</code> command (possibly with arguments).</p>
+<pre><code>&gt; run
+run AIOOB
+Set uncaught java.lang.Throwable
+Set deferred uncaught java.lang.Throwable
+&gt;
+VM Started: Set deferred breakpoint AIOOB.main
+
+Breakpoint hit: &quot;thread=main&quot;, AIOOB.main(), line=5 bci=0
+5           String[] strings = {&quot;array&quot;, &quot;index&quot;, &quot;out&quot;, &quot;of&quot;, &quot;bounds&quot;, &quot;exception&quot;};
+
+main[1] _</code></pre>
+<p>We’ve started execution of our program until we hit the line where we set our breakpoint. Then <code>jdb</code> paused our program’s execution, and ceded control back to us.</p>
+<p>At this point, we can set additional breakpoints, examine our program’s state, or we can execute one or more lines of code.</p>
+<h2 id="exploring-our-code">Exploring Our Code</h2>
+<p>To get a sense of what our program is doing, we can use the <code>list</code> command to print the code surrounding our current point in the execution.</p>
+<pre><code>main[1] list
+1    // AIOOB = Array Index Out Of Bounds
+2    // This class has an &quot;obvious&quot; error: we overflow the length of our array!
+3    public class AIOOB {
+4       public static void main (String[] args) {
+5 =&gt;        String[] strings = {&quot;array&quot;, &quot;index&quot;, &quot;out&quot;, &quot;of&quot;, &quot;bounds&quot;, &quot;exception&quot;};
+6           for (int i = 0; i &lt;= strings.length; i++) {
+7               System.out.println(strings[i]);
+8           }
+9       }
+10    }
+main[1] _</code></pre>
+<p>The <code>=&gt;</code> next to the number five shows that we are currently stopped at line 5. To execute that line, we can say <code>step</code>, which executes the line and moves to the next line <em>even if that line is inside a different function</em>, or <code>next</code> which executes the next line <em>in this function</em> by resolving the entire expression on the current line (which may call several other functions, yield return values, etc.).</p>
+<p>If I instead wanted to continue executing my program until I hit the next breakpoint, I could use the <code>cont</code> command (short for continue). Let’s try that next:</p>
+<pre><code>main[1] cont
+&gt; array
+index
+out
+of
+bounds
+exception
+
+Exception occurred: java.lang.ArrayIndexOutOfBoundsException (uncaught)&quot;thread=main&quot;, AIOOB.main(), line=7 bci=49
+7               System.out.println(strings[i]);
+
+main[1] _</code></pre>
+<p>Continue executed my program, which printed out some strings, and then it encountered a crash. However, <em><code>jdb</code> did not stop</em>! I am still able to interact with my program to see what is going on!</p>
+<p>I can use the <code>print</code> command to evaluate expressions. I can also use the <code>locals</code> command to see the state of all local variables in this function. Since my exception gives me some clues as to what is going on (array index out of bounds is the name of the exception…) I may want to examine the features of the array (perhaps <code>strings.length</code>), as well as the value of the index variable (<code>i</code>) that I’m using.</p>
+<pre><code>main[1] print strings.length
+ strings.length = 6
+main[1] print i
+ i = 6
+main[1] print strings[i]
+java.lang.IndexOutOfBoundsException: Invalid array range: 6 to 6
+ strings[i] = null
+main[1]</code></pre>
+<p>This tells me what I need to know! I can’t use index 6 to access my 0-indexed array that only has 6 elements.</p>
+<p>Since the <code>locals</code> argument is very useful for giving me complete information all at once, here is that output:</p>
+<pre><code>main[1] locals
+Method arguments:
+args = instance of java.lang.String[0] (id=419)
+Local variables:
+strings = instance of java.lang.String[6] (id=420)
+i = 6
+main[1] _</code></pre>
+<p>There are many other useful features in <code>jdb</code>. If you want to explore its behavior, the best way to do so is to try it out. Take one of the programs you’ve written this semester, compile it with the <code>-g</code> flag, and then run it using <code>jdb</code>. The <code>where</code>, <code>up</code>, and <code>down</code> commands are particularly useful. Try them out! If you want to know more about any command, you can type <code>help</code> at the <code>jdb</code> prompt for a list of all the options. You can also use the <code>man jdb</code> command on the terminal. This will open up the <code>jdb</code> Unix manual page. You can navigate with the arrows and exit by typing <code>q</code>.</p>
+<p>Explore and enjoy!</p>

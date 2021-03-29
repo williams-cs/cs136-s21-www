@@ -119,6 +119,11 @@ to open that local file.
 	  <a href="./SymbolTable.java">SymbolTable.java</a>
 	  source files (also in your private repository)
 	  before coming to lab.
+    <ul class="bullet">
+      <li><b>Note:</b> Be sure to use named constants, such as Token.NUMBER_KIND,
+        Token.BOOLEAN_KIND, and so on, and not the underlying int values (1,2, etc.).
+      </li>
+    </ul>
 	</li>
 	<li>
 	  Read this handout and think about your lab design.
@@ -259,14 +264,30 @@ to open that local file.
 	</li>
 
 	<li>
-	  You can use the <tt>gs</tt> interpreter if you want try out
-	  the commands yourself (you may need to install the program
-	  "Ghostscript", which is the name of the <tt>gs</tt>
-	  PostScript interpreter).  Type the command:
-	  <pre><code>$  gs -dNODISPLAY</code></pre>
-	  This will give you a text-only postscript interpreter.
-	  You can type commands at the prompt as they appear in the lab
-	  assignment.  Type <tt>quit</tt> to exit the interpreter.
+	  <b>Experimenting with PostScript</b>
+    If you'd like to see how a real PostScript interpreter evaluates
+    PostScript code, here are a few options.
+    <ul class="bullet">
+      <li>
+        This <a href="https://tio.run/#postscript-xpost">website</a>
+        lets you enter PostScript (into the Code textbox) and run it.
+        Note: It's a bit fussy, sometimes we needed to reload the page.
+      </li>
+      <li>
+        You can use <tt>gs</tt> (GhostScript Interpreter) if you have
+        it installed on your system. Type the command:
+	      <pre>
+          <code>$  gs -dNODISPLAY</code>
+        </pre>
+	      to get a text-only postscript interpreter (or to learn whether
+        gs is installed on your system.
+	       You can type commands at the prompt as they appear in the lab
+	        assignment.  Type <tt>quit</tt> to exit the interpreter.
+
+          If PostScript is not installed, try the website above or
+          search the web for a free GhostScript installation.
+      </li>
+    </ul>
 	  </li>
       </ul>
     </p>
@@ -470,22 +491,10 @@ and
 
 
     <p class="heading" id="late">Late Days</p>
-
-    <p class="text">
-      At any point up to the lab deadline, and for any reason at all,
-      you may decide to take a late day. In order to let us know, you
-      must fill
-      out <a href="https://docs.google.com/forms/d/e/1FAIpQLSfmHWOxn_aJJOLhPYsuRpHI8l4cEA_FSe8maPkBhho9bPF3Kg/viewform?usp=sf_link">this
-      form</a>.
-    </p>
-
-    <p class="text">
-      Over the course of the semester, you have a total of 3 free late
-      days at your disposal. You may not take more than two late days
-      on a given lab. When deciding whether or not to take a late day,
-      please remember that we give partial credit for any work that
-      you complete.
-    </p>
+  <p class="text">Remember that if&dash;for any reason&dash;you will be submitting your lab beyond <thead>
+  submission deadline, you'll need to</thead> fill out the <a
+  href="https://docs.google.com/forms/d/e/1FAIpQLScFAr2Cu2rzYYoxRiiTZmQrXowHfBPBCUbYQ45aV4WffO-WJA/viewform"><i>Late Lab Form</i></a>.
+  That form contains a description of the late lab submission policy for the course</p>
 
 
   <p class="bottom">&nbsp;</p>
