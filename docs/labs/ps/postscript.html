@@ -58,7 +58,8 @@
     </p>
     <ul class="bullet">
       <li>The <code>-d</code> javadoc option tells the <code>javadoc</code> program to place its output in the <tt>javadoc/</tt> directory.
-      <li>The <code>*.java</code> argument tells Javadoc to create documentation for every single file in your current directory that ends with the extension <code>.java</code>. The <code>*</code> is what is called a "wildcard character" (in <code>*.java</code>, the <code>*</code> will expand to match anything that it can, given the constraint that the string ends in <code>.java</code>).
+	  <li>The <code>*.java</code> argument tells Javadoc to create documentation for every single file in your current directory that ends with the extension <code>.java</code>. The <code>*</code> is what is called a "wildcard character" (in <code>*.java</code>, the <code>*</code> will expand to match anything that it can, given the constraint that the string ends in <code>.java</code>).
+	  <li>You may get some errors about "unknown tag" for pre and post.  that's perfectly fine; you can ignore these errors.  The errors are generated because pre and post conditions are not standard javadoc tags. 
     </ul>
 
     <p class="text">
@@ -154,7 +155,7 @@ to open that local file.
       <ul class="bullet">
 	<li><b>Problem 10.3</b>: Suppose you wish to fill a stack with
 	  a copy of another, maintaining the order of elements. Using
-	  only Stack operations, describe how this would be done. How
+	  only Stack operations (<tt>push</tt> and <tt>pop</tt>), describe how this would be done. How
 	  many stacks are necessary (including the source stack and
 	  any additional stacks that you use)? <em>Note: the original
 	  stack and its contents should be preserved. After completing
@@ -162,20 +163,20 @@ to open that local file.
 	  stacks.</em>
 	</li>
 
-	<li><b>Problem 10.4</b>: Suppose you wish to reverse the order
-	  of elements of a stack (when you are done, the "reversed
-	  elements" should be located in the original stack). Using
-	  only Stacks and Stack operations, describe how this could be
-	  done. How many stacks are necessary (including the source
-	  stack and any additional stacks that you use)?
+	<li><b>Problem 10.4</b>: Suppose you wish to reverse the order of elements
+		of a stack (when you are done, the "reversed elements" should be
+		located in the original stack). Using only stacks and stack operations
+		(<tt>push</tt> and <tt>pop</tt>), describe how this could be done. How
+		many stacks are necessary (including the source stack and any
+		additional stacks that you use)?
 	</li>
 
-	<li><b>Problem 10.5</b>: Suppose you wish to move the contents
-	  of one queue into another, preserving the order of the
-	  elements. Using only Queue operations, describe how this
-	  would be done. <em>Also indicate the number of queues
-	  needed, including the source queue, the destination queue,
-	  and any additional queues that you use.</em>
+	<li><b>Problem 10.5</b>: Suppose you wish to move the contents of one queue
+		into another, preserving the order of the elements. Using only Queue
+		operations (<tt>enqueue</tt> and <tt>dequeue</tt>), describe how this
+			would be done. <em>Also indicate the number of queues needed,
+				including the source queue, the destination queue, and any
+				additional queues that you use.</em>
 	</li>
       </ul>
     </p>
@@ -248,19 +249,28 @@ to open that local file.
 	  operations?
 	</li>
 
+	<li> 
+		The basic operation <tt>ne</tt> (not equal) is the opposite of
+		<tt>eq</tt>.  <tt>sub</tt> and <tt>div</tt> are for subtraction and
+		division respectively.  The other basic operations are defined in the
+		handout.
+	</li>
+
 	<li>
-	  Implementing the basic operations
-	  (<tt>pstack</tt>, <tt>add</tt>, <tt>sub</tt>, <tt>mul</tt>,
-	  <tt>div</tt>, <tt>dup</tt>, <tt>exch</tt>, <tt>eq</tt>, <tt>ne</tt>,
-	  <tt>def</tt>, <tt>pop</tt>, <tt>quit</tt>, and <tt>ptable</tt>)
-	  will allow you to earn <b>4.5 out of 5 functionality points</b>.
-	  You can earn the last functionality points by <b>implementing the
-	  extensions outlined in thought questions 3, 4, and 5</b> from the book.
-	  In particular, you should implement <em>procedure</em> definitions
-	  and calls, and the <tt>if</tt> instruction.
-	  These extensions may require a little thought,
-	  but ought to be straight-forward to implement if you have designed
-	  your interpreter engine well.
+	  Implementing the basic operations (<tt>pstack</tt>, <tt>add</tt>,
+	  <tt>sub</tt>, <tt>mul</tt>, <tt>div</tt>, <tt>dup</tt>, <tt>exch</tt>,
+	  <tt>eq</tt>, <tt>ne</tt>, <tt>def</tt>, <tt>pop</tt>, <tt>quit</tt>, and
+	  <tt>ptable</tt>) will allow you to earn <b>4.5 out of 5 functionality
+	  points</b>.  You can earn the last functionality points by
+	  <b>implementing the extensions outlined in thought questions 3, 4, and 5</b>
+	  from the book.  In particular, you should implement <em>procedure</em>
+	  definitions and calls, the <tt>lt</tt> (less than) instruction, and the
+	  <tt>if</tt> instruction.  
+	  Note that procedure calls only work if a space is left before and after
+	  the opening and closing braces.
+	  These extensions may require a little thought, but
+	  ought to be straight-forward to implement if you have designed your
+	  interpreter engine well.
 	</li>
 
 	<li>
