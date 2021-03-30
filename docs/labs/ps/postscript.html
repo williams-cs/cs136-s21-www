@@ -59,7 +59,7 @@
     <ul class="bullet">
       <li>The <code>-d</code> javadoc option tells the <code>javadoc</code> program to place its output in the <tt>javadoc/</tt> directory.
 	  <li>The <code>*.java</code> argument tells Javadoc to create documentation for every single file in your current directory that ends with the extension <code>.java</code>. The <code>*</code> is what is called a "wildcard character" (in <code>*.java</code>, the <code>*</code> will expand to match anything that it can, given the constraint that the string ends in <code>.java</code>).
-	  <li>You may get some errors about "unknown tag" for pre and post.  that's perfectly fine; you can ignore these errors.  The errors are generated because pre and post conditions are not standard javadoc tags. 
+	  <li>You may get some errors about "unknown tag" for pre and post.  that's perfectly fine; you can ignore these errors.  The errors are generated because pre and post conditions are not standard javadoc tags.
     </ul>
 
     <p class="text">
@@ -85,6 +85,13 @@
 </p>
 <pre>
           <code>$ open javadoc/index.html</code>
+</pre>
+<p class="text">
+This will open the javadoc page for your Interpreter class. To see the javadocs
+for all four classes, try:
+</p>
+<pre>
+          <code>$ open javadoc/allclasses-index.html</code>
 </pre>
 <p class="text">
 I can also use my browser of choice (e.g., Firefox, Chrome, Safari, Edge, etc.)
@@ -249,7 +256,7 @@ to open that local file.
 	  operations?
 	</li>
 
-	<li> 
+	<li>
 		The basic operation <tt>ne</tt> (not equal) is the opposite of
 		<tt>eq</tt>.  <tt>sub</tt> and <tt>div</tt> are for subtraction and
 		division respectively.  The other basic operations are defined in the
@@ -265,7 +272,7 @@ to open that local file.
 	  <b>implementing the extensions outlined in thought questions 3, 4, and 5</b>
 	  from the book.  In particular, you should implement <em>procedure</em>
 	  definitions and calls, the <tt>lt</tt> (less than) instruction, and the
-	  <tt>if</tt> instruction.  
+	  <tt>if</tt> instruction.
 	  Note that procedure calls only work if a space is left before and after
 	  the opening and closing braces.
 	  These extensions may require a little thought, but
