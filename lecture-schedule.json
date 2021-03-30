@@ -354,6 +354,14 @@
 			"materials" : [
 			],
 			"post" : [
+				"[Code :",
+          "- <a href='handouts/iteratorExamples/FibonacciNumbers.java'>FibonacciNumbers.java</a>",
+          "- <a href='handouts/iteratorExamples/ReverseIterator.java'>ReverseIterator.java</a>",
+          "- <a href='handouts/iteratorExamples/SkipIterator.java'>SkipIterator.java</a>",
+          "- <a href='handouts/iteratorExamples/StackIterators.java'>StackIterators.java</a>",
+					"- <a href='handouts/iteratorExamples/Collatz.java'>Collatz.java</a>",
+					"- <a href='handouts/iteratorExamples/Primes.java'>Primes.java</a>",
+        "]"
 			]
 		},
 		{
@@ -364,6 +372,8 @@
 				"<i>Bailey</i> 11"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/UZVYqaGtCio'>Ordered Structures</a>",
+				"[Slides: <a href='handouts/OrderedStructures.pdf'>Ordered Structures</a>]"
 			],
 			"materials" : [
 			],
@@ -378,6 +388,8 @@
 				"<i>Bailey</i> 12-12.3"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/a47Uoad6nfk'>Introduction to Trees</a>",
+				"[Slides: <a href='handouts/treesIntro.pdf'>treesIntro.java</a>]"
 			],
 			"materials" : [
 			],
