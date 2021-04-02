@@ -377,7 +377,10 @@
 			],
 			"materials" : [
 			],
-			"post" : []
+			"post" : [
+				"- <a href='handouts/iteratorExamples/Giterator.java'>Giterator.java</a>",
+				"- <a href='handouts/iteratorExamples/TestIterator.java'>TestIterator.java</a>"
+			]
 		},
 
 		{
@@ -394,6 +397,10 @@
 			"materials" : [
 			],
 			"post" : [
+				"[Code :",
+				"- <a href='handouts/BinaryExpressionTree.java'>BinaryExpressionTree.java</a>",
+        "- <a href='handouts/BinExpTreeFromPS.java'>BinExpTreeFromPS.java</a>",
+        "]"
 			]
 		},
 		{
@@ -404,7 +411,12 @@
 				"<i>Bailey</i> 12.4"
 			],
 			"pre" : [
-			],
+				"Video: <a href='https://youtu.be/E5u97kH8Da4'>Recursion and Induction on Trees</a>",
+	        "Video: <a href='https://youtu.be/yRDLl9Wx0Jk'>Tree Traversals</a>",
+	        "[Slides: <a href='handouts/treeRecursionInduction.pdf'>Induction and Recursion on Trees</a>]",
+	      "[Slides: <a href='handouts/treeTraversals.pdf'>Tree Traversals</a>]",
+	      "]"
+					],
 			"materials" : [
 			],
 			"post" : [
