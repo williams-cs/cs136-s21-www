@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+
+    <p class="heading">Lab 6: Comparators &amp; my Favorite <i>Sort</i> of Vectors</p>
+
+    <p class="info">
+      The goals of this week's lab are to gain experience
+      with<br> &bull; Java's <tt>Comparator</tt> interface,
+      and<br> &bull; to use <tt>Comparator</tt> objects to
+      sort by various criteria.
+
+      <br>
+      <br>
+
+      <b>Important note:</b> This week you may again work with a partner.
+    </p>
+
+    <p class="heading">Pre-lab: Step 0</p>
+    <p class="text">
+      Before lab, please do the following:
+      <ul class="bullet">
+    	<li>
+    	  As in prior labs, you should read through the lab handout
+    	  and develop a plan before coming to lab. Although this is a
+    	  partner lab, you and your partner may want to do this
+    	  exercise independently so that you and your partner can
+    	  discuss and compare your approaches. It is OK if your final
+    	  design deviates from your pre-lab design.
+    	</li>
+      <li>As you design your implementation, consider carefully <i>where</i>
+        (that is, in which class) specific functionality should reside.
+        For example
+        <ul class="bullet">
+          <li>The MyVector class should be a general-purpose class for
+            storing any type of object that can be sorted with a Comparator.
+            Should this class contain any code related to Students?
+          </li>
+          <li>The Student class should provide the essentials for storing and
+            retrieving
+            information about a student. Should it know anything
+            about future, possibly idiosyncratic, methods for comparing students?
+          </li>
+          <li>What's the most sensible location for the code that answers <thead>
+            assigned questions about students?
+          </li>
+        </ul>
+      </li>
+      </ul>
+    </p>
+
+
+    <p class="heading">Lab Assignment</p>
+    <p class="text">
+      In class, we saw how to implement the <tt>Comparable</tt>
+      interface and write a <tt>compareTo</tt> method to compare two
+      objects of the same class. While this is sufficient in many
+      cases, especially when there is a "natural" way to order objects
+      of a given class, other times we will want to sort the same data
+      types in different ways.  For example, we may wish to sort
+      <tt>Student</tt> records by name in some situations and by grade point
+      average in other situations.  A single <tt>compareTo</tt> method is not
+      sufficient to do this, because <tt>compareTo</tt> only provides one way
+      to sort such records.
+    </p>
+
+    <p class="text">
+      In order to sort objects in multiple ways,
+      the <tt>structure5</tt> package uses the
+      Java <tt>Comparator</tt> interface. A
+      <tt>Comparator</tt> object's sole purpose is to compare two
+      objects of some given type and return a value indicating which
+      one is "smaller"&mdash;that is, which comes before the other in
+      the order imposed by the comparator. We can then sort in
+      different ways by using different kinds of <tt>Comparator</tt>
+      objects in the sorting algorithm.  See
+      <i>Bailey</i> Chapter 6.8&ndash;6.9 for a discussion of
+      <tt>Comparator</tt>s and how to use them.
+
+    </p>
+
+    <p class="text">
+
+      In this lab we will develop an extension of <tt>Vector</tt>, called
+      <tt>MyVector</tt>, that includes a new method <tt>sort</tt> that will
+      (with the help of a <tt>Comparator</tt>) order the elements of the
+      <tt>Vector</tt>.  Here are the basic steps for implementing this new
+      class:
+
+    </p>
+
+
+    <p class="heading">Step 1: Get the Code</p>
+    <p class="text">
+
+      Clone your team's private repository. This repository contains starter
+      files for <tt>MyVector.java</tt> and <tt>Student.java</tt>, plus
+      <tt>phonebook.txt</tt> for the last part. The phone book is a
+      few years old, so don't expect to find yourself in it (although
+      you might recognize some of the names that you do find)!
+      <b>Note: this file is not for public distribution.</b>
+    </p>
+
+
+
+    <p class="heading">Step 2: MyVector.java</p>
+    <p class="text">
+
+      Fill in the class, <tt>MyVector</tt>, which is declared to be an
+      extension of the <tt>structure5.Vector</tt> class<a href="#endoffile">[1]</a>.
+      Since we are using generic structures, the
+      class header for <tt>MyVector</tt> will be:
+
+    </p>
+    <pre>
+              <code>public class MyVector&lt;E&gt; extends Vector&lt;E&gt;</code>
+    </pre>
+    <p class="text">
+      You should write a default constructor for this class that
+      simply calls <tt>super();</tt>.  This will force the constructor
+      in <tt>Vector</tt> (the parent/super-class of <tt>MyVector</tt>)
+      to be called.  This, in turn, will initialize the protected
+      ﬁelds of the parent class.
+    </p>
+    <p class="heading">Step 3: sort</p>
+    <p class="text">
+      Inside <tt>MyVector.java</tt>, construct a new method
+      called <tt>sort</tt>.  It should have the following declaration:
+    </p>
+    <pre><code>
+	/**
+	* @param c a comparator that is used to order objects in this Vector
+	* @pre c is non-null
+	* @post this vector's contents are ordered as determined by c
+	*/
+	public void sort(Comparator&lt;E&gt; c) { ... }
+    </code></pre>
+    <p class="text">
+      <tt>Comparator</tt> is a Java interface, which, essentially, looks like:
+    </p>
+    <pre><code>
+	public interface Comparator&lt;E&gt; {
+	  /**
+	  * @param a an object to compare
+	  * @param b an object to compare
+	  * @return  (< 0) if a is smaller than b; (0) if a equals b; and
+	  * (> 0) if a is larger than b.
+	  */
+	  int compare(E a, E b);
+	}
+    </code></pre>
+    <p class="text">
+
+      You will develop some classes that implement the
+      <tt>Comparator</tt> interface. <tt>Comparator</tt> is
+      parameterized by the type <tt>E</tt> of object that it can compare:
+      in the case of the <code>sort</code> method, the type of <tt>c</tt> is
+      <tt>Comparator&lt;E&gt;</tt>&mdash;that is, the <tt>c</tt> object must
+      implement a comparator for the type of data (<tt>&lt;E&gt;</tt>) stored in
+      the vector. This sort method then uses the <tt>Comparator</tt>
+      object <tt>c</tt> to actually perform any needed comparisons of the
+      values in <tt>MyVector</tt>.  You may use any sort algorithm,
+      although it may be good to start with a straightforward approach,
+      such as selection sort. You can be more ambitious once the basic
+      assignment is working.
+    </p>
+    <p class="text">
+      When writing new comparators, you will specify what type they are
+      deﬁned for. For example, we would deﬁne a <tt>CardComparator</tt>
+      class to compare <tt>Card</tt> objects as follows:
+    </p>
+    <pre><code>
+        import java.util.Comparator;
+
+        public class CardComparator implements Comparator&lt;Card&gt; {
+          ...
+        }
+    </code></pre>
+    <p class="text">
+
+      The <tt>compare</tt> method in that class would then take two
+      <tt>Card</tt> objects as parameters.
+    </p>
+    <p class="text">
+      Be sure to test <tt>MyVector</tt> thoroughly before going on to the
+      next part. <tt>MyVector</tt> inherits a <tt>toString()</tt> method
+      from <tt>Vector</tt>, which should be handy for printing out the
+      contents of your vectors during testing.
+    </p>
+
+
+    <p class="heading">Step 4: Reading The Phonebook</p>
+    <p class="text">
+
+      You are now going to write a program that reads Williams College
+      phone data into a <tt>MyVector</tt> and then answers some questions
+      by sorting it with <tt>Comparator</tt>s applied to the student
+      entries.  The file <tt>phonebook.txt</tt> contains student
+      entries, represented by three lines, and separated by a line of
+      dashes:
+
+    </p>
+    <pre><code>
+        Iluv C Science
+        Poker Flats B5
+        4135973427 3334 5406394821
+        -----------------
+        Steve Freund
+        Thompson Physics Lab 302
+        4135974260 1234 4134581234
+        -----------------
+        .
+        .
+        .
+    </code></pre>
+    <p class="text">
+
+      The first line is the name of the student, the second is their
+      campus address, and the third contains the campus phone, su box, and
+      home (or cell) phone.  You should create a <tt>Student</tt> class
+      which represents all the information for a single student.
+
+    </p>
+    <p class="text">
+
+      Once you have your <tt>Student</tt> class working, you will write
+      code to to read in the data file of student information and create a
+      <tt>MyVector</tt> of <tt>Student</tt> objects; after this your
+      code should implement logic to answer the questions listed
+      below. Here are some implementation hints and details:
+    </p>
+    <ul class="bullet">
+      <li>
+	You should read in the phone numbers as
+	<tt>long</tt> values (e.g., by using the <tt>Scanner</tt>
+	class's <tt>nextLong()</tt> method) rather than <tt>int</tt>
+	values, because integer variables cannot store numbers greater
+	than about 2 billion due to how they are represented inside
+	the computer. Phone numbers will "overflow" this size.
+      </li>
+      <li>
+	Some phone numbers are -1 to indicate that the actual
+	information is not available. That is OK; your <tt>Student</tt>
+	class should be able to accommodate this.
+      </li>
+      <li>
+	You can assume that the input data file is well-formed. For
+	"real-world" data, this is a bad assumption; files may be
+	missing fields or might be formatted
+	incorrectly/inconsistently. We often begin by "scrubbing" our
+	data before we attempt to process it. That is not necessary
+	for this lab. All entries in the phonebook have exactly 3
+	lines followed by a "divider" of dashes (even the last entry).
+      </li>
+      <li>
+	In addition to <tt>phonebook.txt</tt>, we have include a
+	smaller file,
+	<tt>testphonebook.txt</tt>. You may wish to test your program
+	using this file, because debugging errors is much easy when
+	you can reason about the data set!
+      </li>
+    </ul>
+
+
+    <p class="heading">Step 5: Phonebook Questions</p>
+    <p class="text">
+      The ultimate goal of your program is to print out answers to the
+      following questions.  When we run your program, we expect this
+      output to be presented in a clear, easy-to-read way. This means
+      you should include context with each answer (e.g., rather than
+      printing "7", you should print "There are 7 total Bill's in the
+      student phone book.") and you should make sure that each answer
+      is differentiable (i.e., we should <i>easily</i> be able to tell
+      where one answer ends and the next begins!).
+
+      In addition to printing these answers as program output, please
+      include the answers to these questions
+      for <tt>studentphonebook.txt</tt> in your <tt>PROBLEMS.md</tt>
+      file.
+    </p>
+    <ol>
+      <li>
+	Which student appears first in a printed phone book (i.e., a
+	phone book that has entries that are sorted by name), comparing
+  names in the format in which they appear in the data file (i.e.,
+	first name first)?
+      </li>
+      <li>
+	Which student has the smallest SU box?  Largest?
+      </li>
+      <li>
+	Which student has the most vowels in his or her full name?
+	(You may ignore "Y"s when counting vowels.)
+      </li>
+      <li>
+	Which unique address is shared by the most students, and
+	what are their names? (Note: you should not consider
+	"Greylock" as an address; individual dorm rooms, houses, or
+	coops have unique addresses.) You may find it useful to
+	build a second vector storing <tt>Association</tt>s between
+	each address and the number of students living there.  A
+	special comparator can then be used to sort that vector by
+	comparing the number of students at each address.  Once the
+	most common address is known, you can consult the original
+	vector of
+	<tt>Student</tt>s and print those living at that address.
+
+	<br>
+
+	Some students have address <tt>UNKNOWN</tt> because they are
+	abroad, on leave, etc. These students should be ignored for
+	this question.  Any other student entries with strange
+	formatting, should also be ignored.  (But please let your
+	instructor know if you find any weird entries.)
+      </li>
+
+      <li>
+	What are the ten most common area codes for student home
+	phone numbers, in decreasing order?  Some phone numbers are
+	<tt>-1</tt> to indicate that the actual information is not
+	available.  You should simply disregard&mdash;for this
+	question&mdash;students without a known home phone number.
+      </li>
+    </ol>
+
+    <p class="text">
+      When designing your solution, it is a good idea to <i>reuse</i>
+      your vector of student data. Answering each question will likely
+      involve sorting the vector; once you have answered a question,
+      you can resort the vector to answer the next question. It is
+      wasteful to create a new vector by reading in the phonebook
+      repeatedly. If you think that you DO need auxiliary data to answer a
+      question, that is fine. Just avoid duplicate data when you can.
+    <p>
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in the previous week. In fact, solutions to this lab
+      are likely going to be less modular than past last due to the
+      structure of the task: we are writing code that answers a
+      specific question. So try to use good design principles when
+      possible (e.g., move code that implements a concrete task into a
+      helper method, apply public/private/protected visibility
+      modifiers as appropriate, use abstraction to hide the details of
+      your implementation, etc.), but also recognize that we may be
+      limited by the specificity of the task.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants).
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc”
+	comment (starts with <code>/**</code> and ends
+	with <code>*/</code>; it should include descriptions of the
+	function at the top, descriptions of return values after
+	a <code>@return</code> tag, descriptions of each argument
+	after a <code>@param</code> tag, and pre/post conditions after
+	the <code>@pre</code> or <code>@post</code> tags). Think
+	carefully about what methods *should* be public and why.
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+      </li>
+    </ul>
+
+    <p class="heading">Step 6: Textbook Questions</p>
+    <p class="text">
+
+      In addition, <b>answer the following questions</b> in your
+      <tt>PROBLEMS.md</tt> file, and submit those answers with the
+      rest of your code this week.
+
+      <ul class="bullet">
+	<li>
+	  Problem 6.4 (You can ignore average case)
+	</li>
+	<li>
+	  Problem 6.13 (For those sorts that are not stable, explain why)
+	</li>
+	<li>
+	  Problem 6.14
+	</li>
+      </ul>
+    </p>
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+    <ul class="bullet">
+      <li>
+	Your well-documented source code for all Java files used. This
+	should include <tt>Student.java</tt>, <tt>MyVector.java</tt>,
+	and possibly a separate file with the class that contains the
+	main method that prints answers to the questions.
+      </li>
+      <li>
+	A file named <tt>PROBLEMS.md</tt> that includes:
+	<ul>
+	  <li>
+	    Answers to the 3 Book questions above (6.4, 6.13, and 6.14)
+	  </li>
+	  <li>
+	    The answers (printed by your program) to the Phonebook questions in the lab handout.
+	  </li>
+	</ul>
+      </li>
+      <li>
+	A description in your <tt>README.md</tt> file that indicates how to run your program.
+	This should contain a command that can be copied and pasted into the terminal to run
+	your code.
+      </li>
+    </ul>
+    <p class="text">
+      If you worked with a partner, submit one folder with your collaborative solution.
+    </p>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.  Be sure to document your program appropriately:
+      include pre/post conditions and assertions where appropriate.
+      We will also be looking at how well you organize your code.
+      Whenever you see yourself duplicating functionality, consider moving that
+      code to a helper method. There are several opportunities in this lab to simplify
+      your code by using helper methods. Think carefully!
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">As you complete portions of this lab, you
+    should <code>commit</code> your changes and <code>push</code>
+    them. <u>Commit early and often.</u> When the deadline arrives, we
+    will retrieve the latest version of your code. If you are
+    confident that you are done, please use the phrase <code>"Lab
+    Submission"</code> as the commit message for your final commit. If
+    you later decide that you have more edits to make, it is OK. We
+    will look at the latest commit before the deadline.</p>
+    <ul class="bullet">
+      <li><u>Be sure to push your changes.</u></li>
+      <li><u>Verify your changes are saved and visible on GitLab.</u>
+      Navigate in your web browser to your private repository. You
+      should see all changes reflected in the files that
+      you <code>push</code>. If not, go back and make sure you have
+      both committed and pushed.</li>
+    </ul>
+    <p class="text">We will know that the files are yours because they
+    are in <em>your</em> <code>git</code> repository. <u>Do not
+    include identifying information in the code that you submit.</u>
+    We grade your lab programs anonymously to avoid bias. In
+    your <code>README.md</code> file, please cite any sources of
+    inspiration or collaboration (e.g., conversations with
+    classmates). We take the honor code very seriously, and so should
+    you. Please include the statement <code>"I am the sole author of
+    the work in this repository."</code> in the comments at the top
+    your Java files.</p>
+    <!---
+	<p class="text">
+	  As you complete various milestones,
+	  you should <tt>commit</tt> your changes and <tt>push</tt> them.
+	  <b>Commit early and often</b>.
+	  When the deadline arrives, we will retrieve the latest version of your code.
+	  If you are confident that you are done,
+	  please include "Lab Submission" as the commit message for your final commit.
+	  If you later decide that you have more edits to make, it is OK.
+	  We will look at the latest commit before the deadline.
+	</p>
+	<ul class="bullet">
+	  <li><b>Be sure to push your changes to GitHub</b>
+	  </li>
+
+	  <li><b>Verify your changes on Github</b>.
+	    Navigate in your web browser to your private repository on GitHub.
+	    It should be available at  <tt>https://github.com/williams-cs/cs136lab5-{USERNAMES}</tt>
+	    You should see all changes reflected in the various files that you submit.
+	    If not, go back and make sure you committed <em>and</em> pushed.
+	  </li>
+	</ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em> git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository"
+      (or
+      "we are the sole authors of the work in this repository"
+      if working in pairs)
+      in the comments at the top your Java file.
+    </p>
+    -->
+    <p class="bottom" id="endoffile">&nbsp;</p>
+    <p class="text">
+      Lab notes:
+      <ol>
+	<li>
+	  Avoid the statement "<tt>import java.util.*</tt>" because <tt>java.util</tt> also provides a <tt>Vector</tt> class, which might lead to
+	  unanticipated results. Instead explicitly import <tt>java.util.Comparator</tt>
+	</li>
+      </ol>
+    </p>
+  </body>
+</html>
