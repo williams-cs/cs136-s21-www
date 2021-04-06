@@ -414,8 +414,7 @@
 				"Video: <a href='https://youtu.be/E5u97kH8Da4'>Recursion and Induction on Trees</a>",
 	        "Video: <a href='https://youtu.be/yRDLl9Wx0Jk'>Tree Traversals</a>",
 	        "[Slides: <a href='handouts/treeRecursionInduction.pdf'>Induction and Recursion on Trees</a>]",
-	      "[Slides: <a href='handouts/treeTraversals.pdf'>Tree Traversals</a>]",
-	      "]"
+	      "[Slides: <a href='handouts/treeTraversals.pdf'>Tree Traversals</a>]"
 					],
 			"materials" : [
 			],
@@ -430,6 +429,9 @@
 				"<i>Bailey</i> 12.6"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/_XKJ0EqkuYw'>Tree Iterators</a>",
+				"Video: <a href='https://youtu.be/38ebOr09UmE'>Tree Arrays</a>",
+				"Slides: <a href='handouts/treeTraversalIterators-split.pdf'>Tree Iterators and Arrays</a>"
 			],
 			"materials" : [
 			],
