@@ -399,7 +399,7 @@
 			"post" : [
 				"[Code :",
 				"- <a href='handouts/BinaryExpressionTree.java'>BinaryExpressionTree.java</a>",
-        "- <a href='handouts/BinExpTreeFromPS.java'>BinExpTreeFromPS.java</a>",
+				"- <a href='handouts/BinExpTreeFromPS.java'>BinExpTreeFromPS.java</a>",
         "]"
 			]
 		},
@@ -419,7 +419,13 @@
 			"materials" : [
 			],
 			"post" : [
+				"[Code :",
+					"- <a href='handouts/InfiniteQuestions.java'>InfiniteQuestions.java</a>",
+					"- <a href='handouts/TreeFile.java'>TreeFile.java</a>",
+					"- <a href='handouts/GoT.txt'>GoT.txt</a>",
+        "]"
 			]
+
 		},
 		{
 			"topic" : [
@@ -436,6 +442,11 @@
 			"materials" : [
 			],
 			"post" : [
+				"[Code :",
+					"- <a href='handouts/TreeVisitor.java'>TreeVisitor.java</a>",
+					"- <a href='handouts/ArrayTrees.java'>ArrayTrees.java</a>",
+					"- <a href='handouts/animals.txt'>animals.txt</a>",
+        "]"
 			]
 		},
 		{
@@ -446,7 +457,10 @@
 				"<i>Bailey</i> 14-14.2"
 			],
 			"pre" : [
-			],
+        "Video: <a href='https://youtu.be/ev2c7_ch328'>Binary Search Trees<a>",
+        "[Slides: <a href='handouts/BinarySearchTreesIa.pdf'>Introducing Binary Search Trees</a>]",
+    		"[Slides: <a href='handouts/BinarySearchTreesIb.pdf'>BST Implementation</a>]"
+	    ],
 			"materials" : [
 			],
 			"post" : []

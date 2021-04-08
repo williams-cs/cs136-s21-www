@@ -1,0 +1,52 @@
+
+
+BT copy(BT tree)
+
+  base case(s)
+    empty tree: return a new empty tree
+
+  recursive step
+    fact: tree is not an empty tree
+
+    return a new BT resultTree where
+      value : tree.value
+      left subtree : copy( tree.left)
+      right subtree: copy tree.right)
+
+Prove: copy correctly copies any binary tree
+
+Idea: Induction on the height h of tree
+
+Base case: h = -1 (empty tree)
+  correctly returns copy of the empty tree
+
+Induction hypothesis: For some h >= -1, copyTree
+works correctly on all trees of height <= h (Strong Induction)
+
+Induction Step: Prove that it works correctly on trees of height h+1
+
+copyTree correctly makes the root of tree the root of the copy
+Then copyTree makes the left child of the new root using the result
+of copyTree on tree.left.  But the height of tree.left is
+at most h, so by IH, copyTree correctly copies the left subtree of tree.
+
+Similarly, it correctly copies the right subtree.
+
+Note: We also could have used (Strong) Induction on the number of nodes
+------------------------------------------
+
+boolean equals(BT t1, BT t2)
+
+base case(s)
+  if both trees are empty, return true
+  if either tree is empty, return false
+
+
+recursive step
+  return :  the roots are the same and
+  left subtrees are the same and
+  right subtrees are the same
+
+  Exercise: Correctness proof for equals method
+  Hint: Do induction n the MAX of the heights of the two trees!
+  
