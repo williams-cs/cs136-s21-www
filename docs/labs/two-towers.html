@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Lab 7: The Two Towers</p>
+
+    <p class="info">
+      Your goal this week is to solve a difficult problem using Iterators.
+      In fact, the problem is so difficult that there is no known efficient solution,
+      so we will use "brute force".
+
+      We will build an iterator to examine all possible configurations of objects from a set,
+      keeping track of the best configuration that our iteration encounters.
+      If we truly considered every possibility, then we must have found the best configuration!
+      (Note: This lab is a variation of the Lab from Chapter 8,
+      modified to use generic classes.)
+    </p>
+
+    <p class="heading">Pre-lab Warmup</p>
+    <p class="text">
+      Before lab, please do the following:
+
+      Design an iterator that iterates over the characters of a <code>String</code>.  Repeated calls to the iterator’s <code>next()</code> method will return the first character of the string, then the second character, and so on.<BR>
+
+      More specifically, you are to design and implement a class called <code>CharacterIterator</code> that has the following constructor and method signatures (you may provide additional helper methods and instance variables as you see fit):</p>
+
+
+     <pre><code>
+          public class CharacterIterator extends AbstractIterator&lt;Character&gt; {
+              public CharacterIterator(String str) { ... }
+              public Character next() { ... }
+              public boolean hasNext() { ... }
+              public void reset() { ... }
+              public Character get() { ... }
+          }
+     </code></pre>
+
+    <p class="text">
+        The <code>Character</code> class is a wrapper class for
+	primitive <code>char</code> values so that we can
+	use <code>char</code> values with the
+	generic <code>AbstractIterator</code> class.  You
+	use <code>Character</code> much like one
+	uses <code>Integer</code> for <code>int</code> values.  The
+	Java compiler will <em>automatically</em>
+	convert <code>char</code> values to <code>Character</code>
+	objects as necessary via a technique called “autoboxing.”  You
+	may use the following <code>main</code> method to test your
+	code.
+    </p>
+
+       <pre>
+            public static void main(String[] args) {
+                CharacterIterator ci = new CharacterIterator("Hello world!");
+                for (char c : ci) {
+                    System.out.println(c);
+                }
+            }
+       </pre>
+    <p class="text">
+      To refresh your memory, you may want to refer to Chapter 8 in your
+      textbook to review Iterators.  We recommend that you complete
+      your Prelab Warmup solution <i>before</i> lab.  You
+      will submit it (in a file
+      named <tt>CharacterIterator.java</tt>) in your git repository
+      at the end of the lab.
+    </p>
+
+    <p class="heading">Lab Assignment</p>
+
+    <p class="text">
+      <b>Goal.</b> To solve a computationally complex problem using
+      iterators. Note: This lab is a variation of the one given in
+      Chapter 8, modified to use generic classes.
+    </p>
+
+    <p class="text">
+      <b>Discussion.</b> Suppose that we are given <tt>n</tt>
+      uniquely-sized cubic blocks and that each block has a distinct <em>face
+      area</em> between <tt>1</tt> and <tt>n</tt>. If we build two
+      towers by stacking these blocks, how close can we make their
+      heights? The following two towers, built by stacking 15 blocks,
+      differ in height by only 129 millionths of an inch (each unit is
+      one-tenth of an inch):
+    </p>
+
+    <div>
+        <center>
+	<img src="images/blockstack.png"/>
+        </center>
+</div>
+
+    <p class="text">
+      Still, this stacking is only the <em>second-best</em> solution!
+      To find the best stacking, we could consider all the possible
+      configurations; if we truly consider every possible configuration,
+      then if there is a better solution, we will find it.
+    </p>
+
+    <p class="text">
+      We do know one thing: the total height of the two towers can be
+      computed by summing the heights of all the blocks. Since the
+      height of each block is the square root of its face area, this
+      is:
+    </p>
+
+<div class="center">
+  <center>
+    <img src="http://latex.codecogs.com/gif.latex?h=\sum_{i=1}^n\sqrt{i}=\sqrt{1}+\sqrt{2}+\ldots+\sqrt{n}" border="0"/>
+  </center>
+</div>
+
+    <p class="text">
+      If we consider all the subsets of the <tt>n</tt> blocks, we can
+      think of each subset as representing the set of blocks that make
+      up, say, the left tower (the "missing" blocks would then make up
+      the right tower). We need only keep track of the subset that
+      comes closest to <tt>h/2</tt> without exceeding it
+      (where <tt>h</tt> is the total height of all <tt>n</tt> blocks).
+    </p>
+
+    <p class="text">
+      In this lab, we will represent a set of <tt>n</tt> distinct
+      objects with a <code>Vector&lt;Double&gt;</code>, and we will
+      construct an <code>Iterator</code> that returns each of
+      the <tt>2<sup>n</sup></tt> subsets, one at a time.
+    </p>
+
+
+    <p class="heading">Understanding the Algorithm</p>
+
+    <p class="text">
+      The trick to understanding how to generate a subset
+      of <tt>n</tt> values from a <code>Vector</code> is to first
+      consider how to generate a subset of indices of elements
+      from <tt>0</tt> to <tt>n-1</tt>. Once this simpler problem is
+      solved, we can use the indices to help us build
+      a <code>Vector</code> (or subset) of values identified by the
+      indices.
+    </p>
+
+    <p class="text">
+      There are exactly <tt>2<sup>n</sup></tt> subsets of the values
+      from <tt>0</tt> to <tt>n−1</tt>.  To see this, imagine that you
+      have a strip of paper with <tt>n</tt> blanks on it,
+      labeled <tt>n-1</tt> to <tt>0</tt> (the blanks are labeled in
+      descending order). <!-- Let <tt>m</tt> be a number <tt>0 &le; m
+      &lt; n</tt>.--> Now choose an arbitrary subset of blocks.  If a
+      block <tt>i</tt> is included in a subset, you write
+      a <code>1</code> in blank <tt>i</tt> on the paper, otherwise you
+      put a <code>0</code> in blank <tt>i</tt>.  Since there are <tt>2
+      * 2 * ... * 2 = 2<sup>n</sup></tt> different ways to fill in
+      this strip of paper, there are <tt>2<sup>n</sup></tt> different
+      subsets.
+    </p>
+
+    <p class="text">
+      For example, suppose we start with a blank strip of paper.
+    </p>
+
+<div>
+  <center>
+    <img src="images/paperstrip.png" />
+  </center>
+</div>
+
+    <p class="text">
+      Also suppose that we have eight blocks,
+      labeled <tt>1,2,...,8</tt>, and we arbitrarily choose
+      blocks <tt>1, 4, 5, 6, </tt> and <tt>7</tt> as our subset:
+    </p>
+
+<div>
+  <center>
+    <img src="images/smallstack.png" />
+  </center>
+</div>
+
+    <p class="text">
+      If we filled in the corresponding boxes in for each chosen block
+      (i.e., if the block <tt>i</tt> is chosen, we put
+      a <code>1</code> in spot <tt>i-1</tt> since our blocks are
+      1-indexed), our paper strip looks like this:
+    </p>
+
+<div>
+  <center>
+    <img src="images/paperstrip-filled.png" />
+  </center>
+</div>
+
+    <p class="text">
+      Conveniently, we can think of the combination of 0s and 1s on
+      strip of paper as the digits of an <tt>n</tt>-bit binary number.
+      For example, the binary number <code>01111001</code> is the
+      decimal number <code>121</code>, since <code>01111001</code> is
+      2<sup>0</sup> + 2<sup>3</sup> + 2<sup>4</sup> + 2<sup>5</sup> +
+      2<sup>6</sup>.
+    </p>
+
+    <p class="text">
+      In fact, each number in the range <tt>0</tt>
+      through <tt>2<sup>n</sup>−1</tt>, when written in binary,
+      uniquely describes a different subset.  Given this, we develop a
+      line of attack:
+      count from <tt>0</tt> to <tt>2<sup>n</sup>−1</tt>.
+      For each number, use the value of
+      the binary digits (a binary digit is called a <em>bit</em>) to
+      select which blocks are to be included in a subset.
+    </p>
+
+<p class="heading">Working with Binary Numbers in Java</p>
+
+<p class="text">Computer scientists work with binary numbers frequently, so there are a number of useful things to remember:
+<ul class="bullet">
+  <li>
+    A Java <code>int</code> type is represented by 32 bits.  A
+    Java <code>long</code> is represented by 64 bits.  For maximum
+    flexibility, it is useful to use <code>long</code> values to
+    represent sets of up to 64 elements.
+  </li>
+  <li>
+    The arithmetic left shift operator <code>&lt;&lt;</code> can be
+    used to quickly compute powers of <tt>2</tt>.  The
+    value <tt>2<sup>i</sup></tt> can be computed by shifting the
+    binary value (<code>1</code>) <tt>i</tt> places to the left. In
+    Java we write this <code>1L &lt;&lt; i</code>. This trick works
+    only for non-negative, integral powers. The
+    constant <code>1L</code> is the value one stored as a
+    64-bit <code>long</code> value. Using this constant ensures that
+    we are using a 64-bit shift operation resulting in
+    a <code>long</code> value instead of a 32-bit operation resulting
+    in an <code>int</code> value. The <code>L</code> is important to
+    ensure that the result is a <code>long</code>.
+  </li>
+  <li>
+    The “bitwise and” of two numbers can be used to determine the
+    value of a single bit in a number’s binary representation. To
+    isolate bit <tt>i</tt> of a <code>long</code>
+    value <code>m</code>, we can use the experession <code>m &amp; (1L
+    &lt;&lt; i)</code>. If the expression yields the value 0, then the
+    bit at position <tt>i</tt> is 0; if the expression yields the
+    value <tt>(1L &lt;&lt; i)</tt>, then the bit at
+    position <tt>i</tt> is 1.
+  </li>
+</ul>
+<p>
+
+
+<p class="heading">Procedure</p>
+
+    <p class="text">
+      Armed with this information, the process of generating subsets
+      is achievable. One approach is the following:
+    </p>
+    <p class="text">
+      <b>Implement an efficient iterator for subsets of a set.</b></p>
+    <ol>
+      <li>
+	Construct a new extension to the <code>AbstractIterator</code>
+	class.  This new class should have a constructor that takes
+	a <code>Vector&lt;E&gt;</code> as its sole argument.  Subsets
+	of this <code>Vector</code> will be returned as
+	the <code>Iterator</code> progresses (e.g., each call
+	to <code>next()</code> will create a new Vector object that is
+	filled with values corresponding to the appropriate blocks).
+	Name this extended class <code>SubsetIterator</code>, and be
+	sure to import <code>structure5.*</code> at the top of your
+	file.  Your <code>SubsetIterator</code> should be completely
+	generic.  It should know nothing about the values it is
+	iterating over. Thus, the declaration will be:
+
+	<pre><code> public class SubsetIterator&lt;E&gt; extends AbstractIterator&lt;Vector&lt;E&gt;&gt;</code></pre>
+
+	Your <code>SubsetIterator</code> class is parameterized by the
+	type <tt>&lt;E&gt;</tt>, and each step through the iteration
+	yields a <tt>Vector&lt;E&gt;</tt>.
+      </li>
+
+      <li>
+	Internally, a <code>long</code> value is used to represent the
+	current subset.  This value increases from <tt>0</tt> (the
+	empty set) to <tt>2<sup>n</sup>−1</tt> (the entire set of
+	values) as the <code>Iterator</code> progresses.
+      </li>
+      <li>
+	Write a <code>reset</code> method that resets the subset
+	counter to <tt>0</tt>.
+      </li>
+      <li>
+	Write a <code>hasNext</code> method that
+	returns <code>true</code> if the iterator has not yet
+	dispensed all possible subsets.
+      </li>
+      <li>
+	Write a <code>get</code> method that returns a
+	new <code>Vector&lt;E&gt;</code> of values that are part of
+	the current subset: if bit <tt>i</tt> of the current counter
+	is <tt>1</tt>, element <tt>i</tt> of the
+	original <code>Vector</code> is included in the resulting
+	subset <code>Vector</code>.
+      </li>
+      <li>
+	Write a <code>next</code> method. Remember it returns the
+	current subset <em>before</em> incrementing the counter.
+      </li>
+      <li>
+	For an <code>Iterator</code> you would normally have to write
+	a <code>remove</code> method.  If you extend
+	the <code>AbstractIterator</code> class, this method is
+	provided and will do nothing (this is reasonable).
+      </li>
+    </ol>
+
+    <p class="text">
+      <b>Incrementally test.</b><br>
+      You can now test
+      your <code>SubsetIterator</code> by asking it to print all the
+      subsets of a <code>Vector</code> of values. For example, write
+      a <code>main</code> method for your <code>SubsetIterator</code>
+      class that creates a <code>Vector&lt;Integer&gt;</code> with the
+      first <tt>8</tt> Integers (<tt>0</tt> through <tt>7</tt>),
+      creates a <code>SubsetIterator&lt;Integer&gt;</code> with
+      this <code>Vector&lt;Integer&gt;</code>, and then prints out all
+      subsets returned. Make sure you end up with all <tt>256</tt>
+      different subsets printed.
+    </p>
+
+<p class="text"><b>Implement a Two Towers class.</b><br>
+To solve the two towers problem, write a <code>main</code> method in a new class called <code>TwoTowers</code> that takes an argument <code>n</code> from the command line.  For example,</p>
+<pre><code>
+        $ java TwoTowers 15
+</code></pre>
+
+    <p class="text">
+      should compute the solution of the two towers problem for blocks
+      labeled 1 through 15.
+    </p>
+
+    <p class="text">
+      It is easier to proceed by populating your <code>Vector</code>
+      with height values instead of area values.  In other words,
+      insert
+      <img src="http://latex.codecogs.com/gif.latex?\sqrt{1},\sqrt{2},\ldots,\sqrt{n}"
+      border="0"/> into a <code>Vector&lt;Double&gt;</code> object.
+      To compute the square root of <tt>n</tt>, you can use
+      the <code>Math.sqrt(n)</code> method.
+      A <code>SubsetIterator</code> is then used to
+      construct all <tt>2<sup>n</sup></tt> subsets of these values. The
+      values of each subset are summed, and the sum that comes closest
+      to, but does not exceed, the value <tt>h/2</tt> is
+      remembered. After all the subsets have been considered, print
+      the best solution (the left and right towers). Since each block’s height is a square root, you
+      should print out the area instead (e.g., print 2 instead of 1.41421356237).</p>
+
+    <p class="text">
+      In addition to printing the best solution, <b>your program should
+      also print the <em>second best</em> solution</b>.  In addition to
+      providing an interesting twist to the problem, this has the
+      effect of making it so that you can check the output of your
+      program against the two towers diagram above.
+    </p>
+
+    <p class="text">The following is a sample run of the tool:</p>
+
+<pre><code>
+          $ java TwoTowers 14
+          There are 14 total blocks.
+          The half height (h/2) is: 18.298106626967595
+          The best subset (left stack) is: [1, 4, 5, 8, 10, 12, 13] = 18.2964256530161
+          The second best subset (left stack) is: [5, 8, 9, 10, 12, 13] = 18.2964256530161
+</code></pre>
+
+
+    <p class="heading">Thought Questions</p>
+
+<p class="text">Be sure to answer the following questions in the <code>PROBLEMS.md</code> file, and submit it with the rest of your code this week.</p>
+
+<ol>
+  <li>What is the best solution to the 15-block problem?</li>
+  <li>How long does it take your program to find the answer to the 20-block problem? You may time programs with the Unix <code>time</code> command, as in the following:
+    <pre><code> $ time java -Xint TwoTowers 20
+</code></pre>
+
+(The <code>-Xint</code> flag turns off some optimizations in the Java Virtual Machine and will give you more reliable results.)
+    The output from the <code>time</code> program contains 3 lines:
+
+    <pre><code> real 0m1.588s
+ user 0m1.276s
+ sys  0m0.922s
+</code></pre>
+    If you read the <code>time</code> manual page (<code>$ man 1 time</code>), you can see the meaning of each line. The <code>real</code> line shows the “wall clock” time, which is what we care about. Please run the program 3 times and report the median.
+    <br>
+    Based on the time taken to solve the 20-block problem, about how long do you expect it would take to solve the 21-block problem?  What is the actual time to solve the 21-block problem?  How about the 25-block problem (predicted and actual times)? Do these agree with your expectations, given the time complexity of the problem? What about the 40- and 50-block problems?  (These will take a <em>very</em> long time.  Just estimate based on the runtimes of the smaller problems).
+  </li>
+  <li>This method of exhaustively checking the subsets of blocks will not work for very large problems.  Consider, for example, the problem with 50 blocks: there are <tt>2<sup>50</sup></tt> different subsets.  One approach is to repeatedly pick and evaluate random subsets of blocks (stop the computation after 1 second of elapsed time, printing the best subset found). How would you implement <code>randomSubset</code>, a new <code>SubsetIterator</code> method that returns a random subset? Describe your strategy. You do not need to actually implement it. (Although if you have time, it's
+    pretty straight-forward and you can get some interesing results!)</li>
+</ol>
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in previous weeks.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants). (We don't expect this to be an issue this week.)
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc” comment
+	(starts with <code>/**</code> and ends with <code>*/</code>;
+	it should include descriptions of the function at the top,
+	descriptions of return values after a <code>@return</code> tag,
+	descriptions of each argument after a <code>@param</code> tag,
+	and pre/post conditions after the <code>@pre</code>
+	or <code>@post</code> tags).
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+      </li>
+    </ul>
+
+
+    <br><br>
+
+    <p class="text">
+      <b>To run <code>checkstyle</code>, you would type the following
+      command at the terminal:</b>
+    </p>
+
+<pre><code>
+        $ ./checkstyle
+</code></pre>
+
+    <p class="text">
+      The <code>./</code> is peculiar to Unix: it tells the terminal
+      to look for the <code>checkstyle</code> program in the current
+      directory.  This command will run <code>checkstyle</code> on
+      every Java program in your directory.  To
+      run <code>checkstyle</code> on a specific Java file, type:
+    </p>
+
+<pre><code>
+        $ ./checkstyle SomeFile.java
+</code></pre>
+
+
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+      <ul class="bullet">
+	<li>
+          Your well-documented source code in <tt>CharacterIterator.java</tt>, <tt>SubsetIterator.java</tt>, and <tt>TwoTowers.java</tt>.
+	</li>
+	<li>
+	  The <tt>PROBLEMS.md</tt> file that contains answers to the three
+	  questions described above, as well as any other information
+	  about your submission.
+	</li>
+      </ul>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.
+      Be sure to document your program with appropriate comments,
+      including a general description at the top of each Java class,
+      a description of each method with pre- and post-conditions where
+      appropriate.
+      Also use comments and descriptive variable names to clarify sections
+      of the code which may not be clear to someone trying to understand it.
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">
+      As you complete various milestones,
+      you should <tt>commit</tt> your changes and <tt>push</tt> them.
+      <b>Commit early and often</b>.
+      When the deadline arrives,
+      we will retrieve the latest version of your code.
+      If you are confident that you are done,
+      please include "Lab Submission" as the commit message for your final commit.
+      If you later decide that you have more edits to make, it is OK.
+      We will look at the latest commit before the deadline.
+    </p>
+    <ul class="bullet">
+      <li><b>Be sure to push your changes to GitLab</b>
+      </li>
+
+      <li><b>Verify your changes on GitLab</b>.
+	Navigate in your web browser to your private repository on GitLab.
+	You should see all changes reflected in the various files that you submit.
+	If not, go back and make sure you committed <em>and</em> pushed.
+      </li>
+    </ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em>
+      git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration
+      (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository"
+      in the comments at the top each of your java files.
+    </p>
+  <p class="bottom">&nbsp;</p>
+</body>
+</html>
