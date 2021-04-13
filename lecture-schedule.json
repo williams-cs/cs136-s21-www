@@ -479,7 +479,9 @@
 			"materials" : [
 			],
 			"post" : [
-			]
+		"[Slides: <a href='handouts/BitOpsSlides.pdf'>BitOpsSlides.pdf</a>]",
+		"[Code: <a href='handouts/BIterator.java'>BIterator.java</a>]"
+      ]
 		},
 		{
 			"topic" : [
