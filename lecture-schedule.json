@@ -491,7 +491,7 @@
 				"<i>Bailey</i> 15-15.4"
 			],
 			"pre" : [
-				"Video: <a href='https://youtu.be/E8o89zvbnaU'>Maps<a>",
+				"Video: <a href='https://youtu.be/E8o89zvbnaU'>Maps</a>",
 				"Slides: <a href='handouts/maps.pdf'>Maps</a>"
 			],
 			"materials" : [
@@ -501,13 +501,17 @@
 		},
 		{
 			"topic" : [
-				"Hashtables"
+				"Hashtables: Collisions"
 			],
 			"readings" :[
 				"<i>Bailey</i> 15.5-end"
 			],
-			"pre" : [],
+			"pre" : [
+				"Video: <a href='https://youtu.be/shtdTuB7JZM'>Hashtables: Collisions</a>",
+				"Slides: <a href='handouts/collisions.pdf'>Collisions</a>"
+			],
 			"materials" : [
+			"[Code: <a href='handouts/NaiveProbing.java'>NaiveProbing.java</a>]"
 			],
 			"post" : []
 		},
