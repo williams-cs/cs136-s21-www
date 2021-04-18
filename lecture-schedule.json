@@ -508,10 +508,10 @@
 			],
 			"pre" : [
 				"Video: <a href='https://youtu.be/shtdTuB7JZM'>Hashtables: Collisions</a>",
-				"Slides: <a href='handouts/collisions.pdf'>Collisions</a>"
+				"Slides: <a href='handouts/collisions.pdf'>Collisions</a>",
+				"[Code: <a href='handouts/NaiveProbing.java'>NaiveProbing.java</a>]"
 			],
 			"materials" : [
-			"[Code: <a href='handouts/NaiveProbing.java'>NaiveProbing.java</a>]"
 			],
 			"post" : [
 			"[Code: <a href='handouts/Conference23.java'>Conference23.java</a>]"
