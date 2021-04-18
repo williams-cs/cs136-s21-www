@@ -522,7 +522,10 @@
 			"readings" :[
 				"<i>Bailey</i> 15.5-end"
 			],
-			"pre" : [],
+			"pre" : [
+				"Video: <a href='https://youtu.be/9YUktt4qqwQ'>Hashing: Loose Ends</a>",
+				"Slides: <a href='handouts/hashing-looseends.pdf'>Hashing: Loose Ends</a>"
+			],
 			"materials" : [
 			],
 			"post" : [
