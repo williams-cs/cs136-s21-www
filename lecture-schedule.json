@@ -547,7 +547,9 @@
 			"materials" : [
 			],
 			"post" : [
-			]
+        "[Code: <a href='handouts/BasicHuffman.java'>BasicHuffman.java</a>]",
+        "[Code: <a href='handouts/FrequencyList.java'>FrequencyList.java</a>]"
+       ]
 		},
 
 		{
@@ -558,7 +560,9 @@
 				"<i>Bailey</i> 13-13.4"
 			],
 			"pre" : [
-			],
+        "Video: <a href='https://youtu.be/5m_G9oZB1R4'>Priority Queues and Heaps</a>",
+        "[<a href='handouts/priorityQueue.pdf'>slides</a>]"
+      ],
 			"materials" : [
 			],
 			"post" : [
