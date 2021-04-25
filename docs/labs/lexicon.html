@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Lab 8: Super Lexicon</p>
+
+    <p class="info">
+      Virtually all modern word processors contain a feature to check
+      the spelling of words in documents.
+      More advanced word  processors also provide suggested corrections
+      for misspelled words.
+      In this lab, you will be taking on the fun and challenging task of
+      implementing such a spelling corrector.
+      You are to implement a highly-efficient <tt>Lexicon</tt> class.
+      This lab has optional assignments that implement additional functionality like finding spelling
+      corrections for misspelled words.<br><br>
+
+      The assignment has several purposes:<br>
+      &nbsp;&nbsp;&bull; To gain further skill with recursion in managing a
+      recursive tree structure and exploring it efficiently
+      <br>
+      &nbsp;&nbsp;&bull; To explore the notion of a layered abstraction where
+      one class (<tt>Lexicon</tt>) makes use of other classes
+      (e.g., <tt>Iterator</tt>, <tt>Vector</tt>, <tt>Set</tt>)
+      as part of its internal representation.
+    </p>
+
+    <p class="heading">Pre-lab</p>
+    <p class="text">
+		Before lab, please do the following:
+
+		<ul class="bullet">
+			<li>
+
+				As in prior labs, you should develop a design document before
+				coming to lab. Although this is a partner lab, you should create
+				an independent design document so that you and your partner can
+				compare approaches. It is OK if your final design deviates from
+				your design document.
+			</li>
+		</ul>
+    </p>
+
+
+    <p class="heading">The Lexicon Interface</p>
+    <p class="text">
+      Your first task is to write a basic class that implements the
+      <tt>Lexicon</tt> interface. The <tt>Lexicon</tt> interface
+      describes the functionality necessary to support required
+      operations that include:
+
+      <ul class="bullet">
+        <li> Add a word to the lexicon </li>
+        <li> Remove a word from the lexicon </li>
+        <li> Determine whether the lexicon contains a given word</li>
+        <li> Determine whether the lexicon contains any words with a given prefix</li>
+        <li> Read words from a file, adding them to the lexicon</li>
+        <li> Provide an iterator for the words in the lexicon</li>
+      </ul>
+    </p>
+    <p class="text">
+      and, if you're keen, the optional operations
+      <ul class="bullet">
+        <li> List all words that are "close to" a given word (defined below)</li>
+        <li> Find all words that match a given pattern (defined below)</li>
+      </ul>
+
+    </p>
+    <p class="text">
+      <b>Historical Footnote:</b> Back in the ancient times, cell-phones lacked
+      the memory and processsing power necessary to support the
+      elaborate text messaging apps found on modern
+      smartphones. Instead of auto-completing words based on a
+      message's content or correcting a message's grammar mistakes,
+      the "spell-checking" functionality was limited.  In this lab,
+      you'll get a chance to build a lexicon yourself to see the kind
+      of specialized and highly-efficient data structures that were
+      used in its implementation.
+    </p>
+    <p class="text">
+      You should implement the <tt>Lexicon</tt> interface
+      in a file called <tt>LexiconTrie.java</tt>.
+      This class will use the <tt>LexiconNode</tt> class, which you are
+      responsible for designing and implementing.
+      The following methods are in the <tt>Lexicon</tt> interface.
+    </p>
+    <pre class="text">
+      public interface Lexicon {
+          boolean addWord(String word);
+          boolean removeWord(String word);
+          boolean containsWord(String word);
+          boolean containsPrefix(String prefix);
+          int addWordsFromFile(String filename);
+          int numWords();
+          Iterator&lt;String&gt; iterator();
+          Set&lt;String&gt; suggestCorrections(String target, int maxDistance);
+          Set&lt;String&gt; matchRegex(String pattern);
+      }
+    </pre>
+
+    <p class="text">
+      Most of the method behaviors can be inferred from their names
+      and return types.  For more information about the usage and
+      purpose of these methods, refer to the comments in the starter
+      code.
+    </p>
+    <p class="text">
+    The <tt>addWordsFromFile(String filename)</tt> method requires reading input in from a file. This can be done with the <tt>structure5</tt> <tt>Filestream</tt> class.  After setting up a <tt>Scanner</tt> as follows for a file with name <tt>filename</tt>, the scanner can be used as normal to obtain the contents of the file (i.e. with <tt>sc.hasNextLine()</tt> and <tt>sc.nextLine()</tt>):
+    </p>
+    <pre class="text">
+       Scanner sc = new Scanner(new FileStream(filename));
+    </pre>
+
+
+    <p class="heading">Implementing the Lexicon as a Trie</p>
+    <p class="text">
+      There are several different data structures you could use to
+      implement a lexicon: a sorted array, a linked list, a binary
+      search tree, and many others. Each of these offers tradeoffs
+      between the speed of word and prefix lookup, the amount of
+      memory required to store the data structure, the ease of writing
+      and debugging the code, the performance of add/remove, and so
+      on. The implementation we will use is a special kind of tree
+      called a <i>trie</i> (pronounced "try"), designed for just this
+      purpose.
+    </p>
+    <p class="text">
+      A trie is a letter-tree that efficiently stores strings. A node
+      in a trie represents a letter. A path through the trie traces
+      out a sequence of letters that represent a prefix or word in the
+      lexicon.
+    </p>
+    <p class="text">
+      Instead of just two children as in a binary tree, each trie node
+      has potentially <b>26 child references</b> (one for each letter of
+      the alphabet). Whereas searching a binary search tree eliminates
+      a single subtree of words with each left or right turn, a search in a trie
+      follows the child reference for the next letter, which narrows the
+      search to just words starting with that letter. For example,
+      from the root, any words that begin with "n" can be found by
+      following the reference to the "n" child node. From there,
+      following "o" leads to just those words that begin with "no"
+      and so on, recursively. If two words have the same prefix, they
+      share that initial part of their paths. This saves space since
+      there are typically many shared prefixes among words. Each node
+      has a boolean <tt>isWord</tt> flag which indicates that the path
+      taken from the root to this node represents a complete
+      word. Here's a conceptual picture of a small trie:
+    </p>
+    <img style="display:block;margin-left:auto;margin-right:auto;width:500px;" src="./trie.svg"></img>
+
+    <p class="text">
+      The thick border around a node indicates that
+      its <tt>isWord</tt> flag is true. This trie contains the
+      words: <tt>a, are, as, new, no, not,</tt>
+      and <tt>zen</tt>. Strings such as <tt>ze</tt> or <tt>ar</tt> are
+      not valid words for this trie because the path for those strings
+      ends at a node where <tt>isWord</tt> is false. Any path not
+      drawn is assumed to not exist, so strings such as <tt>cat</tt>
+      or <tt>astronaut</tt> are not valid because there is no such
+      path in this trie.
+    </p>
+    <p class="text">
+      Like other trees, a trie is a recursive data structure.
+      All of the children of a given trie node are themselves smaller tries.
+      You will be making good use of your recursion skills when operating on
+      the trie!
+    </p>
+
+    <p class="heading"><a name="nodechildren">Managing Node Children</a></p>
+    <p class="text">
+      For each node in the trie, you need a list of
+      children nodes. In the sample trie drawn above, the root node
+      has three children, one each for the letters <tt>A</tt>, <tt>N</tt>, and <tt>Z</tt>.  One
+      possibility for storing the children is a
+      statically-sized 26-member array of nodes, where
+      <tt>array[0]</tt> is the child for <tt>A</tt>, <tt>array[1]</tt>
+      refers to <tt>B</tt>, ... and <tt>array[25]</tt> refers
+      to <tt>Z</tt>.  When there is no child for a given letter, (such
+      as from <tt>Z</tt> to <tt>X</tt>) the array entry would
+      be <tt>null</tt>. This arrangement makes it trivial to find the
+      child for a given letter:you simply access the correct element
+      in the array by letter index.
+    </p>
+
+    <p class="text">
+      However, for most nodes within the trie, very few of the 26
+      references are needed, so using a largely <tt>null</tt> 26-member
+      array is much too memory-intensive (i.e., it wastes a lot of
+      space). Better alternatives would be a dynamically-sized array
+      which can grow and shrink as needed (i.e., a <tt>Vector</tt>), or a
+      linked list of children nodes. We leave the final choice of a
+      space-efficient design up to you, but <b>you should justify
+      the choice you make (briefly) in your program comments</b>. Two
+      things you may want to consider:
+          <ul class="bullet">
+	    <li>
+	      there are at most 26 children, so even
+	      a <em>O(N)</em> <tt>List</tt> operation to find a
+	      particular child is <em>O(1)</em>, and
+	    </li>
+	    <li>
+	      trie operations such as iteration require traversing the
+	      words in alphabetical order, so keeping the list of
+	      children nodes sorted by letter will be advantageous.
+	    </li>
+	  </ul>
+
+    </p>
+
+    <p class="heading">Developing an Implementation Strategy</p>
+    <p class="text">
+      <b>Begin implementing your trie by constructing
+      a <tt>LexiconNode</tt> class.</b>  <tt>LexiconNode</tt>s should be
+      comparable, so make sure to implement the <tt>Comparable</tt>
+      interface. <b>Be sure to incrementally compile and test this code.</b>
+
+      <p class="text">
+        <b>Create a constructor in <tt>LexiconTrie</tt> that creates an
+          empty <tt>LexiconTrie</tt> to represent an empty word list.</b>
+          Test (using the main method of LexiconTrie) your constructor.</p>
+
+      <p class="text">
+        Provided in the starter repository is a class called Main.java, which
+        provides a command-line based user interface. You can use this class
+        to test your LexiconTrie as you incrementally develop it. A suggested
+        order of implementation is reflected below.
+    </p>
+
+    <p class="heading">Adding Words</p>
+    <p class="text">
+      Adding a new word into the trie with <tt>addWord</tt> is a matter
+      of tracing out its path starting from the root, as if
+      searching. If any part of the path does not exist, the missing
+      nodes must be added to the trie. Lastly, the <tt>isWord</tt> flag
+      is turned on for the final node.  In some situations, adding a
+      new word will necessitate adding a new node for each letter, for
+      example, adding the word <i>dot</i> to our sample trie will add
+      three new nodes, one for each letter. On the other hand, adding
+      the word <i>news</i> would only require adding an <i>s</i> child
+      to the end of existing path for new.  Adding the word <i>do</i>
+      after <i>dot</i> has been added doesn't require any new nodes at
+      all; it just sets the <tt>isWord</tt> flag on an existing node to
+      true. Here is the sample trie after those three words have been
+      added:
+    </p>
+
+    <img style="display:block;margin-left:auto;margin-right:auto;width:500px;" src="./trie2.svg"></img>
+
+    <p class="text">
+      A trie is an unusual data structure in that its performance can
+      improve as it becomes more loaded.  Instead of slowing down as
+      its get full, it becomes faster to add words when they can share
+      common prefix nodes with words already in the trie.
+    </p>
+
+    <p class="text">
+    <i>Suggestion:</i>At this point, you might consider whether it would be helpful to be able
+    to print out some kind of representation of your LexiconTrie to ensure that
+    it has the contents and structure you intend it to have!
+    </p>
+
+    <p class="heading">Searching for Words and Prefixes</p>
+    <p class="text">
+      Searching the trie for words and prefixes
+      using <tt>containsWord</tt> and <tt>containsPrefix</tt> is a
+      matter of tracing out the path letter by letter. Let's consider
+      a few examples on the sample trie shown previously. To determine
+      if the string
+      <i>new</i> is a word, start at the root node and examine its
+      children to find one pointing to <i>n</i>. Once found, recurse on
+      matching the remainder string <i>ew</i>.  Find <i>e</i> among its
+      children, follow its reference, and recurse again to match
+      <i>w</i>.  Once we arrive at the <i>w</i> node, there are no more
+      letters remaining in the input, so this is the last node. The
+      <tt>isWord</tt> field of this node is <tt>true</tt>, indicating
+      that the path to this node is a word contained in the lexicon.
+    </p>
+
+    <p class="text">
+      Alternatively, search for <i>ar</i>.  The path exists and we can
+      trace our way through all letters, but the <tt>isWord</tt> field on
+      the last node is <tt>false</tt>, which indicates that this path
+      is not a word. (It is, however, a prefix of other words in the
+      trie). Searching for <i>nap</i> follows <i>n</i> away from the
+      root, but finds no <i>a</i> child leading from there, so the path
+      for this string does not exist in the trie and it is neither a
+      word nor a prefix in this trie (<tt>containsWord</tt> and
+      <tt>containsPrefix</tt> both return <tt>false</tt>).
+    </p>
+
+    <p class="text">
+      All paths through the trie eventually lead to a valid node (a
+      <tt>LexiconNode</tt> where <tt>isWord</tt> has value <tt>true</tt>).
+      Therefore determining whether a string is a prefix of at least
+      one word in the trie is simply a matter of verifying that the
+      path for the prefix exists.
+    </p>
+
+    <p class="heading">Removing Words</p>
+    <p class="text">
+      The first step to removing a word with <tt>removeWord</tt> is
+      tracing out its path and turning off the <tt>isWord</tt> flag on
+      the final node. However, your work is not yet done because you
+      should remove any node along that path that no longer leads to a word.
+      <b>The removal of such nodes is left as an optional
+      extension, described in the next paragraph.</b>  For this lab, you only need
+      to update the <tt>isWord</tt> flag for full credit.</p>
+
+    <p class="text">
+      <b>Optional extension.</b>
+      All paths in the trie must eventually lead to a word.  If the word being
+      removed was the only valid word along this path, the nodes along
+      that path should be deleted from the trie along with the word.
+      For example, if you removed the words <i>zen</i> and <i>not</i>
+      from the trie shown previously, you should have the result below.
+    </p>
+
+    <img style="display:block;margin-left:auto;margin-right:auto;width:450px;" src="./trie3.svg"></img>
+
+    <p class="text">
+      Deleting unneeded nodes requires care because of the recursive nature of the trie.  Think about
+      how we removed the last element of a <tt>SinglyLinkedList</tt>
+      (Chapter 9.4 in <em>Bailey</em>). We had to maintain a reference
+      to the second to last element to update the references
+      appropriately.  The situation is similar here.
+    </p>
+
+    <p class="text">
+      As a general observation, there should never be a leaf node
+      whose <tt>isWord</tt> field is false.  If a node has no children
+      and does not represent a valid word (i.e., <tt>isWord</tt> is
+      false), then this node is not part of any path to a valid word
+      in the trie and such nodes should be deleted when removing a
+      word.  In some cases, removing a word from the trie may not
+      require removing any nodes.  For example, if we were to remove
+      the word <tt>new</tt> from the above trie, it turns off
+      <tt>isWord</tt> but all nodes along that path are still in use for other
+      words.
+    </p>
+
+    <p class="text">
+      <i>Important note</i>: when removing a word from the trie, the
+      only nodes that may require removal are nodes on the path to the
+      word that was removed. It would be extremely inefficient to
+      check additional nodes that are not on the path.
+    </p>
+
+    <p class="heading">Other Required Trie Operations</p>
+    <p class="text">
+      There are a few remaining odds and ends to the trie implementation:
+      <ul class="bullet">
+	<li>
+	  You need to keep track of the total number of words stored in the trie.
+	</li>
+	<li>
+	  You should add support for reading words from a file using a <tt>Scanner</tt> (see the section on The Lexicon Interface above).
+	</li>
+	<li>
+	  Creating an iterator to traverse the trie involves
+	  a <b>recursive</b> exploration of all paths through the trie
+	  to find all of the contained words.
+	  <!--You will want to use a
+	  new class (<tt>LexiconIterator</tt>) that
+	  extends <tt>AbstractIterator</tt> to implement this
+	  functionality.-->
+	  Remember that it is only words (not
+	  prefixes) that you want to operate on and that the iterator
+	  needs to dispense the words in alphabetical order.  You may
+	  find the approach that we used in the
+	  <a href="../handouts/iteratorExamples/ReverseIterator.java">ReverseIterator.java</a>
+	  example from class helpful (e.g., creating a data structure
+	  that contains the elements in the desired order and
+	  returning an iterator for that data strurcture).
+	</li>
+      </ul>
+    </p>
+
+
+        <p class="heading">Optional Extensions</p>
+    <p class="text">
+      Once you have a working lexicon and iterator method,
+      you're ready to implement snazzy spelling correction features.
+      In addition to the previously mentioned removal of nodes
+      that are no longer parts of words, there are two additional extensions
+      that you could attempt to implement.
+      These extensions are "just for fun" and do not affect your lab grade.
+      They are the two Lexicon member functions
+      for suggesting simple corrections
+      and for regular expressions matching:
+    </p>
+        <ul class="bullet">
+	  <li>
+	    <tt>Set&lt;String&gt; suggestCorrections(String target, int maxDistance);</tt>
+	  </li>
+	  <li>
+            <tt>Set&lt;String&gt; matchRegex(String pattern);</tt>
+	  </li>
+	</ul>
+
+    <p class="text">
+      Sets are basically just fancy Vectors that do not allow duplicates.
+      Check out the javadocs on
+      <a href="http://www.cs.williams.edu/~bailey/JavaStructures/doc/structure5/structure5/Set.html">Sets</a>
+      and
+      <a href="http://www.cs.williams.edu/~bailey/JavaStructures/doc/structure5/structure5/SetVector.html">SetVectors</a>
+      in structure5 for more information.
+    </p>
+
+
+    <p class="text"><b><font size="5">Suggesting Corrections:</font></b></p>
+
+    <p class="text">
+      First consider the member function <tt>suggestCorrections</tt>.
+      Given a (potentially misspelled) target string and a maximum distance,
+      this function gathers the set of words from the lexicon
+      that have a distance to the target string less than or equal to the given
+      <tt>maxDistance</tt>.
+      We define the distance between two equal-length strings to be
+      the total number of character positions in which the strings differ.
+      For example, "place" and "peace" have distance 1,
+      "place" and "plank" have distance 2.
+      The returned set contains all words in the lexicon that
+      are the same length as the target string and are within the maximum
+      distance.
+    </p>
+
+    <p class="text">
+      For example, consider the original sample trie containing the words
+      <i>a</i>, <i>are</i>, <i>as</i>, <i>new</i>, <i>no</i>, <i>not,</i>
+      and <i>zen</i>.
+      If we were to call <tt>suggestCorrections</tt>
+      with the following target string and maximum distance,
+      here are the suggested corrections:
+    </p>
+    <table class="bordered">
+      <tr>
+	<b>
+	<th width="150px">Target String</th>
+	<th>Max Distance</th>
+	<th>Suggested Corrections</th>
+	</b>
+      </tr>
+      <tr>
+	<td>ben</td>
+	<td>1</td>
+	<td>{zen}</td>
+      </tr>
+      <tr>
+	<td>nat</td>
+	<td>2</td>
+	<td>{new, not}</td>
+      </tr>
+      </table>
+
+    <p class="text">
+      For a more rigorous test,
+      we also provide the word file <tt>ospd2.txt</tt>, which lists all of
+      the words in the second edition of the Official Scrabble Player's
+      Dictionary.
+      Here are a few examples of <tt>suggestCorrections</tt> run on a lexicon
+      containing all the words in <tt>ospd2.txt</tt>:
+    </p>
+
+    <table class="bordered">
+      <tr>
+	<b>
+	<th width="150px">Target String</th>
+	<th>Max Distance</th>
+	<th>Suggested Corrections</th>
+	</b>
+      </tr>
+      <tr>
+	<td>crw</td>
+	<td>1</td>
+	<td>{caw, cow, cry}</td>
+      </tr>
+      <tr>
+	<td>zqwp</td>
+	<td>2</td>
+	<td>{gawp, yawp}</td>
+      </tr>
+      </table>
+
+
+    <p class="text">
+      Finding appropriate spelling corrections will require a recursive
+      traversal through the trie gathering those "neighbors" that are close to
+      the target path.
+      You should not find suggestions by examining each word in the lexicon
+      and seeing if it is close enough.
+      Instead, think about how you can generate candidate suggestions by
+      traversing the path of the target string taking small "detours" to the
+      neighbors that are within the maximum distance.
+    </p>
+
+
+    <p class="text"><b><font size="5">Matching Regular Expressions:</font></b></p>
+    <p class="text">
+      The second optional extension is to use recursion to match regular
+      expressions. The <tt>matchRegex</tt> method takes a regular expression (as defined below) as
+      input and gathers the set of lexicon words that match that regular
+      expression.
+    </p>
+    <p class="text">
+      If you have not encountered them before,
+      a regular expression describes a string-matching pattern.
+      Ordinary alphabetic letters within the pattern indicate where a candidate
+      word must exactly match.
+      The pattern may also contain "wildcard" characters,
+      which specify how and where the candidate word is allowed to vary.
+      For now, we will consider a subset of wildcard characters that have the
+      following meanings:
+    </p>
+    <ul class="bullet">
+      <li>
+	The '<tt>*</tt>' wildcard character matches any sequence of zero or more characters.
+	</li>
+      <li>
+	The  '<tt>?</tt>' wildcard character matches either zero or one character.
+	</li>
+    </ul>
+
+    <p class="text">
+      For example, consider the original sample trie containing the words
+      <i>a, are, as, new, no, not,</i> and <i>zen</i>.
+      Here are the matches for some sample regular expressions:
+    </p>
+    <table class="bordered">
+      <tr>
+	<th>Regular Expression</th>
+	<th>Matching Words from Lexicon</th>
+      </tr>
+      <tr>
+	<td>a*</td>
+	<td>{a, are, as}</td>
+      </tr>
+      <tr>
+	<td>a?</td>
+	<td>{a, as}</td>
+      </tr>
+      <tr>
+	<td>*e*</td>
+	<td>{are, new, zen}</td>
+      </tr>
+      <tr>
+	<td>not</td>
+	<td>{not}</td>
+      </tr>
+      <tr>
+	<td>z*abc?*d</td>
+	<td>{}</td>
+      </tr>
+      <tr>
+	<td>*o</td>
+	<td>{no}</td>
+      </tr>
+    </table>
+
+    <p class="text">
+      Finding the words that match a regular expression will require applying
+      your finest recursive skills.
+      You should <b>not</b> find suggestions by examining each word in the
+      lexicon and seeing if it is a match.
+      Instead, think about how to generate matches by traversing the path of
+      the pattern.
+      For non-wildcard characters, it proceeds just as for traversing ordinary
+      words.
+      On wildcard characters, "fan out" the search to include all possibilities
+      for that wildcard.
+    </p>
+
+    <p class="heading">Suggestions</p>
+        <ul class="bullet">
+	  <li>
+	    Lexicon operations are case-insensitive.
+	    Searching for words, suggesting corrections,
+	    matching regular expressions,
+	    and other operations should have the same behavior for both for
+	    upper and lowercase inputs.
+	    Be sure to take that into consideration when designing
+	    your data structure and algorithms.
+	  </li>
+	  <li>
+	    <b>Build and test incrementally</b>.
+	    Develop your trie one function at a time and
+	    continually test as you go.
+	    We have provided a handy client program that exercises the lexicon
+	    and allows you to drive the testing interactively from the console.
+	    It is supplied in source code form (<tt>Main.java</tt>) and you
+	    are encouraged to modify and extend it as needed for your purposes.
+	  </li>
+	  <li>
+	    Use stubs as placeholders.
+	    The testing code we provide makes calls to all of the public member
+	    functions on the Lexicon.
+	    In order for the program to compile, you must have implementations
+	    for all the functions.
+	    However, this doesn't suggest that you need to write all the code
+	    first and then attempt to debug it all at once.
+	    You can implement methods with placeholder "stubs" to start.
+	    If your lexicon doesn't yet remove words,
+	    implement the remove operation to ignore its argument or raise an
+	    error.
+	    Before you have implemented regular expression match, just return
+	    an empty set from the function and so on.
+	  </li>
+	  <li>
+	    Test on smaller data first.
+	    There are <tt>small.txt</tt> and <tt>small2.txt</tt> data files
+	    with just a few words that are especially helpful for testing in
+	    the early stages.
+	    You can also create word data files of your own that test
+	    specific trie configurations.
+	    The <tt>ospd2.txt</tt> word file is very large.
+	    It will be useful for stress-testing once you have the basics
+	    in place,
+	    but it can be overwhelming to try to debug using that version.
+	  </li>
+	</ul>
+
+
+    <p class="heading">Thought Questions</p>
+    <p class="text">
+      Please answer the following questions in the PROBLEMS.md file.
+      <ul class="bullet">
+	<li>
+	  For each node in the trie, you need a list of references to children nodes.
+	  What data structure did you use to store the references to children nodes?
+	  Justify the choice you made.
+	</li>
+	<li>
+	  Suppose we use an <tt>OrderedVector</tt> instead of a trie for storing
+	  our Lexicon.
+	  Discuss how the process of searching for suggested spelling corrections
+	  would differ from our trie-based implementation.
+	  Which structure do you think is more appropriate for the set of
+    operations a Lexicon must support?  Why?
+	</li>
+      </ul>
+    </p>
+
+    <p class="heading">Completing the Lab</p>
+    <p class="text">
+      We provide basic starter code for this assignment.
+      The lexicon directory contains the following files:
+    <ul class="bullet">
+      <li>
+	<tt>Lexicon.java</tt>: The interface that you need to implement <b>(Do not edit.)</b>
+      </li>
+      <li>
+	<tt>Main.java</tt>: Sample code that you can use to test your LexiconTrie <b>(No need to edit.)</b>
+      </li>
+      <li>
+	<tt>LexiconTrie.java</tt>: skeleton for a LexiconTrie implementation <b>(Must edit.)</b>
+      </li>
+      <li>
+	<tt>LexiconNode.java</tt>: skeleton for the class that represents Trie nodes <b>(Must edit.)</b>
+      </li>
+      <!-- <li>
+	<tt>LexiconIterator.java</tt>: skeleton for the class that iterates over words stored in the Lexicon <b>(Must edit.)</b>
+      </li> -->
+      <li>
+	<tt>small.txt</tt>, <tt>small2.txt</tt>, <tt>ospd2.txt</tt>: Data files containing sets of words for you to test with <b>(Do not edit.)</b>
+      </li>
+    </ul>
+    </p>
+    <p class="text">
+    </p>
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in previous weeks.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants). (We don't expect this to be an issue this week.)
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc” comment
+	(starts with <code>/**</code> and ends with <code>*/</code>;
+	it should include descriptions of the function at the top,
+	descriptions of return values after a <code>@return</code> tag,
+	descriptions of each argument after a <code>@param</code> tag,
+	and pre/post conditions after the <code>@pre</code>
+	or <code>@post</code> tags).
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+      </li>
+    </ul>
+
+
+    <br><br>
+
+    <p class="text">
+      <b>To run <code>checkstyle</code>, you would type the following
+      command at the terminal:</b>
+    </p>
+
+    <pre><code>
+          $ ./checkstyle
+        </code></pre>
+
+    <p class="text">
+      The <code>./</code> is peculiar to Unix: it tells the terminal
+      to look for the <code>checkstyle</code> program in the current
+      directory.  This command will run <code>checkstyle</code> on
+      every Java program in your directory.  To
+      run <code>checkstyle</code> on a specific Java file, type:
+    </p>
+
+    <pre><code>
+          $ ./checkstyle SomeFile.java
+    </code></pre>
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+      <ul class="bullet">
+	<li>
+          Your well-documented source code in <tt>LexiconNode.java</tt> and <tt>LexiconTrie.java</tt>.
+	</li>
+  <li>
+          The other provided java classes in <tt>Lexicon.java</tt> and <tt>Main.java</tt>.
+  </li>
+  <li>
+          The data files <tt>small.txt</tt>, <tt>small2.txt</tt>,and <tt>ospd2.txt</tt>.
+  </li>
+
+	<li>
+	  The <tt>PROBLEMS.md</tt> file that contains answers to the two
+	  questions described above, as well as any other information
+	  about your submission.
+	</li>
+      </ul>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.
+      Be sure to document your program with appropriate comments,
+      including a general description at the top of each Java class,
+      a description of each method with pre- and post-conditions where
+      appropriate.
+      Also use comments and descriptive variable names to clarify sections
+      of the code which may not be clear to someone trying to understand it.
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">
+      As you complete various milestones,
+      you should <tt>commit</tt> your changes and <tt>push</tt> them.
+      <b>Commit early and often</b>.
+      When the deadline arrives,
+      we will retrieve the latest version of your code.
+      If you are confident that you are done,
+      please include "Lab Submission" as the commit message for your final commit.
+      If you later decide that you have more edits to make, it is OK.
+      We will look at the latest commit before the deadline.
+    </p>
+    <ul class="bullet">
+      <li><b>Be sure to push your changes to GitLab</b>
+      </li>
+
+      <li><b>Verify your changes on GitLab</b>.
+	Navigate in your web browser to your private repository on GitLab.
+	You should see all changes reflected in the various files that you submit.
+	If not, go back and make sure you committed <em>and</em> pushed.
+      </li>
+    </ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em>
+      git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration
+      (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository"
+      in the comments at the top each of your java files.
+    </p>
+  <p class="bottom">&nbsp;</p>
+  </body>
+</html>
