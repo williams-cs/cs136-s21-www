@@ -566,6 +566,10 @@
 			"materials" : [
 			],
 			"post" : [
+				"[Code: <a href='handouts/GenericFrequencyList.java'>GenericFrequencyList.java</a>]",
+        "[Code: <a href='handouts/CompBinTree.java'>CompBinTree.java</a>]",
+        "[Code: <a href='handouts/HeapHuffman.java'>HeapHuffman.java</a>]",
+        "[Code: <a href='handouts/FileCompressor.java'>FileCompressor.java</a>]"
 			]
 		},
 		{
