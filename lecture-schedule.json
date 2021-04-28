@@ -587,6 +587,11 @@
 			"materials" : [
 			],
 			"post" : [
+				"Video: <a href='https://www.youtube.com/watch?v=ZzU3iZL5Z3g'>Skew Heaps</a>",
+				"[Slides: <a href='handouts/skewheaps.pdf'>Skew Heap Slides</a>]",
+				"[Code: <a href='handouts/isHeap.java'>isHeap.java</a>]",
+				"[Code: <a href='handouts/CheckForHeapProperty.java'>CheckForHeapProperty.java</a>]",
+				"[Code: <a href='handouts/CheckHeap.java'>CheckHeap.java</a>]"
 			]
 		},
 		{
