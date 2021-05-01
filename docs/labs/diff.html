@@ -23,8 +23,10 @@
     <p class="heading">Lab 9: Spot the Difference</p>
 
     <p class="info">
-	Up until this point in class, we've been using <tt>git</tt> to submit assignments.  You may have wondered what exactly gets sent to the server when you run <tt>git push</tt>.  If you make one change, is the entire file reuploaded?  It would be much more efficient if, instead, <tt>git</tt> could calculate what changes were made to the file, and only upload those changes to the server.In fact, git does make this calculation.
-
+	Up until this point in class, we've been using <tt>git</tt> to submit assignments.  You may have wondered what exactly gets sent to the server when you run <tt>git push</tt>.  If you make one change, is the entire file reuploaded?  It would be much more efficient if, instead, <tt>git</tt> could calculate what changes were made to the file, and only upload those changes to the server.  In fact, git does make this calculation!<BR><BR>
+	&nbsp;
+	&nbsp;
+	&nbsp;
 	Our goal in this lab is to create a Java program that does exactly this: given two files (an old version and a new version of the file), calculate the minimum number of changes required to transform the old version into the new version of the file.
 	</p>
 
@@ -56,6 +58,14 @@ onlyB</pre>
 &lt; onlyA
 &gt; onlyB
 	</pre>
+	<p class="text">
+	This calculation is quite similar to (although simpler than) the output of the unix utility <tt>diff</tt>.  You can try running 
+	<pre class="text">
+	% diff sample/verySmallA sample/verySmallB
+	</pre>
+	<p class="text">
+	and you will see a similar output.  Paying homage to this utility, we'll call our result the <tt>diff</tt> of two files.
+	</p>
 
 	<p class="heading">Calculating the Optimal Differences</p>
     <p class="text">
@@ -65,30 +75,36 @@ onlyB</pre>
 	There are two possibilities to obtain the minimum difference between these files:
 	</p>
 	<ul class="bullet">
-	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file1</tt>.</li>
-		<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).
+	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file1</tt>.  In this case, the solution begins with the first line of <tt>file1</tt>, with <tt>&lt;</tt> prepended, and continues with the recursive solution.</li>
+	<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).  In this case, the solution begins with the first line of <tt>file2</tt>, with <tt>&gt;</tt> prepended, and continues with the recursive solution. </li>
 	</ul>
     <p class="text">
 	If the first lines of file 1 and file 2 are the same, then we have a third option:
 	</p>
 	<ul class="bullet">
-		<li> Perhaps the first line of <tt>file1</tt> should remain unchanged in <tt>file2</tt>.  Then the minimum number of differences is the minimum number of differences between the remainder of <tt>file1</tt> and <tt>file2</tt>.
+		<li> Perhaps the first line of <tt>file1</tt> should remain unchanged in <tt>file2</tt>.  Then the minimum number of differences is the minimum number of differences between the remainder of <tt>file1</tt> and <tt>file2</tt> (with one line deleted from each).  
 	</ul>
     <p class="text">
-	For any pair of files, we have either 2 or 3 possibilities for how to proceed.  We calculate the cost of each possibility.  We take the choice that gives the minimum cost, and return that as our solution.
+	For any pair of files, we have either 2 or 3 possibilities for how to proceed.  We calculate the cost of each recursively.  We take the choice that gives the minimum cost, and return that as our solution.
 	</p>
 	<p class="text">
-	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>.
+	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>, with the <tt>&lt;</tt> character prepended before each line.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>, with the <tt>&gt;</tt> character prepended before each line.
 	</p>
 	
     <p class="heading">Simplifying the Design</p>
 	<p class="text">
-	As-is, this approach is kind of a pain: we need to spend lots of work splitting the first line off of each file.  This is inefficient, and it would significantly clutter up our code.
-	Instead, let's split each file into a <tt>Vector</tt> of <tt>String</tt>s, where each entry is a line of the file.  Our recursion calls a helper method
+	As-is, this approach is a bit difficult to work with: we need to spend lots of work splitting the first line off of each file.  This is inefficient, and it would significantly clutter up our code.
+	Instead, let's split each file into a <tt>Vector</tt> of <tt>String</tt>s, where each entry is a line of the file.  
+	</p>
+	<p class="text">
+	With this change, we can recurse by keeping track of which lines remain in each file.  
+	To recurse, we'll use a helper method:
+	</p>
+	<p class="text">
 	<code>
-	public Association&lt;Integer, String&gt; diffHelper(int remainingFile1Index, int remainingFile2Index) {
+			public Association&lt;Integer, String&gt; diffHelper(int remainingFile1Index, int remainingFile2Index)
 	</code>
-	<!--This method finds the minimum difference between lines <tt>i</tt> through the last line of <tt>file1</tt> and the last <tt>j</tt> lines of <tt>file2</tt>.  -->
+	</p>
     <p class="text">
 	<tt>diffHelper</tt> finds the optimal diff between the suffix of <tt>file1</tt> starting at line <tt>remainingFile1Index</tt>, and the suffix of <tt>file2</tt> starting at line <tt>remainingFile2Index</tt>.
 	It returns an <tt>Association</tt> between an <tt>int</tt> (representing the cost of the solution), and a <tt>String</tt> (representing the actual diff to return).
@@ -99,14 +115,14 @@ onlyB</pre>
 	</p>
     <p class="heading">Task 1: Implement The Difference Algorithm</p>
 	<p class="text">
-	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design.
+	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design.  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.  
 	</p>
 	<p class="text">
 	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
 	</p>
 	<ul class="bullet">
 		<li> If matching lines leads to an optimal solution, then resturn the solution with matching lines.</li>
-		<li> Otherwise, if deleting a line from either file leads to an optimal solution, return the solution that deletes a line from <tt>file1</tt>.
+		<li> Otherwise, if deleting a line from <tt>file1</tt> leads to the same cost as deleting a line from <tt>file2</tt>, return the solution that deletes a line from <tt>file1</tt>.
 	</ul>
 	
     <p class="text">
@@ -135,10 +151,10 @@ onlyB</pre>
 
     <p class="heading">Task 2: Speed Up Diff With Hashing</p>
 	<p class="text">
-	Implement the hash table described above to speed up your method.  You'll need to create an <tt>IntPair</tt> class.  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  For now, the <tt>hashCode()</tt> method should return the sum of the integers stored in <tt>IntPair</tt>
+	Implement the hash table described above to speed up your method.  You'll need to create an <tt>IntPair</tt> class (much of it is already implemented in the starter code).  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  For now, the <tt>hashCode()</tt> method should return the sum of the integers stored in <tt>IntPair</tt>
 	</p>
 	<p class="text">
-	Once this is completed, you should be able to correctly diff TODO.
+	Once this is completed, you should be able to correctly diff <tt>maSenate2016.txt</tt> and <tt>maSenate2020.txt</tt>.  Your solution should match <tt>maSenateSol.txt</tt>.
 	</p>
 
     <p class="heading">Task 3: Getting a Better Hash Function</p>
@@ -146,7 +162,10 @@ onlyB</pre>
 	Unfortunately, the hash described above has suboptimal performance: many pairs share the same hash code.  For example, if <tt>remainingFile1Index</tt> is 3, and <tt>remainingFile2Index</tt> is 1, we'll get the same hash code as when <tt>remainingFile1Index</tt> is 2 and <tt>remainingFile2Index</tt> is 2.
 	</p>
 	<p class="text">
-	Instead, implement the following <tt>hashCode()</tt> method:
+	As a result, you may find that your program still cannot compute the <tt>diff</tt> of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt> in a reasonable time.  (It takes just over 15 minutes on my machine.)
+	</p>
+	<p class="text">
+	To speed up execution, implement the following <tt>hashCode()</tt> method for your <tt>IntPair</tt> class:
 	</p>
 	<pre class="text">
 		return ((hashMult * int1 + hashAdd) % hashPrime) +
