@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+    <p class="heading">Lab 9: Spot the Difference</p>
+
+    <p class="info">
+	Up until this point in class, we've been using <tt>git</tt> to submit assignments.  You may have wondered what exactly gets sent to the server when you run <tt>git push</tt>.  If you make one change, is the entire file reuploaded?  It would be much more efficient if, instead, <tt>git</tt> could calculate what changes were made to the file, and only upload those changes to the server.In fact, git does make this calculation.
+
+	Our goal in this lab is to create a Java program that does exactly this: given two files (an old version and a new version of the file), calculate the minimum number of changes required to transform the old version into the new version of the file.
+	</p>
+
+    <p class="heading">What's the Difference?</p>
+	<p class="text">
+	Our goal is to list the differences between the two files on a line by line basis:  
+	</p>
+	<ul class="bullet"> 
+		<li> If a line was not included in the old version of the file, but is included in the new version, it should be prefixed by <tt>&gt;</tt>.  </li>
+		<li> On the other hand, if a line was in the old version, but has been removed in the new version, it should be prefixed by <tt>&lt;</tt>.  </li>
+		<li> If a line stays the same between the two versions, it should not be included in the output.</li>
+	</ul>
+	<p class="text">
+	For example, let's say the old version of our file is:
+	</p>
+	<pre class="text">
+match
+onlyA</pre>
+	<p class="text">
+	and the new version is:
+	</p>
+	<pre class="text">
+match
+onlyB</pre>
+	<p class="text">
+	Then the output should be:
+	</p>
+	<pre class="text">
+&lt; onlyA
+&gt; onlyB
+	</pre>
+
+	<p class="heading">Calculating the Optimal Differences</p>
+    <p class="text">
+	In this lab, we want to calculate the <it>minimum</it> sequence of differences between the old and new version of the file.  How can we make sure that the differences we output are, in fact, the minimum?  To ensure an optimal solution, we fall back to a classic technique in the course: we brute force all possibilities using recursion.
+
+	Let's say we have two files <tt>file1</tt> and <tt>file2</tt>, each stored as Strings.
+	There are two possibilities to obtain the minimum difference between these files:
+	</p>
+	<ul class="bullet">
+	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file1</tt>.</li>
+		<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).
+	</ul>
+    <p class="text">
+	If the first lines of file 1 and file 2 are the same, then we have a third option:
+	</p>
+	<ul class="bullet">
+		<li> Perhaps the first line of <tt>file1</tt> should remain unchanged in <tt>file2</tt>.  Then the minimum number of differences is the minimum number of differences between the remainder of <tt>file1</tt> and <tt>file2</tt>.
+	</ul>
+    <p class="text">
+	For any pair of files, we have either 2 or 3 possibilities for how to proceed.  We calculate the cost of each possibility.  We take the choice that gives the minimum cost, and return that as our solution.
+	</p>
+	<p class="text">
+	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>.
+	</p>
+	
+    <p class="heading">Simplifying the Design</p>
+	<p class="text">
+	As-is, this approach is kind of a pain: we need to spend lots of work splitting the first line off of each file.  This is inefficient, and it would significantly clutter up our code.
+	Instead, let's split each file into a <tt>Vector</tt> of <tt>String</tt>s, where each entry is a line of the file.  Our recursion calls a helper method
+	<code>
+	public Association<Integer, String> diffHelper(int remainingFile1Index, int remainingFile2Index) {
+	</code>
+	<!--This method finds the minimum difference between lines <tt>i</tt> through the last line of <tt>file1</tt> and the last <tt>j</tt> lines of <tt>file2</tt>.  -->
+    <p class="text">
+	<tt>diffHelper</tt> finds the optimal diff between the suffix of <tt>file1</tt> starting at line <tt>remainingFile1Index</tt>, and the suffix of <tt>file2</tt> starting at line <tt>remainingFile2Index</tt>.
+	It returns an <tt>Association</tt> between an <tt>int</tt> (representing the cost of the solution), and a <tt>String</tt> (representing the actual diff to return).
+	</p>
+    <p class="text">
+	<tt>diffHelper</tt> works recursively as described above. We can determine if <tt>diffHelper</tt> is in a base case by comparing <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> to the size of each vector.  
+		Otherwise, <tt>diffHelper</tt> considers two or three possibilities, each calculated with a recursive call.  The first two recursive calls remove one line from <tt>file1</tt> and <tt>file2</tt>; these recursive calls can be made by modifying remainingFile1Index and remainingFile2Index respectively.
+	</p>
+    <p class="text">
+	   After implementing <tt>diffHelper</tt>, your java program should run successfully on the inputs <tt>verySmallA</tt> and <tt>verySmallB</tt>, as well as <tt>smallA</tt> and <tt>smallB</tt>.  (It will also run correctly on the other sample files, but the time it takes will be prohibitively large.)
+	</p>
+    <p class="heading">Improving Efficiency</p>
+    <p class="text">
+	The recursive algorithm described above is very slow.  In fact, if <tt>file1</tt> and <tt>file2</tt> have <it>n</it> and <it>m</it> lines respectively, then this algorithm takes <it>O(2^(n+m))</it> time.
+	</p>
+	<p class="text">
+	Part of the reason this algorithm is so slow is due to <tt>diffHelper</tt>computing the same thing over and over.  For example, let's look at what recursive calls are made when comparing files <tt>verySmallA</tt> and <tt>verySmallB</tt>:
+	</p>
+	<p class="text">
+	We need a way to keep track of previous calls to <tt>diffHelper</tt>.  If <tt>diffHelper</tt> is called a second time with the same arguments, rather than recomputing the solution from scratch, we want to look up the solution calculated last time it was called.  Then, we can return it immediately.
+	</p>
+	<p class="text">
+	We need a few things to accomplish this.  First, we need a way to keep track of which calls have been made to <tt>diffHelper</tt>.  Since <tt>diffHelper</tt> takes two <tt>int</tt>s as arguments, let's create a class <tt>IntPair</tt> that stores two <tt>int</tt>s.  
+	</p>
+	<p class="text">
+	Then, we want to store, for each <tt>diffHelper</tt> we have called in the past, the final return value of the method (which is an <tt>Association&lt;Integer, String&gt;</tt>).  We want to be able to lookup if we've made a call with a given <tt>IntPair</tt> in the past, and if so, find the associated <tt>Association</tt> and return it.  Otherwise, at the end of <tt>diffHelper</tt>, we want to keep track of  the <tt>IntPair</tt> and the newly calculated return value.
+	</p>
+	<p class="text">
+	This is an ideal situation for hashing.  
+	At the beginning of a recursive call, we <tt>get</tt> an <tt>IntPair</tt> consisting of <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> to see if their final value has been previously caluclated.  If so, we return it.  Otherwise, after completing a new recursive call, we want to <tt>put</tt> the arguments along with the calculated return value into the hash table.  
+	</p>
+
+    <p class="heading">Task 2: Speed Up Diff With Hashing</p>
+	<p class="text">
+	Implement the hash table described above to speed up your method.  You'll need to create an <tt>IntPair</tt> class.  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  For now, the <tt>hashCode()</tt> method should return the sum of the integers stored in <tt>IntPair</tt>
+	</p>
+	<p class="text">
+	Once this is completed, you should be able to correctly diff TODO.
+	</p>
+
+    <p class="heading">Task 3: Getting a Better Hash Function</p>
+	<p class="text">
+	Unfortunately, the hash described above has suboptimal performance: many pairs share the same hash code.  For example, if <tt>remainingFile1Index</tt> is 3, and <tt>remainingFile2Index</tt> is 1, we'll get the same hash code as when <tt>remainingFile1Index</tt> is 2 and <tt>remainingFile2Index</tt> is 2.
+	</p>
+	<p class="text">
+	Instead, implement the following <tt>hashCode()</tt> method:
+	</p>
+	<pre class="text">
+		return ((hashMult * int1 + hashAdd) % hashPrime) +
+				((hashMult * int2 + hashAdd) % hashPrime);
+	</pre>
+	<p class="text">
+	This method uses the following instance variables:
+	</p>
+	<pre class="text">
+	//Constants used in hashing
+	private final int hashPrime = 402653189;
+	private final int hashMult = 334743597;
+	private final int hashAdd = 205380754;
+	</pre>
+	<p class="text">
+	Multiplying by a large random number, adding a second large random number, and finally taking the result modulo a large random prime is one of the best-known methods for hashing integers (or, in this case, pairs of integers).  And it should work particularly well here.  With this improvement, your program should be able to quickly and correctly calculate the diff for all sample files.
+	</p>
+
+
+    <p class="heading">Pre-lab</p>
+    <p class="text">
+		Before lab, please do the following:
+
+		<ul class="bullet">
+			<li>
+				In this lab you'll be writing somewhat dense code: the amount of code you write won't be too large, but the concepts behind the lab are all fairly new.  For this reason, be sure to carefully read through the lab description before you get started.
+			</li>
+		</ul>
+    </p>
+
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in previous weeks.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants). (We don't expect this to be an issue this week.)
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc” comment
+	(starts with <code>/**</code> and ends with <code>*/</code>;
+	it should include descriptions of the function at the top,
+	descriptions of return values after a <code>@return</code> tag,
+	descriptions of each argument after a <code>@param</code> tag,
+	and pre/post conditions after the <code>@pre</code>
+	or <code>@post</code> tags).
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+      </li>
+    </ul>
+
+
+    <br><br>
+
+    <p class="text">
+      <b>To run <code>checkstyle</code>, you would type the following
+      command at the terminal:</b>
+    </p>
+
+    <pre><code>
+          $ ./checkstyle
+        </code></pre>
+
+    <p class="text">
+      The <code>./</code> is peculiar to Unix: it tells the terminal
+      to look for the <code>checkstyle</code> program in the current
+      directory.  This command will run <code>checkstyle</code> on
+      every Java program in your directory.  To
+      run <code>checkstyle</code> on a specific Java file, type:
+    </p>
+
+    <pre><code>
+          $ ./checkstyle SomeFile.java
+    </code></pre>
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      For this lab, please submit the following:
+    </p>
+      <ul class="bullet">
+	<li>
+          Your well-documented source code in <tt>Diff.java</tt> and <tt>IntPair.java</tt>.
+	</li>
+<li>
+	  The <tt>PROBLEMS.md</tt> file that contains answers to the TODO
+	  questions described above, as well as any other information
+	  about your submission.
+	</li>
+      </ul>
+    <p class="text">
+      As in all labs, you will be graded on design, documentation, style,
+      and correctness.
+      Be sure to document your program with appropriate comments,
+      including a general description at the top of each Java class,
+      a description of each method with pre- and post-conditions where
+      appropriate.
+      Also use comments and descriptive variable names to clarify sections
+      of the code which may not be clear to someone trying to understand it.
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">
+      As you complete various milestones,
+      you should <tt>commit</tt> your changes and <tt>push</tt> them.
+      <b>Commit early and often</b>.
+      When the deadline arrives,
+      we will retrieve the latest version of your code.
+      If you are confident that you are done,
+      please include "Lab Submission" as the commit message for your final commit.
+      If you later decide that you have more edits to make, it is OK.
+      We will look at the latest commit before the deadline.
+    </p>
+    <ul class="bullet">
+      <li><b>Be sure to push your changes to GitLab</b>
+      </li>
+
+      <li><b>Verify your changes on GitLab</b>.
+	Navigate in your web browser to your private repository on GitLab.
+	You should see all changes reflected in the various files that you submit.
+	If not, go back and make sure you committed <em>and</em> pushed.
+      </li>
+    </ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em>
+      git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration
+      (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository"
+      in the comments at the top each of your java files.
+    </p>
+  <p class="bottom">&nbsp;</p>
+  </body>
+</html>
