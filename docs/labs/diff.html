@@ -86,7 +86,7 @@ onlyB</pre>
 	As-is, this approach is kind of a pain: we need to spend lots of work splitting the first line off of each file.  This is inefficient, and it would significantly clutter up our code.
 	Instead, let's split each file into a <tt>Vector</tt> of <tt>String</tt>s, where each entry is a line of the file.  Our recursion calls a helper method
 	<code>
-	public Association<Integer, String> diffHelper(int remainingFile1Index, int remainingFile2Index) {
+	public Association&lt;Integer, String&gt; diffHelper(int remainingFile1Index, int remainingFile2Index) {
 	</code>
 	<!--This method finds the minimum difference between lines <tt>i</tt> through the last line of <tt>file1</tt> and the last <tt>j</tt> lines of <tt>file2</tt>.  -->
     <p class="text">
@@ -97,8 +97,20 @@ onlyB</pre>
 	<tt>diffHelper</tt> works recursively as described above. We can determine if <tt>diffHelper</tt> is in a base case by comparing <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> to the size of each vector.  
 		Otherwise, <tt>diffHelper</tt> considers two or three possibilities, each calculated with a recursive call.  The first two recursive calls remove one line from <tt>file1</tt> and <tt>file2</tt>; these recursive calls can be made by modifying remainingFile1Index and remainingFile2Index respectively.
 	</p>
+    <p class="heading">Task 1: Implement The Difference Algorithm</p>
+	<p class="text">
+	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design.
+	</p>
+	<p class="text">
+	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
+	</p>
+	<ul class="bullet">
+		<li> If matching lines leads to an optimal solution, then resturn the solution with matching lines.</li>
+		<li> Otherwise, if deleting a line from either file leads to an optimal solution, return the solution that deletes a line from <tt>file1</tt>.
+	</ul>
+	
     <p class="text">
-	   After implementing <tt>diffHelper</tt>, your java program should run successfully on the inputs <tt>verySmallA</tt> and <tt>verySmallB</tt>, as well as <tt>smallA</tt> and <tt>smallB</tt>.  (It will also run correctly on the other sample files, but the time it takes will be prohibitively large.)
+	   After implementing <tt>diffHelper</tt>, your java program should run successfully on the inputs <tt>verySmallA.txt</tt> and <tt>verySmallB.txt</tt> (matching the output in <tt>verySmallSolution.txt</tt>), as well as <tt>smallA.txt</tt> and <tt>smallB.txt</tt> (matching the output in <tt>smallSolution.txt</tt>).  It will also run correctly on the other sample files, but the time it takes will be prohibitively large.
 	</p>
     <p class="heading">Improving Efficiency</p>
     <p class="text">
