@@ -624,7 +624,16 @@
 			],
 			"materials" : [
 			],
-			"post" : []
+			"post" : [
+				"[Code: <a href='handouts/BFSComponentSize.java'>BFSComponentSize.java</a>]",
+				"[Code: <a href='handouts/DFSComponentSize.java'>DFSComponentSize.java</a>]",
+				"[Code: <a href='handouts/ComponentSize.java'>ComponentSize.java</a>]",
+				"[Code: <a href='handouts/RecDFSComponentSize.java'>RecDFSComponentSize.java</a>]",
+				"[Code: <a href='handouts/FindComponents.java'>FindComponents.java</a>]",
+				"[Code: <a href='handouts/TrianglesFile.java'>TrianglesFile.java</a>]",
+				"[Code: <a href='handouts/graphOfEdges.txt'>graphOfEdges.txt</a>]",
+				"[Code: <a href='handouts/bipartite.txt'>bipartite.txt</a>]"
+			]
 		},
 		{
 			"topic" : [
@@ -634,6 +643,10 @@
 				"<i>Bailey</i> 16.3"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/W8R3niru6V4'>Directed Graphs</a>",
+    		"[<a href='handouts/DirectedGraphs.pdf'>Directed Graph Slides</a>]",
+        "Video: <a href='https://youtu.be/tgCyvFVdV7M'>Describing Graphs</a>",
+    		"[<a href='handouts/DescribingGraphs.pdf'>Describing Graphs Slides</a>]"
 			],
 			"materials" : [],
 			"post" : [
