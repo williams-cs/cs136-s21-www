@@ -72,10 +72,10 @@ onlyB</pre>
 	In this lab, we want to calculate the <i>minimum</i> sequence of differences between the old and new version of the file.  How can we make sure that the differences we output are, in fact, the minimum?  To ensure an optimal solution, we fall back to a classic technique in the course: we brute force all possibilities using recursion.
 
 	Let's say we have two files <tt>file1</tt> and <tt>file2</tt>, each stored as Strings.
-	There are two possibilities to obtain the minimum difference between these files:
+	To start, there are two possibilities to obtain the minimum difference between these files:
 	</p>
 	<ul class="bullet">
-	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file1</tt>.  In this case, the solution begins with the first line of <tt>file1</tt>, with <tt>&lt;</tt> prepended, and continues with the recursive solution.</li>
+	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file2</tt>.  In this case, the solution begins with the first line of <tt>file1</tt>, with <tt>&lt;</tt> prepended, and continues with the recursive solution.</li>
 	<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).  In this case, the solution begins with the first line of <tt>file2</tt>, with <tt>&gt;</tt> prepended, and continues with the recursive solution. </li>
 	</ul>
     <p class="text">
@@ -115,7 +115,7 @@ onlyB</pre>
 	</p>
     <p class="heading">Task 1: Implement The Difference Algorithm</p>
 	<p class="text">
-	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use the <tt>IntPair</tt> class yet; we'll use it later in the lab.
+	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above, in the file <tt>Diff.java</tt>.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use the <tt>IntPair</tt> class yet; we'll use it later in the lab.
 	</p>
 	<p class="text">
 	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
@@ -133,7 +133,7 @@ onlyB</pre>
 	The recursive algorithm described above is very slow.  In fact, if <tt>file1</tt> and <tt>file2</tt> have <i>n</i> and <i>m</i> lines respectively, then this algorithm takes <i>Ω(2^(n+m))</i> time.
 	</p>
 	<p class="text">
-	Part of the reason this algorithm is so slow is due to <tt>diffHelper</tt>computing the same thing over and over.  For example, let's look at what recursive calls are made when comparing files <tt>verySmallA</tt> and <tt>verySmallB</tt>: (TODO)
+	Part of the reason this algorithm is so slow is due to <tt>diffHelper</tt> computing the same thing over and over.  For example, let's look at what recursive calls are made when comparing files <tt>verySmallA</tt> and <tt>verySmallB</tt>: (TODO)
 	</p>
 	<p class="text">
 	We need a way to keep track of previous calls to <tt>diffHelper</tt>.  If <tt>diffHelper</tt> is called a second time with the same arguments, rather than recomputing the solution from scratch, we want to look up the solution calculated last time it was called.  Then, we can return it immediately.
@@ -151,10 +151,13 @@ onlyB</pre>
 
     <p class="heading">Task 2: Speed Up Diff With Hashing</p>
 	<p class="text">
-	Implement the hash table described above to speed up your method.  You'll need to create an <tt>IntPair</tt> class (much of it is already implemented in the starter code).  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  For now, the <tt>hashCode()</tt> method should return the sum of the integers stored in <tt>IntPair</tt>.
+	Implement the hash table described above to speed up your method in <tt>HashDiff.java</tt>.  The <tt>HashDiff</tt> class extends the <tt>Diff</tt> class, so you will have access to all of the variables and methods you already wrote in Task 1.  You should begin by copy pasting <tt>diffHelper</tt> from <tt>Diff</tt> into <tt>HashDiff</tt>, and then add in the hashtable checks described above. <b> Make sure your diffHelper method works correctly before doing this!</b>  Otherwise, if you made a mistake in your original implementation, you'll need to fix it in two places.
+
+		<p class="text">
+		You'll need to create an <tt>IntPair</tt> class (much of it is already implemented in the starter code).  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  The <tt>hashCode()</tt> method of <tt>IntPair</tt> should return the sum of the integers stored in <tt>IntPair</tt>.
 	</p>
 	<p class="text">
-	Once this is completed, you should be able to correctly diff <tt>maSenate2016.txt</tt> and <tt>maSenate2020.txt</tt>.  Your solution should match <tt>maSenateSol.txt</tt>.
+	Once this is completed, <tt>HashDiff</tt> should be able to correctly diff <tt>maSenate2016.txt</tt> and <tt>maSenate2020.txt</tt> in a few seconds.  Your solution should match <tt>maSenateSol.txt</tt>.
 	</p>
 
     <p class="heading">Task 3: Getting a Better Hash Function</p>
@@ -165,7 +168,7 @@ onlyB</pre>
 	As a result, you may find that your program still cannot compute the <tt>diff</tt> of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt> in a reasonable time.  (It takes just over 15 minutes on my machine.)
 	</p>
 	<p class="text">
-	To speed up execution, implement the following <tt>hashCode()</tt> method for your <tt>IntPair</tt> class:
+	To speed up execution, implement the following <tt>hashCode()</tt> method  in the <tt>BetterIntPair</tt> class:
 	</p>
 	<pre class="text">
 		return ((hashMult * int1 + hashAdd) % hashPrime) +
@@ -181,7 +184,13 @@ onlyB</pre>
 	private final int hashAdd = 205380754;
 	</pre>
 	<p class="text">
-	Multiplying by a large random number, adding a second large random number, and finally taking the result modulo a large random prime is one of the best-known methods for hashing integers (or, in this case, pairs of integers).  And it should work particularly well here.  With this improvement, your program should be able to quickly and correctly calculate the diff for all sample files.
+	Multiplying by a large random number, adding a second large random number, and finally taking the result modulo a large random prime is one of the best-known methods for hashing integers (or, in this case, pairs of integers).  And it should work particularly well here.  
+</p>
+<p class="text">
+    Copy the contents of <tt>HashDiff.java</tt> into <tt>BetterHashDiff.java</tt>.  In <tt>BetterHashDiff.java</tt>, replace all instances of <tt>IntPair</tt> with a <tt>BetterIntPair</tt>.
+	</p>
+	<p class="text">
+	With this improvement, <tt>BetterHashDiff.java</tt> should be able to quickly and correctly calculate the diff for all sample files.
 	</p>
     <p class="heading">Task 4: Thought Questions</p>
 	<p class="text">
@@ -190,8 +199,9 @@ onlyB</pre>
 			<li>This question is about the reason why the more complex hash function in Task 3 led to a significant speedup over the simpler hash function in Task 2.  Let's say that throughout all recursive calls, <tt>remainingFile1Index</tt> is always between 0 and <i>n-1</i>, and <tt>remainingFile2Index</tt> is always between 0 and <i>m-1</i>. 
 				<ul class="bullet">
 					<li> In this case, how many possible <tt>IntPair</tt>s can there be throughout the execution of the program?</li>
-					<li>  With the simpler <tt>hashCode()</tt> implemented in Task 2, how many possible <tt>hashCode</tt>s can be output by all <tt>IntPair</tt>s?  <i>(Hint: What is the maximum value that can be output by <tt>hashCode()</tt>?  What is the minimum value?)  </i></li>
+					<li>   How many possible <tt>hashCode</tt>s can be output by all <tt>IntPair</tt>s?  <i>(Hint: What is the maximum value that can be output by <tt>hashCode()</tt>?  What is the minimum value?)  </i></li>
 				</ul></li>
+			<li> Rather than using an <tt>IntPair</tt> in this lab, we could have used an <tt>Association&lt;Integer, Integer&gt;</tt>.  What would be the downside of doing this?
 		</ul>
 	</p>
 
@@ -203,7 +213,7 @@ onlyB</pre>
 
 		<ul class="bullet">
 			<li>
-				In this lab you'll be writing somewhat dense code: the amount of code you write won't be too large, but the concepts behind the lab are all fairly new.  For this reason, be sure to carefully read through the lab description before you get started.
+				In this lab, the amount of code you write won't be too large, but the concepts behind the lab are fairly new.  For this reason, be sure to carefully read through the lab description before you get started.
 			</li>
 		</ul>
     </p>
