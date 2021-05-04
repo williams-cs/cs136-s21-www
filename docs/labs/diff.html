@@ -35,8 +35,8 @@
 	Our goal is to list the differences between the two files on a line by line basis:  
 	</p>
 	<ul class="bullet"> 
-		<li> If a line was not included in the old version of the file, but is included in the new version, it should be prefixed by <tt>&gt;</tt>.  </li>
-		<li> On the other hand, if a line was in the old version, but has been removed in the new version, it should be prefixed by <tt>&lt;</tt>.  </li>
+		<li> If a line was not included in the old version of the file, but is included in the new version, it should be prefixed by <tt>&gt;</tt> and its line number.
+		<li> On the other hand, if a line was in the old version, but has been removed in the new version, it should be prefixed by <tt>&lt;</tt> and its line number.  </li>
 		<li> If a line stays the same between the two versions, it should not be included in the output.</li>
 	</ul>
 	<p class="text">
@@ -55,8 +55,8 @@ onlyB</pre>
 	Then the output should be:
 	</p>
 	<pre class="text">
-&lt; onlyA
-&gt; onlyB
+ &lt; 2: onlyA
+ &gt; 2: onlyB
 	</pre>
 	<p class="text">
 	This calculation is quite similar to (although simpler than) the output of the unix utility <tt>diff</tt>.  You can try running 
@@ -115,9 +115,16 @@ onlyB</pre>
 	</p>
     <p class="heading">Task 1: Implement The Difference Algorithm</p>
 	<p class="text">
-	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above, in the file <tt>Diff.java</tt>.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use the <tt>IntPair</tt> class yet; we'll use it later in the lab.
+	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above, in the file <tt>Diff.java</tt>.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use any other class yet; task 1 can be completed while only modifying <tt>Diff.java</tt>.
 	</p>
 	<p class="text">
+	First, implement the base case, where one of the files has no remaining lines.  You may want to use a helper function for the base case.  This is a good opportunity to make sure the format of your output matches the expected format.  After the base case is implemented, <tt>Diff</tt> should work correctly when one of the files is empty.  In particular, the sample solution in <tt>emptySolution.txt</tt> should be exactly match the output when you run 
+	</p>
+	<pre class="text">
+		$ java Diff samples/verySmallA.txt samples/empty.txt
+	</pre>
+	<p class="text">
+	Next, implement the recursive algorithm.  
 	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
 	</p>
 	<ul class="bullet">
