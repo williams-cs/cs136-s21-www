@@ -181,7 +181,7 @@ onlyB</pre>
 	As a result, you may find that your program still cannot compute the <tt>diff</tt> of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt> in a reasonable time.  (It takes just over 15 minutes on my machine.)
 	</p>
 	<p class="text">
-	To speed up execution, implement the following <tt>hashCode()</tt> method  in the <tt>BetterIntPair</tt> class.  The instance variables used in this method are already included in the starter code.
+	To speed up execution, implement the following <tt>hashCode()</tt> method  in the <tt>BetterIntPair</tt> class (<tt>BetterIntPair</tt> extends <tt>IntPair</tt>, so you only need to override the <tt>hashCode()</tt> method).  The instance variables used in this method are already included in the starter code.
 	</p>
 	<pre class="text">
 		return ((hashMult * int1 + hashAdd) % hashPrime) +
