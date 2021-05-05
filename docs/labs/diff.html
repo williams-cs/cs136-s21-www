@@ -88,7 +88,7 @@ onlyB</pre>
 	For any pair of files, we have either 2 or 3 possibilities for how to proceed.  We calculate the cost of each recursively.  We take the choice that gives the minimum cost, and return that as our solution.
 	</p>
 	<p class="text">
-	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>, with the <tt>&lt;</tt> character and line number prepended before each line.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>, with the <tt>&gt;</tt> character and line number prepended before each line.
+	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>, with the <tt>&gt;</tt> character and line number prepended to each line.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>, with the <tt>&lt;</tt> character and line number prepended to each line.
 	</p>
 	
     <p class="heading">Simplifying the Design</p>
@@ -110,19 +110,22 @@ onlyB</pre>
 	It returns an <tt>Association</tt> between an <tt>int</tt> (representing the cost of the solution), and a <tt>String</tt> (representing the actual diff to return).
 	</p>
     <p class="text">
-	<tt>diffHelper</tt> works recursively as described above. We can determine if <tt>diffHelper</tt> is in a base case by comparing <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> to the size of each vector.  
-		Otherwise, <tt>diffHelper</tt> considers two or three possibilities, each calculated with a recursive call.  The first two recursive calls remove one line from <tt>file1</tt> and <tt>file2</tt>; these recursive calls can be made by modifying <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> respectively.
+	<tt>diffHelper</tt> works recursively as described above. We can determine if <tt>diffHelper</tt> is in a base case (where one of the files is empty) by comparing <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> to the size of each vector.  
+		If both files are nonempty, <tt>diffHelper</tt> considers two or three possibilities, each calculated with a recursive call.  The first two recursive calls remove one line from <tt>file1</tt> and <tt>file2</tt>; these recursive calls can be made by modifying <tt>remainingFile1Index</tt> and <tt>remainingFile2Index</tt> respectively.
 	</p>
     <p class="heading">Task 1: Implement The Difference Algorithm</p>
 	<p class="text">
-	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above, in the file <tt>Diff.java</tt>.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use any other class yet; task 1 can be completed while only modifying <tt>Diff.java</tt>.
+	Your first task is to implement <tt>diffHelper</tt> using the recursive method described above, in the file <tt>Diff.java</tt>.  You should store the files using a <tt>Vector&lt;String&gt;</tt> to simplify your design (this has already been implemented in the starter code).  You will probably want to use helper methods to keep your <tt>diffHelper</tt> method short.   You don't need to use any other class yet; task 1 can be completed by only modifying <tt>Diff.java</tt>.
 	</p>
 	<p class="text">
-	First, implement the base case, where one of the files has no remaining lines.  You may want to use a helper function for the base case.  This is a good opportunity to make sure the format of your output matches the expected format.  After the base case is implemented, <tt>Diff</tt> should work correctly when one of the files is empty.  In particular, the sample solution in <tt>emptySolution.txt</tt> should be exactly match the output when you run 
+	First, implement the base case, where one of the files has no remaining lines.  You may want to use a helper function for the base case.  After the base case is implemented, <tt>Diff</tt> should work correctly when one of the files is empty.  In particular, if you run the command 
 	</p>
 	<pre class="text">
 		% java Diff samples/verySmallA.txt samples/empty.txt
 	</pre>
+	<p class="text">
+	then the result you obtain should exactly match the sample solution in <tt>emptySolution.txt</tt>.  This is a good opportunity to make sure the format of your output matches the expected format---make sure the output matches before you proceed further in the lab.
+	</p>
 	<p class="text">
 	Next, implement the recursive algorithm.  
 	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
@@ -160,7 +163,7 @@ onlyB</pre>
 
     <p class="heading">Task 2: Speed Up Diff With Hashing</p>
 	<p class="text">
-	Implement the hash table described above to speed up your method in <tt>HashDiff.java</tt>.  The <tt>HashDiff</tt> class extends the <tt>Diff</tt> class, so you will have access to all of the variables and methods you already wrote in task 1.  You should use your <tt>diffHelper</tt> from <tt>Diff</tt> as a staring point, incorporating the hashtable checks described above. <b> Make sure your diffHelper method works correctly before starting task 2!</b>  Otherwise, if you made a mistake in your original implementation, you'll need to fix it in two places.
+	Implement a version of <tt>diffHelper</tt> that uses a hash table to avoid repeated calculations in <tt>HashDiff.java</tt>.  The <tt>HashDiff</tt> class extends the <tt>Diff</tt> class, so you will have access to all of the variables and methods you already wrote in task 1.  You should use your <tt>diffHelper</tt> from <tt>Diff</tt> as a staring point, incorporating the hashtable checks described above. <b> Make sure your diffHelper method works correctly before starting task 2!</b>  Otherwise, if you made a mistake in your original implementation, you'll need to fix it in two places.
 
 		<p class="text">
 		You'll need to create an <tt>IntPair</tt> class (much of it is already implemented in the starter code).  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  The <tt>hashCode()</tt> method of <tt>IntPair</tt> should return the sum of the integers stored in <tt>IntPair</tt>.
@@ -168,6 +171,9 @@ onlyB</pre>
 	<p class="text">
 	Once this is completed, <tt>HashDiff</tt> should be able to correctly diff <tt>maSenate2016.txt</tt> and <tt>maSenate2020.txt</tt> in a few seconds.  Your solution should match <tt>maSenateSol.txt</tt>.
 	</p>
+	<pre class="text">
+		% java HashDiff samples/maSenate2016.txt samples/maSenate2020.txt
+	</pre>
 
     <p class="heading">Task 3: Getting a Better Hash Function</p>
 	<p class="text">
@@ -177,20 +183,11 @@ onlyB</pre>
 	As a result, you may find that your program still cannot compute the <tt>diff</tt> of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt> in a reasonable time.  (It takes just over 15 minutes on my machine.)
 	</p>
 	<p class="text">
-	To speed up execution, implement the following <tt>hashCode()</tt> method  in the <tt>BetterIntPair</tt> class:
+	To speed up execution, implement the following <tt>hashCode()</tt> method  in the <tt>BetterIntPair</tt> class (<tt>BetterIntPair</tt> extends <tt>IntPair</tt>, so you only need to override the <tt>hashCode()</tt> method).  The instance variables used in this method are already included in the starter code.
 	</p>
 	<pre class="text">
 		return ((hashMult * int1 + hashAdd) % hashPrime) +
 				((hashMult * int2 + hashAdd) % hashPrime);
-	</pre>
-	<p class="text">
-	This method uses the following instance variables:
-	</p>
-	<pre class="text">
-	//Constants used in hashing
-	private final int hashPrime = 402653189;
-	private final int hashMult = 334743597;
-	private final int hashAdd = 205380754;
 	</pre>
 	<p class="text">
 	Multiplying by a large random number, adding a second large random number, and finally taking the result modulo a large random prime is one of the best-known methods for hashing integers (or, in this case, pairs of integers).  And it should work particularly well here.  
@@ -199,6 +196,9 @@ onlyB</pre>
 Create a new implementation of <tt>diffHelper()</tt> in <tt>BetterHashDiff.java</tt> that uses the <tt>BetterIntPair</tt> class in the hash table.  This implementation will likely be very similar to the version of <tt>diffHelper()</tt> implemented in <tt>HashDiff.java</tt>.
 With this improvement, <tt>BetterHashDiff</tt> should be able to quickly and correctly calculate the diff for all sample files.  In particular, <tt>BetterHashDiff</tt> should be able to quickly calculate the diff of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt>, obtaining a solution matching <tt>whosonfirstSol.txt</tt>
 	</p>
+	<pre class="text">
+		% java BetterHashDiff samples/whosonfirst.txt samples/whosonfirst2.txt
+	</pre>
     <p class="heading">Task 4: Thought Questions</p>
 	<p class="text">
 	Answer the following questions in <tt>PROBLEMS.md</tt>.
