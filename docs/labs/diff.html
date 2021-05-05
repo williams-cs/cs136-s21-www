@@ -131,9 +131,11 @@ onlyB</pre>
 	In some cases, there may be multiple optimal solutions.  <b>Make sure you break ties according to the following rules</b> so that your output matches the sample output:
 	</p>
 	<ul class="bullet">
-		<li> If matching lines leads to an optimal solution, then return the solution with matching lines.</li>
-		<li> Otherwise, if deleting a line from <tt>file1</tt> leads to the same cost as deleting a line from <tt>file2</tt>, return the solution that deletes a line from <tt>file1</tt>.
+		<li> If removing a line from <tt>file1</tt> leads to an optimal solution, then return the solution that removes a line from <tt>file1</tt> (even if other solutions are also optimal).</li>
+		<li> Otherwise, if removing a line from <tt>file2</tt> leads to the same cost as removing a line from both files, return the solution that removes a line from <tt>file2</tt>.
 	</ul>
+	<p class="text"> In other words, if removing a line from <tt>file1</tt> and <tt>file2</tt> leads to the same cost, break the tie towards deleting the line from <tt>file1</tt>.  Only remove a line from both files if it is the unique best solution (of course, we only consider deleting a line from both files if their current lines are equal).
+	</p>
 	
     <p class="text">
 	   After implementing <tt>diffHelper</tt>, your java program should run successfully on the inputs <tt>verySmallA.txt</tt> and <tt>verySmallB.txt</tt> (matching the output in <tt>verySmallSolution.txt</tt>), as well as <tt>smallA.txt</tt> and <tt>smallB.txt</tt> (matching the output in <tt>smallSolution.txt</tt>).  It will also run correctly on the other sample files, but the time it takes will be prohibitively large.
