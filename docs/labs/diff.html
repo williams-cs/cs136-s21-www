@@ -169,6 +169,9 @@ onlyB</pre>
 	<p class="text">
 	Once this is completed, <tt>HashDiff</tt> should be able to correctly diff <tt>maSenate2016.txt</tt> and <tt>maSenate2020.txt</tt> in a few seconds.  Your solution should match <tt>maSenateSol.txt</tt>.
 	</p>
+	<pre class="text">
+		% java HashDiff samples/maSenate2016.txt samples/maSenate2020.txt
+	</pre>
 
     <p class="heading">Task 3: Getting a Better Hash Function</p>
 	<p class="text">
@@ -191,6 +194,9 @@ onlyB</pre>
 Create a new implementation of <tt>diffHelper()</tt> in <tt>BetterHashDiff.java</tt> that uses the <tt>BetterIntPair</tt> class in the hash table.  This implementation will likely be very similar to the version of <tt>diffHelper()</tt> implemented in <tt>HashDiff.java</tt>.
 With this improvement, <tt>BetterHashDiff</tt> should be able to quickly and correctly calculate the diff for all sample files.  In particular, <tt>BetterHashDiff</tt> should be able to quickly calculate the diff of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt>, obtaining a solution matching <tt>whosonfirstSol.txt</tt>
 	</p>
+	<pre class="text">
+		% java BetterHashDiff samples/whosonfirst.txt samples/whosonfirst2.txt
+	</pre>
     <p class="heading">Task 4: Thought Questions</p>
 	<p class="text">
 	Answer the following questions in <tt>PROBLEMS.md</tt>.
