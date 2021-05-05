@@ -59,7 +59,7 @@ onlyB</pre>
  &gt; 2: onlyB
 	</pre>
 	<p class="text">
-	This calculation is quite similar to (although simpler than) the output of the unix utility <tt>diff</tt>.  You can try running 
+	This calculation is quite similar to the output of the unix utility <tt>diff</tt>.  You can try running 
 	<pre class="text">
 	% diff sample/verySmallA sample/verySmallB
 	</pre>
@@ -75,8 +75,8 @@ onlyB</pre>
 	To start, there are two possibilities to obtain the minimum difference between these files:
 	</p>
 	<ul class="bullet">
-	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file2</tt>.  In this case, the solution begins with the first line of <tt>file1</tt>, with <tt>&lt;</tt> prepended, and continues with the recursive solution.</li>
-	<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).  In this case, the solution begins with the first line of <tt>file2</tt>, with <tt>&gt;</tt> prepended, and continues with the recursive solution. </li>
+	<li> It may be that the minimum difference is obtained by deleting the first line of <tt>file1</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between the remainder of <tt>file1</tt> (with the first line deleted), and <tt>file2</tt>.  In this case, the solution begins with the first line of <tt>file1</tt>, with <tt>&lt;</tt> and the line number prepended, and continues with the recursive solution.</li>
+	<li> On the other hand, perhaps the minimum difference involves deleting the first line from <tt>file2</tt>.  Then the minimum number of differences is 1 plus the minimum number of differences between <tt>file1</tt>, and the remainder of <tt>file2</tt> (with the first line deleted).  In this case, the solution begins with the first line of <tt>file2</tt>, with <tt>&gt;</tt> and the line number prepended, and continues with the recursive solution. </li>
 	</ul>
     <p class="text">
 	If the first lines of file 1 and file 2 are the same, then we have a third option:
@@ -88,7 +88,7 @@ onlyB</pre>
 	For any pair of files, we have either 2 or 3 possibilities for how to proceed.  We calculate the cost of each recursively.  We take the choice that gives the minimum cost, and return that as our solution.
 	</p>
 	<p class="text">
-	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>, with the <tt>&lt;</tt> character prepended before each line.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>, with the <tt>&gt;</tt> character prepended before each line.
+	Finally, any recursive algorithm needs a base case.  If <tt>file1</tt> is empty, then the remaining difference consists of all of <tt>file2</tt>, with the <tt>&lt;</tt> character and line number prepended before each line.  Similarly, if <tt>file2</tt> is empty, then the remaining difference consists of all of <tt>file1</tt>, with the <tt>&gt;</tt> character and line number prepended before each line.
 	</p>
 	
     <p class="heading">Simplifying the Design</p>
@@ -121,7 +121,7 @@ onlyB</pre>
 	First, implement the base case, where one of the files has no remaining lines.  You may want to use a helper function for the base case.  This is a good opportunity to make sure the format of your output matches the expected format.  After the base case is implemented, <tt>Diff</tt> should work correctly when one of the files is empty.  In particular, the sample solution in <tt>emptySolution.txt</tt> should be exactly match the output when you run 
 	</p>
 	<pre class="text">
-		$ java Diff samples/verySmallA.txt samples/empty.txt
+		% java Diff samples/verySmallA.txt samples/empty.txt
 	</pre>
 	<p class="text">
 	Next, implement the recursive algorithm.  
@@ -140,7 +140,7 @@ onlyB</pre>
 	The recursive algorithm described above is very slow.  In fact, if <tt>file1</tt> and <tt>file2</tt> have <i>n</i> and <i>m</i> lines respectively, then this algorithm takes <i>Ω(2^(n+m))</i> time.
 	</p>
 	<p class="text">
-	Part of the reason this algorithm is so slow is due to <tt>diffHelper</tt> computing the same thing over and over.  For example, let's look at what recursive calls are made when comparing files <tt>verySmallA</tt> and <tt>verySmallB</tt>: (TODO)
+	Part of the reason this algorithm is so slow is due to <tt>diffHelper</tt> computing the same thing over and over.  Each new recursive call to <tt>diffHelper</tt> requires an entire, possibly slow computation&mdash;even if an identical call was made in the past.
 	</p>
 	<p class="text">
 	We need a way to keep track of previous calls to <tt>diffHelper</tt>.  If <tt>diffHelper</tt> is called a second time with the same arguments, rather than recomputing the solution from scratch, we want to look up the solution calculated last time it was called.  Then, we can return it immediately.
@@ -158,7 +158,7 @@ onlyB</pre>
 
     <p class="heading">Task 2: Speed Up Diff With Hashing</p>
 	<p class="text">
-	Implement the hash table described above to speed up your method in <tt>HashDiff.java</tt>.  The <tt>HashDiff</tt> class extends the <tt>Diff</tt> class, so you will have access to all of the variables and methods you already wrote in Task 1.  You should begin by copy pasting <tt>diffHelper</tt> from <tt>Diff</tt> into <tt>HashDiff</tt>, and then add in the hashtable checks described above. <b> Make sure your diffHelper method works correctly before doing this!</b>  Otherwise, if you made a mistake in your original implementation, you'll need to fix it in two places.
+	Implement the hash table described above to speed up your method in <tt>HashDiff.java</tt>.  The <tt>HashDiff</tt> class extends the <tt>Diff</tt> class, so you will have access to all of the variables and methods you already wrote in task 1.  You should use your <tt>diffHelper</tt> from <tt>Diff</tt> as a staring point, incorporating the hashtable checks described above. <b> Make sure your diffHelper method works correctly before starting task 2!</b>  Otherwise, if you made a mistake in your original implementation, you'll need to fix it in two places.
 
 		<p class="text">
 		You'll need to create an <tt>IntPair</tt> class (much of it is already implemented in the starter code).  Don't forget to create a <tt>hashCode()</tt> method for <tt>IntPair</tt> so that it can be used as a key in a hash table.  The <tt>hashCode()</tt> method of <tt>IntPair</tt> should return the sum of the integers stored in <tt>IntPair</tt>.
@@ -194,10 +194,8 @@ onlyB</pre>
 	Multiplying by a large random number, adding a second large random number, and finally taking the result modulo a large random prime is one of the best-known methods for hashing integers (or, in this case, pairs of integers).  And it should work particularly well here.  
 </p>
 <p class="text">
-    Copy the contents of <tt>HashDiff.java</tt> into <tt>BetterHashDiff.java</tt>.  In <tt>BetterHashDiff.java</tt>, replace all instances of <tt>IntPair</tt> with a <tt>BetterIntPair</tt>.
-	</p>
-	<p class="text">
-	With this improvement, <tt>BetterHashDiff.java</tt> should be able to quickly and correctly calculate the diff for all sample files.
+Create a new implementation of <tt>diffHelper()</tt> in <tt>BetterHashDiff.java</tt> that uses the <tt>BetterIntPair</tt> class in the hash table.  This implementation will likely be very similar to the version of <tt>diffHelper()</tt> implemented in <tt>HashDiff.java</tt>.
+With this improvement, <tt>BetterHashDiff</tt> should be able to quickly and correctly calculate the diff for all sample files.  In particular, <tt>BetterHashDiff</tt> should be able to quickly calculate the diff of <tt>whosonfirst.txt</tt> and <tt>whosonfirst2.txt</tt>, obtaining a solution matching <tt>whosonfirstSol.txt</tt>
 	</p>
     <p class="heading">Task 4: Thought Questions</p>
 	<p class="text">
@@ -307,7 +305,7 @@ onlyB</pre>
           Your well-documented source code in <tt>Diff.java</tt> and <tt>IntPair.java</tt>.
 	</li>
 <li>
-	  The <tt>PROBLEMS.md</tt> file that contains answers to the TODO
+	  The <tt>PROBLEMS.md</tt> file that contains answers to the
 	  questions described above, as well as any other information
 	  about your submission.
 	</li>
