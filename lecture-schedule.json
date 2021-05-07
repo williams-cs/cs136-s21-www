@@ -650,6 +650,8 @@
 			],
 			"materials" : [],
 			"post" : [
+				"[Code: <a href='handouts/MemoFib.java'>MemoFib.java</a>]",
+				"[Code: <a href='handouts/MemoCollatz.java'>MemoCollatz.java</a>]"
 			]
 		},
 		{
