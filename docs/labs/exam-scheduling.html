@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../resources/cs136.css" type="text/css">
+    <title>CSCI 136</title>
+  </head>
+
+  <body>
+
+    <!-- standard header (found in header.html) -->
+    <p class="title2"><font size="5">CSCI 136 :: Spring 2021</font></p>
+    <p class="title">Data Structures &amp; Advanced Programming</p>
+    <p class="box">
+      <a href="../index.html">Home</a> |
+      <a href="../schedule.html">Schedule</a> |
+      <a href="../labs.html">Labs</a> |
+      <a href="../handouts.html">Handouts</a> |
+      <a href="../links.html">Links</a> |
+      <a href="https://csci.williams.edu/">CS@Williams</a>
+    </p>
+
+
+
+    <p class="heading">Lab 10: Exam Scheduling</p>
+
+    <p class="info">
+      This week, you will write a program (that <em>could</em> be used) to schedule final exams for the
+      Registrar so that no student has two exams at the same time.
+      The goals of this lab are to:
+      <br>&nbsp;&nbsp;&bull; Gain experience using basic graph building and traversal
+      operations.
+      <br>&nbsp;&nbsp;&bull; Develop a fairly sophisticated algorithm requiring several
+      coordinated data structures.
+
+      <br><br>
+
+      You will use a <em>greedy</em> algorithm to determine an assignment of
+      classes to exam slots such that:
+      <br>&nbsp;&nbsp;&bull; No student is enrolled in two courses assigned to the same exam slot.
+      <br>&nbsp;&nbsp;&bull; Any attempt to combine two exam slots into one slot would violate rule 1.
+      <br>
+      The second requirement ensures that we do not gratuitously waste exam
+      slots (students would like to start their breaks as soon as possible,
+      after all).
+    </p>
+
+
+    <p class="heading">Program Input</p>
+    <p class="text">
+      Before describing the solution strategy, let's examine the <em>data</em>.
+      The input to your program will be a text file containing (fictitious) student class
+      information.  For example:
+    </p>
+    <pre>
+            Bill Lenhart
+            CSCI 136
+            MATH 251
+            ENGL 201
+            PHIL 101
+            Bill Jannen
+            PSYC 212
+            ENGL 201
+            HIST 301
+            CSCI 136
+            Sam McCauley
+            SOCI 201
+            CSCI 136
+            MATH 251
+            PSYC 212
+    </pre>
+    <p class="text">
+      For each student, there will be five consecutive lines.
+      The first line is a student's name, and
+      the next four are the courses for that student. In the above example:
+    </p>
+      <ul class="bullet">
+	<li>
+	  Bill Lenhart is taking CSCI 136, MATH 251, ENGL 201, and PHIL 101;
+	</li>
+	<li>
+	  Bill Jannen is taking PSYC 212, ENGL 201, HIST 301, and CSCI 136; and
+	</li>
+	<li>
+	  Sam McCauley is taking SOCI 201 CSCI 136, MATH 251, and PSYC 212.
+	</li>
+      </ul>
+    <p class="text">
+      We will provide small, medium, and large input files in your starter
+      repository so you can test your program.
+    </p>
+    <p class="text">
+      Note that whenever you process data in the "real world",
+      your code should carefully handle inputs that are not properly formatted.
+      For the purpose of this lab, however, you can assume that all files are
+      properly formatted and that all students take exactly four courses.
+    </p>
+
+    <p class="heading">Program Output</p>
+    <p class="text">
+      The output of your program should be a schedule that satisfies two constraints:
+    </p>
+    <ol>
+      <li>
+	No student is enrolled in two courses assigned to the same exam slot (we can't be in two places at once, after all).
+      </li>
+      <li>
+	Any attempt to combine two exam slots into one slot would violate rule 1.
+      </li>
+    </ol>
+    <p class="text">
+      This schedule should be provided as a list of time slots with the
+      courses whose final will be given at that slot.
+      For example, the output below describes a valid schedule for the student data above <a href="#footnote">[1]</a>:
+    </p>
+    <pre>
+            Slot 1: HIST 301 PHIL 101 SOCI 201
+            Slot 2: CSCI 136
+            Slot 3: ENGL 201
+            Slot 4: MATH 251
+            Slot 5: PSYC 212
+    </pre>
+
+    <p class="heading">An Overview of the Algorithm</p>
+    <p class="text">
+      The key to doing this assignment is to build a graph as you read in
+      the file of students and their schedules, where:
+    </p>
+    <ul class="bullet">
+      <li>
+	Each node of the graph is a course taken by at least one
+	student in the college.
+      </li>
+      <li>
+	An edge is drawn between two nodes if there is at least one
+	student taking both courses.
+      </li>
+      <li>
+	The label of an edge <em>could</em> be the number of students
+	with both classes (although we don't really need the weights
+	for this program).
+      </li>
+    </ul>
+
+    <p class="text">
+      Thus if there are only the three
+      students listed above, the graph would be as given below (edges
+      without a weight label have weight 1).
+    </p>
+
+  <img class="centeredImage" src="./Exam-Scheduling-Example.svg" alt="sample exam graph">
+
+    <p class="text">
+      A <a href="https://en.wikipedia.org/wiki/Greedy_algorithm"><em>greedy</em> algorithm</a>
+      to find an exam schedule satisfying our two
+      constraints would work as follows.
+      Choose a course (say, PHIL 101) and stick it in the first time slot.
+      Search for a course to which it is <b>not</b> connected.
+      If you find one (e.g., HIST 301), add it to the time slot.
+      Now try to find another which is not connected to any of those
+      already in the time slot.
+      If you find one (e.g., SOCI 201), add it to the time slot.
+      Continue until all nodes in the graph are connected to
+      at least one element in the time slot.
+      When this happens, no more courses can be added to the time slot (why?).
+      By the way, the final set of elements in the time slot is said to be a <em>maximal
+<a href=" https://en.wikipedia.org/wiki/Independent_set_(graph_theory)"> independent
+  set</a></em>
+      in the graph.
+      Once you have this set, you could remove them from the graph,
+      or you could mark them as visited and then ignore them in future passes.
+      Below we'll assume that we've removed them from the graph.
+    </p>
+
+    <p class="text">
+      If there are remaining nodes in the graph (there should be!),
+      pick one and make it part of a new time slot,
+      then try adding other courses to this new slot as described above.
+      Continue adding time slots for remaining courses until all courses are taken care of.
+      Then print the exam schedule.
+      For the graph shown, here is one solution:
+    </p>
+    <pre>
+            Slot 1: PHIL 101, HIST 301, SOCI 201
+            Slot 2: MATH 251
+            Slot 3: CSCI 136
+            Slot 4: ENGL 201
+            Slot 5: PSYC 212
+    </pre>
+    <p class="text">
+      Notice that no pair of time slots can be combined without creating a
+      time conflict with a student.
+      Unfortunately, this is not the minimal schedule as one can be formed with only four time slots.
+      (See if you can find one!)
+      Thus, if a greedy algorithm of this sort gives you a schedule with <i>x</i> slots,
+      no two of which can be combined,
+      a different selection of courses in slots may result in fewer than <i>x</i> slots.
+      Any schedule satisfying our constraints will be acceptable
+      (although see below for extension ideas to compute the optimal solution).
+    </p>
+
+    <p class="heading">More Details</p>
+    <p class="text">
+      We recommend that you use a list-based graph implementation rather
+      than a matrix-based one. (Why does that make
+      the most sense for this application? Think about the relative strengths
+      of list-based and matrix-based graph representations as you
+      implement the lab.)
+    </p>
+
+    <p class="text">
+      In your <tt><a href="http://www.cs.williams.edu/~bailey/JavaStructures/doc/structure5/structure5/GraphListUndirected.html">GraphListUndirected</a></tt> graph,
+      Vertex labels should be the course names. It likely makes sense to use Integer values for Edge labels, but depending on your implementation,
+      there is no need to keep the Edge labels up-to-date.
+    </p>
+
+    <p class="text">
+      You should develop a <tt>Student</tt> class that stores information
+      about each student. This likely includes their name and the list of courses
+      they are taking (although there are always four courses, you might
+      want a dynamic list, like a <tt>Vector</tt> to allow for the potential
+      of students with variable courseloads).
+    </p>
+
+    <p class="text">
+      Here is one possible way to find a collection of maximal independent
+      sets from the graph (a more concrete description of the greedy
+      algorithm described above):
+      represent each "slot" by some sort of a list (or, if you're implementing
+      some of the extensions, consider a binary search tree).
+      To find a maximal independent set for a slot,
+      pick any vertex of the graph and add it to the list.
+      Then, iterate through all other vertices of the graph;
+      if a vertex is not connected to any of the vertices already in the slot,
+      add that vertex to the slot.
+      Continue until you have tried all vertices.
+      Now delete from the graph all vertices that you added to the slot<a href="#footnote">[2]</a>.
+      Continue to fill successive slots in the same way until there are no vertices left in the graph.
+    </p>
+
+    <p class="text">
+      Think carefully about the tasks in this lab. Identify the
+      concrete steps. You should make helper methods that perform each
+      of those concrete steps.  In your <tt>ExamScheduler.java</tt>
+      file, good helper methods will likely be <code>static</code>
+      methods that are passed Vectors, Graphs, or other data
+      structures as parameters. The reason for this design is that
+      there isn't really a strong notion of a logical "ExamScheduler"
+      object, so defining local variables rather global member
+      variables will mean that you have more control over the scope
+      and lifetime of your data structures.
+    </p>
+
+    <p class="text">
+      Read through the optional extensions.
+      Even if you do not wish to complete any of the optional extensions,
+      thinking about them may help you to clarify your program design.
+      If do you choose to complete one or more of the optional extensions,
+      your choice may impact the data structures that you choose to use!
+    </p>
+
+
+    <p class="heading">Optional Extensions</p>
+    <p class="text">
+      You can receive full credit on this lab for completing the tasks described above.
+      However, we have listed some interesting extensions below in case you would like
+      to explore the problem at a deeper level or apply other concepts we have learned
+      so far this semester.
+      Some of these extensions are easier than others, but in our experience,
+      the more challenging extensions are also more interesting!
+    </p>
+    <ol >
+      <li>
+	Print out a final exam schedule ordered by course name/number
+	(ie, AFR 100 would be first, and WGST 999 would be last, if such
+	courses are offered this semester).
+      </li>
+      <li>
+	Print out a final exam schedule for each student, listing students in
+	alphabetical order.
+      </li>
+      <li>
+	Randomize! To handle large files, you could also
+	repeatedly use the greedy algorithm on random orderings of the nodes.
+	After running for a while, you may get lucky and find a schedule close
+	to the optimal, even if you are not guaranteed to find the true
+	optimal. Feel free to explore other approaches as well.
+	As output, list the largest and smallest solution found in a given run.
+      </li>
+      <!--
+      <li>
+        Use the <tt>Permute.java</tt> class to try the greedy algorithm with <i>every</i> permutation of vertices.  As we discussed, one of these permutations is guaranteed to minimize the number of exam slots.  This means that by trying every permutation, you can find the best solution.  This method will only work in a reasonable amount of time on small graphs.
+      </li
+	>-->
+      <li>
+	Arrange the time slots in an order which tries to minimize the
+	number of students who must take exams in three consecutive time
+	slots. This is trickier than the other options!
+      </li>
+    </ol>
+    <p class="text">
+      Feel free to add other features as well.
+      <b>
+	Be sure sure to indicate in the heading of your program (in comments)
+	what extras you have included so we can appreciate them.
+      </b>
+    </p>
+
+    <p class="heading" id="checkstyle">
+      <strong><code>checkstyle</code> requirements</strong>:
+    </p>
+
+    <p class="text">
+      For this lab, we will be not be adding any
+      new <code>checkstyle</code> rules to the set of rules that we
+      have used in previous weeks.
+    </p>
+
+    <p class="text">
+      We <em>STRONGLY ENCOURAGE</em> you to run
+      checkstyle early and often when developing your code,
+      and try to program in a way that minimizes WARNING messages.
+      The checkstyle rules that we use in this course
+      are based on real-world style guides;
+      internalizing good style practices will help us write more
+      readable code.
+    </p>
+
+    <p class="text">
+      <b>In total, checkstyle will enforce the following guidelines:</b>
+    </p>
+
+    <ul class="bullet">
+      <li>
+	All class variables that are not <code>final</code> must be
+	declared <code>private</code> or <code>protected</code> (i.e.,
+	no <code>public</code> member variables unless they are
+	constants). (We don't expect this to be an issue this week.)
+      </li>
+
+      <li>
+	All <code>public</code> methods must include a “Javadoc” comment
+	(starts with <code>/**</code> and ends with <code>*/</code>;
+	it should include descriptions of the function at the top,
+	descriptions of return values after a <code>@return</code> tag,
+	descriptions of each argument after a <code>@param</code> tag,
+	and pre/post conditions after the <code>@pre</code>
+	or <code>@post</code> tags).
+      </li>
+      <li>
+	No methods should be longer than 30 lines (excluding
+	whitespace and single-line comments).
+      </li>
+    </ul>
+
+
+    <br><br>
+
+    <p class="text">
+      <b>To run <code>checkstyle</code>, you would type the following
+      command at the terminal:</b>
+    </p>
+
+    <pre><code>
+            $ ./checkstyle
+    </code></pre>
+
+    <p class="text">
+      The <code>./</code> is peculiar to Unix: it tells the terminal
+      to look for the <code>checkstyle</code> program in the current
+      directory.  This command will run <code>checkstyle</code> on
+      every Java program in your directory.  To
+      run <code>checkstyle</code> on a specific Java file, type:
+    </p>
+
+    <pre><code>
+            $ ./checkstyle SomeFile.java
+    </code></pre>
+
+
+    <p class="heading">Lab Deliverables</p>
+    <p class="text">
+      Please complete and submit the following items in your repository:
+      <ul class="bullet">
+	<li>
+	  Your well-documented source code for <tt>Student.java</tt>
+	  and <tt>ExamScheduler.java</tt> (plus any additional files
+	  that you might wish to create for optional extensions).
+	</li>
+	<li>
+	  The files <tt>README.md</tt> and <tt>Rubric.md</tt> (there are no thought questions this week, so just be thoughtful when completing your lab!).
+	</li>
+      </ul>
+    </p>
+
+    <p class="heading">Submitting Your Lab</p>
+    <p class="text">
+      As you complete various milestones,
+      you should <tt>commit</tt> your changes and <tt>push</tt> them.
+      <b>Commit early and often</b>.
+      When the deadline arrives,
+      we will retrieve the latest version of your code.
+      If you are confident that you are done,
+      please include "Lab Submission" as the commit message for your final commit.
+      If you later decide that you have more edits to make, it is OK.
+      We will look at the latest commit before the deadline.
+    </p>
+    <ul class="bullet">
+      <li><b>Be sure to push your changes to GitLab</b>
+      </li>
+
+      <li><b>Verify your changes on GitLab</b>.
+	Navigate in your web browser to your team's private repository.
+	You should see all changes reflected in the various files that you submit.
+	If not, go back and make sure you committed <em>and</em> pushed.
+      </li>
+    </ul>
+
+    <p class="text">
+      We will know that the files are yours because they are in <em>your</em>
+      git repository.
+      Do not include identifying information in the code that you submit.
+      Our goal is to grade the programs anonymously to avoid any bias.
+      However, in your <tt>README.md</tt> file,
+      please cite any sources of inspiration or collaboration
+      (e.g., conversations with classmates).
+      We take the honor code very seriously, and so should you.
+      Please include the statement
+      "I am the sole author of the work in this repository."
+      in the comments at the top your java files.
+    </p>
+
+    <p class="heading" id="footnote">Footnotes</p>
+    <p class="text">
+      [1] Different implementations of the algorithm may lead to different
+      results!
+      <br>
+      [2] Or just mark them as visited and ignore them in future passes.
+      Can you think of a reason why this might be better or worse than
+      deleting them?
+    </p>
+  </body>
+</html>

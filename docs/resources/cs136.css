@@ -261,3 +261,11 @@ ol {
     font-size: 12pt;
     background: none;
 }
+
+.centeredImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  height: auto;
+}
