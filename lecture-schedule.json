@@ -693,7 +693,15 @@
 				"<i>Bailey</i> 16.5"
 			],
 			"pre" : [
-			],
+        "Video: <a href='https://youtu.be/tQ5S0Tk6bLk'>Shortest Paths by Edge Count</a>",
+        "[<a href='handouts/ShortestPathsEdgeCount.pdf'>Shortest Paths by Edge Count Slides</a>]",
+        "[Code: <a href='handouts/ShortestPathsByEdgeCount.java'>ShortestPathsByEdgeCount.java</a>']",
+      "[<a href='handouts/graphOfEdges.txt'>Input file for ShortestPathsByEdgeCount.java</a>']",
+      "Video: <a href='https://youtu.be/SBc5gdgr8BM'>Dijkstra's Algorithm</a>",
+      "[<a href='handouts/Dijkstra.pdf'>Dijkstra Slides</a>]",
+      "[Code: <a href='handouts/Dijkstra.java'>Dijkstra.java</a>']",
+    "[<a href='handouts/LargeGraph.txt'>Input file for Dijkstra.java</a>']"
+    ],
 			"materials" : [
 
 			],
