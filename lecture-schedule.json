@@ -715,6 +715,10 @@
 				"<i>Bailey</i> 16.5"
 			],
 			"pre" : [
+				"Video: <a href='https://youtu.be/OQk80hVqZM0'>Minimum Cost Spanning Trees</a>",
+				"[<a href='handouts/prim.pdf'>MCST Slides</a>]",
+				"[Code: <a href='handouts/MCST.java'>MCST.java</a>]",
+				"[<a href='handouts/MCST-sampleInput.txt'>Sample Input for Code</a>]"
 			],
 			"materials" : [
 			],
