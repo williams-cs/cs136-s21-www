@@ -900,10 +900,11 @@
 		"readings" : ["<font color='red'>Exam Review</font>"],
 		"pre": [],
 		"materials" : [],
-		"post": ["<a href='handouts/final-format.html'>final format</a>",
-			"<a href='handouts/final-study-sheet.pdf'>final study sheet</a>",
-			"<a href='handouts/sampleFinalExamples.pdf'>sample problems</a>",
-			"<a href='handouts/sample_final_exam.pdf'>old exam problems</a>"
+		"post": ["<a href='exams/final-format.html'>final format</a>",
+			"<a href='exams/final-study-sheet.pdf'>final study sheet</a>",
+			"<a href='exams/sampleFinalExamples.pdf'>sample problems</a>",
+			"<a href='exams/sample_final_exam.pdf'>old exam problems</a>",
+			"<a href='exams/sample-final-exam-solutions.pdf'>Sample final with solutions</a>"
 		]
 	}
 }
