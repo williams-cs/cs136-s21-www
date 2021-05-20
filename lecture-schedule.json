@@ -901,7 +901,7 @@
 		"pre": [],
 		"materials" : [],
 		"post": ["<a href='exams/final-format.html'>final format</a>",
-			"<a href='exams/final-study-sheet.pdf'>final study sheet</a>",
+			"<a href='exams/final-study_sheet.pdf'>final study sheet</a>",
 			"<a href='exams/sampleFinalExamples.pdf'>sample problems</a>",
 			"<a href='exams/sample_final_exam.pdf'>old exam problems</a>",
 			"<a href='exams/sample-final-exam-solutions.pdf'>Sample final with solutions</a>"
